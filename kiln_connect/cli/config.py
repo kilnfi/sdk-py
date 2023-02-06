@@ -170,3 +170,11 @@ def init(env: str):
             f"invalid environment provided (should be one of {ENV_DEVNET}, {ENV_TESTNET} or {ENV_MAINNET})")
         raise typer.Exit(code=1)
     set_current_config(env)
+
+
+@config.command("print")
+def print():
+    """
+    Print the current config.
+    """
+    rich.print(get_current_config_or_die())
