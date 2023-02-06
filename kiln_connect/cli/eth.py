@@ -1,7 +1,8 @@
 import typer
 
 
-eth = typer.Typer(name='eth', help='Staking utilities for Ethereum', no_args_is_help=True)
+eth = typer.Typer(
+    name='eth', help='Staking utilities for Ethereum', no_args_is_help=True)
 
 
 @eth.command("stakes")
