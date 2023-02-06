@@ -33,6 +33,11 @@ config = typer.Typer(
     name='config', help='Configuration of Kiln Connect CLI', no_args_is_help=True)
 
 
+ENV_DEVNET = 'devnet'
+ENV_TESTNET = 'testnet'
+ENV_MAINNET = 'mainnet'
+
+
 def get_config_dir() -> str:
     """
     Returns the path to the config directory for Kiln Connect CLI.
@@ -80,18 +85,18 @@ def get_current_config_or_die() -> dict:
             return yaml.safe_load(stream)
     except:
         rich.echo(
-            "[bold][red]Kiln Connect CLI[/red] was not initialized, please run `kiln-connect config init` [/bold]")
-        typer.Abort()
+            "[red]Kiln Connect CLI is not initialized[/red], please run `kiln-connect config init`")
+        raise typer.Exit(code=1)
     return None
 
 
-def write_config_for(config: dict, env: str):
+def write_config_for(cfg: dict, env: str):
     """
     Writes the config.
     """
     p = get_config_path_for(env)
     with open(p, "w") as stream:
-        yaml.dump(p, stream, default_flow_style=False)
+        yaml.dump(cfg, stream, default_flow_style=False)
 
 
 def set_current_config(env: str):
@@ -101,8 +106,13 @@ def set_current_config(env: str):
     source = get_config_path_for(env)
     target = get_current_config_path()
 
-    if os.path.exists(target):
-        os.remove(target)
+    if not os.path.exists(source):
+        rich.print(
+            f"[red]config file for environment [bold]{env}[/bold] does not exist[/red], please run `kiln-connect config init`")
+        raise typer.Exit(code=1)
+
+    if os.path.islink(target):
+        os.unlink(target)
 
     os.symlink(source, target)
 
@@ -123,16 +133,17 @@ def init(force: bool = typer.Option(False, help="force config init.")):
 
     if not force and get_config():
         rich.print(
-            "config file already exists, use --force if you want to overwrite")
+            "current config file already exists, use --force if you want to overwrite or define a new environment")
         typer.Exit()
 
     env = typer.prompt(
-        "Enter the environment you want to use (devnet, testnet, or mainnet)")
-    if env not in ['devnet', 'testnet', 'mainnet']:
-        rich.print("invalid environment provided")
-        typer.Abort()
+        f"Enter the environment you want to use ({ENV_DEVNET}, {ENV_TESTNET} or {ENV_MAINNET})")
+    if env not in [ENV_DEVNET, ENV_TESTNET, ENV_MAINNET]:
+        rich.print(
+            f"invalid environment provided (should be one of {ENV_DEVNET}, {ENV_TESTNET} or {ENV_MAINNET})")
+        raise typer.Exit(code=1)
     api_url = f"https://api.{env}.kiln.fi/"
-    if env == "mainnet":
+    if env == ENV_MAINNET:
         api_url = "https://api.kiln.fi/"
 
     cfg = {
@@ -147,3 +158,15 @@ def init(force: bool = typer.Option(False, help="force config init.")):
     set_current_config(env)
 
     rich.print("[bold][green]Kiln Connect CLI[/green] properly initialized")
+
+
+@config.command("switch")
+def init(env: str):
+    """
+    Switch to another environment.
+    """
+    if env not in [ENV_DEVNET, ENV_TESTNET, ENV_MAINNET]:
+        rich.print(
+            f"invalid environment provided (should be one of {ENV_DEVNET}, {ENV_TESTNET} or {ENV_MAINNET})")
+        raise typer.Exit(code=1)
+    set_current_config(env)
