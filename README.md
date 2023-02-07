@@ -18,4 +18,3 @@ $ kiln-connect
 │ eth       Staking utilities for Ethereum          │
 ╰───────────────────────────────────────────────────╯
 ```
-

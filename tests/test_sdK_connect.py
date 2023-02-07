@@ -7,15 +7,15 @@ class TestApiUrl(unittest.TestCase):
 
     def test_devnet(self):
         self.assertEqual(
-            'https://api.devnet.kiln.fi/', sdk.get_api_url('devnet'))
+            'https://api.devnet.kiln.fi', sdk.get_api_url('devnet'))
 
     def test_testnet(self):
         self.assertEqual(
-            'https://api.testnet.kiln.fi/', sdk.get_api_url('testnet'))
+            'https://api.testnet.kiln.fi', sdk.get_api_url('testnet'))
 
     def test_mainnet(self):
         self.assertEqual(
-            'https://api.kiln.fi/', sdk.get_api_url('mainnet'))
+            'https://api.kiln.fi', sdk.get_api_url('mainnet'))
 
     def test_invalid_env(self):
         with self.assertRaises(sdk.InvalidEnvError):
