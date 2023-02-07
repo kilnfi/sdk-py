@@ -52,3 +52,33 @@ class Ethereum:
             endpoint, params={"wallets": ",".join(wallets)}, headers=headers)
         check_http_response(response)
         return response.json().get('data')
+
+    def get_rewards_by_accounts(self, accounts: list[str]) -> list[dict]:
+        """
+        List Ethereum rewards by Kiln account.
+        """
+        endpoint, headers = self._query_for('rewards')
+        response = requests.get(
+            endpoint, params={"accounts": ",".join(accounts)}, headers=headers)
+        check_http_response(response)
+        return response.json().get('data')
+
+    def get_rewards_by_validators(self, validators: list[str]) -> list[dict]:
+        """
+        List Ethereum rewards by validator public key.
+        """
+        endpoint, headers = self._query_for('rewards')
+        response = requests.get(
+            endpoint, params={"validators": ",".join(validators)}, headers=headers)
+        check_http_response(response)
+        return response.json().get('data')
+
+    def get_rewards_by_wallets(self, wallets: list[str]) -> list[dict]:
+        """
+        List Ethereum rewards by wallet.
+        """
+        endpoint, headers = self._query_for('rewards')
+        response = requests.get(
+            endpoint, params={"wallets": ",".join(wallets)}, headers=headers)
+        check_http_response(response)
+        return response.json().get('data')
