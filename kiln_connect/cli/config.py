@@ -134,7 +134,7 @@ def init(force: bool = typer.Option(False, help="force config init.")):
 
     env = typer.prompt(
         f"Enter the environment you want to use ({Env.values()})")
-    if env not in Env:
+    if env not in Env.values():
         rich.print(
             f"invalid environment provided (should be one of {Env.values()})")
         raise typer.Exit(code=1)

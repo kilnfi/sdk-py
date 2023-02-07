@@ -1,4 +1,8 @@
-from enum import Enum
+"""
+Kiln Connect module.
+
+This is the entrypoint of the Kiln SDK.
+"""
 
 
 class KilnConnectError(Exception):
@@ -9,7 +13,7 @@ class InvalidEnvError(KilnConnectError):
     pass
 
 
-class Env(Enum):
+class Env:
     """
     Kiln environments available.
     """
@@ -19,7 +23,7 @@ class Env(Enum):
 
     @staticmethod
     def values():
-        return sorted([e.value for e in Env])
+        return [Env.DEVNET, Env.TESTNET, Env.MAINNET]
 
 
 def get_api_url(env: str) -> str:
@@ -27,11 +31,11 @@ def get_api_url(env: str) -> str:
     Returns the Kiln API url for the given environment.
     """
     if env not in Env.values():
-        raise InvalidEnvError(f"{env} not in {Env}")
+        raise InvalidEnvError(f"{env} not in {Env.values()}")
 
     api_url = f"https://api.{env}.kiln.fi/"
 
-    if env == Env.MAINNET.value:
+    if env == Env.MAINNET:
         api_url = "https://api.kiln.fi/"
 
     return api_url
