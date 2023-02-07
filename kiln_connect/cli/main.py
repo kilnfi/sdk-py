@@ -1,6 +1,6 @@
 import typer
 
-from . import config, eth, sol
+from . import ada, config, eth, sol
 
 
 app = typer.Typer(name='kiln-connect', add_completion=False,
@@ -8,3 +8,4 @@ app = typer.Typer(name='kiln-connect', add_completion=False,
 app.add_typer(config.config, name='config')
 app.add_typer(eth.eth, name='eth')
 app.add_typer(sol.sol, name='sol')
+app.add_typer(ada.ada, name='ada')
