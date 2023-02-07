@@ -7,6 +7,7 @@ This is the entrypoint of the Kiln SDK.
 from dataclasses import dataclass
 
 from .eth import Ethereum
+from .sol import Solana
 from .errors import *
 
 
@@ -57,3 +58,4 @@ class Kiln:
             api_url=get_api_url(env), api_token=api_token)
 
         self.eth = Ethereum(cfg)
+        self.sol = Solana(cfg)

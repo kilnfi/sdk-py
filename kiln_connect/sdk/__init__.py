@@ -1,2 +1,2 @@
-from .connect import *
+from .kiln import *
 from .errors import *
