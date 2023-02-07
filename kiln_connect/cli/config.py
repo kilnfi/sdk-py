@@ -1,4 +1,4 @@
-"""Config subcommand.
+"""Commands.
 
 Configuration is represented by a YAML file under the user's config
 directory. Because Kiln has different environments (devnet, testnet
@@ -24,18 +24,14 @@ import textwrap
 import typer
 import yaml
 
-from enum import Enum
 from pathlib import Path
 from typing import Optional
 
+from ..sdk import Env
+
 
 config = typer.Typer(
-    name='config', help='Configuration of Kiln Connect CLI', no_args_is_help=True)
-
-
-ENV_DEVNET = 'devnet'
-ENV_TESTNET = 'testnet'
-ENV_MAINNET = 'mainnet'
+    name='config', help='Config of Kiln Connect CLI', no_args_is_help=True)
 
 
 def get_config_dir() -> str:
@@ -137,18 +133,14 @@ def init(force: bool = typer.Option(False, help="force config init.")):
         typer.Exit()
 
     env = typer.prompt(
-        f"Enter the environment you want to use ({ENV_DEVNET}, {ENV_TESTNET} or {ENV_MAINNET})")
-    if env not in [ENV_DEVNET, ENV_TESTNET, ENV_MAINNET]:
+        f"Enter the environment you want to use ({Env.values()})")
+    if env not in Env:
         rich.print(
-            f"invalid environment provided (should be one of {ENV_DEVNET}, {ENV_TESTNET} or {ENV_MAINNET})")
+            f"invalid environment provided (should be one of {Env.values()})")
         raise typer.Exit(code=1)
-    api_url = f"https://api.{env}.kiln.fi/"
-    if env == ENV_MAINNET:
-        api_url = "https://api.kiln.fi/"
 
     cfg = {
         "kiln-env": env,
-        "kiln-api-url": api_url,
         "kiln-org": typer.prompt("Enter your Kiln Organization Identifier?"),
         "kiln-account": typer.prompt("What's your default Kiln Account Identifier?"),
         "kiln-api-token": typer.prompt("What's your Kiln API key?")
@@ -165,9 +157,9 @@ def init(env: str):
     """
     Switch to another environment.
     """
-    if env not in [ENV_DEVNET, ENV_TESTNET, ENV_MAINNET]:
+    if env not in Env.values():
         rich.print(
-            f"invalid environment provided (should be one of {ENV_DEVNET}, {ENV_TESTNET} or {ENV_MAINNET})")
+            f"invalid environment provided (should be one of {Env.values()})")
         raise typer.Exit(code=1)
     set_current_config(env)
 
