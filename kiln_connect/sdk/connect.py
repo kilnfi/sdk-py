@@ -19,19 +19,19 @@ class Env(Enum):
 
     @staticmethod
     def values():
-        return [e.value for e in Env]
+        return sorted([e.value for e in Env])
 
 
 def get_api_url(env: str) -> str:
     """
     Returns the Kiln API url for the given environment.
     """
-    if env not in Env:
+    if env not in Env.values():
         raise InvalidEnvError(f"{env} not in {Env}")
 
     api_url = f"https://api.{env}.kiln.fi/"
 
-    if env == Env.MAINNET:
+    if env == Env.MAINNET.value:
         api_url = "https://api.kiln.fi/"
 
     return api_url
