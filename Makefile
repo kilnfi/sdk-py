@@ -4,17 +4,17 @@
 # many directions.
 
 TMP_DIR=/tmp/kiln-openapi
-TARGET_SDK=openapi_client
+TARGET_SDK=kiln_connect/openapi_client
 
 all:
 
-regenerate: openapi_client
+regenerate: kiln_connect
 
-openapi_client:
+kiln_connect:
 	rm -rf $(TMP_DIR) && mkdir -p $(TMP_DIR)
-	openapi-generator generate -i ./specs/openapi.yaml -g python-nextgen -o $(TMP_DIR)/openapi_client -c specs/generator.yaml -t specs/templates
+	openapi-generator generate -i ./specs/openapi.yaml -g python-nextgen -o $(TMP_DIR) -c specs/generator.yaml -t specs/templates --package-name kiln_connect.openapi_client
 	rm -rf $(TARGET_SDK)
-	cp -R $(TMP_DIR)/openapi_client/openapi_client $(TARGET_SDK)
+	cp -R $(TMP_DIR)/kiln_connect/openapi_client $(TARGET_SDK)
 
 
-.PHONY: openapi_client
+.PHONY: kiln_connect

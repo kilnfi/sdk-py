@@ -6,7 +6,7 @@ authors = ["s. rannou <mxs@sbrk.org>"]
 readme = "README.md"
 packages = [
          {include = "kiln_connect"},
-         {include = "openapi_client"}
+         {include = "kiln_connect/openapi_client"}
 ]
 
 [tool.poetry.dependencies]

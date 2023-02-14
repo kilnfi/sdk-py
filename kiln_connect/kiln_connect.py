@@ -1,5 +1,5 @@
-from openapi_client import ApiClient, Configuration
-from openapi_client.api import eth_api
+from kiln_connect.openapi_client import ApiClient, Configuration
+from kiln_connect.openapi_client.api import eth_api
 
 
 class KilnConnect:
@@ -14,7 +14,7 @@ class KilnConnect:
             configuration=cfg,
         )
 
-        self.eth = eth_api.ETHApi(self._api)
+        self.eth = eth_api.EthApi(self._api)
 
     def __enter(self):
         return self
