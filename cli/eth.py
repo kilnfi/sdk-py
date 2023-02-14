@@ -13,6 +13,7 @@ simpler.
 import os
 import rich
 import typer
+import click
 
 from rich.console import Console
 from rich.table import Table
@@ -26,6 +27,37 @@ eth = typer.Typer(
 
 
 console = Console()
+error_console = Console(stderr=True)
+
+
+@eth.command("stakes")
+def ethereum_stakes(
+        validators: Optional[list[str]] = None,
+        wallets: Optional[list[str]] = None,
+        accounts: Optional[list[str]] = None):
+    """Show Ethereum Stake status.
+    """
+    if not validators and not wallets and not accounts:
+        raise typer.BadParameter(
+            'need at least one of --validators, --wallets, --accounts')
+
+    host = os.getenv('KILN_API_URL')
+    access_token = os.getenv('KILN_API_TOKEN')
+    kc = kiln_connect.KilnConnect(host, access_token)
+
+    stakes = []
+    if validators:
+        stakes.extend(kc.eth.get_eth_stakes(validators=validators).data)
+    if wallets:
+        stakes.extend(kc.eth.get_eth_stakes(wallets=wallets).data)
+    if accounts:
+        stakes.extend(kc.eth.get_eth_stakes(accounts=accounts).data)
+
+    table = Table('Stake', 'Status', 'Balance', 'Rewards')
+    for stake in stakes:
+        table.add_row(
+            stake.validator_address, stake.state, stake.balance, stake.rewards)
+    console.print(table)
 
 
 @eth.command("network-stats")
