@@ -3,4 +3,4 @@ from __future__ import absolute_import
 # flake8: noqa
 
 # import apis into api package
-from openapi_client.api.eth_api import ETHApi
+from openapi_client.api.eth_api import EthApi
