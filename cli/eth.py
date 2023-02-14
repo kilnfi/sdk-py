@@ -37,7 +37,7 @@ def wei_to_eth(wei: str) -> str:
     return f"{eth}Ξ"
 
 
-@ eth.command("stakes")
+@eth.command("stakes")
 def ethereum_stakes(
         validators: Optional[list[str]] = None,
         wallets: Optional[list[str]] = None,
@@ -60,14 +60,20 @@ def ethereum_stakes(
     if accounts:
         stakes.extend(kc.eth.get_eth_stakes(accounts=accounts).data)
 
-    table = Table('Stake', 'Status', 'Balance', 'Rewards')
+    table = Table('Stake(s)', 'Status', 'Balance', 'Rewards')
+    total_balance = 0
+    total_rewards = 0
     for stake in stakes:
+        total_balance += int(stake.balance)
+        total_rewards += int(stake.rewards)
         table.add_row(
             stake.validator_address, stake.state, wei_to_eth(stake.balance), wei_to_eth(stake.rewards))
+    table.add_row(
+        "[b]Total[/b]", "[b]N/A[/b]", f"[b]{wei_to_eth(total_balance)}[/b]", f"[b]{wei_to_eth(total_rewards)}[/b]")
     console.print(table)
 
 
-@ eth.command("network-stats")
+@eth.command("network-stats")
 def ethereum_network_stats():
     """Show Ethereum Network Stats.
     """
