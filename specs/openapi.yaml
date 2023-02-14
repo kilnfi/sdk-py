@@ -28,7 +28,7 @@ paths:
         - ETH
       summary: Ethereum stakes
       description: Get the status of Ethereum stakes
-      operationId: getEthereumStakes
+      operationId: getEthStakes
       parameters:
       - $ref: '#/components/parameters/EthereumValidatorsParam'
       - $ref: '#/components/parameters/EthereumWalletsParam'
@@ -53,7 +53,7 @@ paths:
         - ETH
       summary: Rewards
       description: Get the rewards of Ethereum stakes
-      operationId: getEthereumRewards
+      operationId: getEthRewards
       parameters:
       - $ref: '#/components/parameters/EthereumValidatorsParam'
       - $ref: '#/components/parameters/EthereumWalletsParam'
@@ -78,7 +78,7 @@ paths:
         - ETH
       summary: Operations
       description: Get the operations of Ethereum stakes
-      operationId: getEthereumOperations
+      operationId: getEthOperations
       parameters:
       - $ref: '#/components/parameters/EthereumValidatorsParam'
       - $ref: '#/components/parameters/EthereumWalletsParam'
@@ -107,7 +107,7 @@ paths:
         - ETH
       summary: Network stats
       description: Get the network statistics of Ethereum staking
-      operationId: getEthereumNetworkStats
+      operationId: getEthNetworkStats
       responses:
         '200':
           description: successful operation
@@ -200,7 +200,7 @@ paths:
         - ETH
       summary: Report
       description: Generates a report sheet for the stakes
-      operationId: getEthereumReport
+      operationId: getEthReport
       parameters:
       - $ref: '#/components/parameters/EthereumValidatorsParam'
       - $ref: '#/components/parameters/EthereumWalletsParam'

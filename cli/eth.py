@@ -1,3 +1,15 @@
+"""Ethereum commands.
+
+This file contains multiple CLI commands showcasing how to use the
+KilnConnect SDK to interact with the Ethereum blockchain.
+
+Code here is voluntarily kept simple: it could be refactored with some
+levels of abstraction to avoid repetitions, but would imply readers to
+understand things unrelated to what their primary goal is: use the
+SDK. So let's keep it stupid simple so the integration work is
+simpler.
+"""
+
 import os
 import rich
 import typer
@@ -17,24 +29,15 @@ console = Console()
 
 
 @eth.command("network-stats")
-def network_stats(accounts: list[str] = None, wallets: list[str] = None, validators: list[str] = None):
+def ethereum_network_stats():
+    """Show Ethereum Network Stats.
     """
-    Show status of Ethereum stakes.
-    """
-
     host = os.getenv('KILN_API_URL')
     access_token = os.getenv('KILN_API_TOKEN')
-
     kc = kiln_connect.KilnConnect(host, access_token)
+    ns = kc.eth.get_eth_network_stats()
 
     table = Table('Network Gross APY %', 'Supply Staked %')
-
-    r = kc.eth.get_ethereum_network_stats()
-    if r.response.status == 200:
-        d = r.body.get('data')
-
-        network_gross_apy = str(round(d['network_gross_apy'], 3))
-        supply_staked_percent = str(round(d['supply_staked_percent'], 3))
-
-        table.add_row(str(network_gross_apy), str(supply_staked_percent))
-        console.print(table)
+    table.add_row(
+        str(ns.data.network_gross_apy), str(ns.data.supply_staked_percent))
+    console.print(table)
