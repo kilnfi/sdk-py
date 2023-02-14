@@ -38,72 +38,7 @@ class EthereumStake(
         
         class properties:
             validator_address = schemas.StrSchema
-            
-            
-            class state(
-                schemas.EnumBase,
-                schemas.StrSchema
-            ):
-            
-            
-                class MetaOapg:
-                    enum_value_to_name = {
-                        "unknown": "UNKNOWN",
-                        "unstaked": "UNSTAKED",
-                        "pending_initialized": "PENDING_INITIALIZED",
-                        "pending_queued": "PENDING_QUEUED",
-                        "active_ongoing": "ACTIVE_ONGOING",
-                        "active_exiting": "ACTIVE_EXITING",
-                        "actived_slashed": "ACTIVED_SLASHED",
-                        "exited_unslashed": "EXITED_UNSLASHED",
-                        "exited_slashed": "EXITED_SLASHED",
-                        "withdrawal_possible": "WITHDRAWAL_POSSIBLE",
-                        "withdrawal_done": "WITHDRAWAL_DONE",
-                    }
-                
-                @schemas.classproperty
-                def UNKNOWN(cls):
-                    return cls("unknown")
-                
-                @schemas.classproperty
-                def UNSTAKED(cls):
-                    return cls("unstaked")
-                
-                @schemas.classproperty
-                def PENDING_INITIALIZED(cls):
-                    return cls("pending_initialized")
-                
-                @schemas.classproperty
-                def PENDING_QUEUED(cls):
-                    return cls("pending_queued")
-                
-                @schemas.classproperty
-                def ACTIVE_ONGOING(cls):
-                    return cls("active_ongoing")
-                
-                @schemas.classproperty
-                def ACTIVE_EXITING(cls):
-                    return cls("active_exiting")
-                
-                @schemas.classproperty
-                def ACTIVED_SLASHED(cls):
-                    return cls("actived_slashed")
-                
-                @schemas.classproperty
-                def EXITED_UNSLASHED(cls):
-                    return cls("exited_unslashed")
-                
-                @schemas.classproperty
-                def EXITED_SLASHED(cls):
-                    return cls("exited_slashed")
-                
-                @schemas.classproperty
-                def WITHDRAWAL_POSSIBLE(cls):
-                    return cls("withdrawal_possible")
-                
-                @schemas.classproperty
-                def WITHDRAWAL_DONE(cls):
-                    return cls("withdrawal_done")
+            state = schemas.StrSchema
             
             
             class activated_at(
