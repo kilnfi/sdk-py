@@ -1,4 +1,4 @@
-# openapi_client.EthApi
+# Documentation for EthApi
 
 All URIs are relative to *https://api.testnet.kiln.fi*
 
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 
 # **get_eth_network_stats**
-> GetEthNetworkStats200Response get_eth_network_stats()
+> GetEthNetworkStats200Response kiln.eth.get_eth_network_stats()
 
 Network stats
 
@@ -23,7 +23,6 @@ Get the network statistics of Ethereum staking
 
 ### Example
 
-* Bearer Authentication (bearerAuth):
 ```python
 import kiln_connect
 import os
@@ -35,16 +34,13 @@ with kiln_connect.KilnConnect(api_url, api_token) as kiln:
     response = kiln.eth.get_eth_network_stats()
 ```
 
+
 ### Parameters
 This endpoint does not need any parameter.
 
 ### Return type
 
 [**GetEthNetworkStats200Response**](GetEthNetworkStats200Response.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -60,7 +56,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_eth_operations**
-> GetEthOperations200Response get_eth_operations(validators=validators, wallets=wallets, accounts=accounts)
+> GetEthOperations200Response kiln.eth.get_eth_operations(validators=validators, wallets=wallets, accounts=accounts)
 
 Operations
 
@@ -68,7 +64,6 @@ Get the operations of Ethereum stakes
 
 ### Example
 
-* Bearer Authentication (bearerAuth):
 ```python
 import kiln_connect
 import os
@@ -83,6 +78,7 @@ with kiln_connect.KilnConnect(api_url, api_token) as kiln:
     response = kiln.eth.get_eth_operations(validators=validators, wallets=wallets, accounts=accounts)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -94,10 +90,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetEthOperations200Response**](GetEthOperations200Response.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -112,7 +104,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_eth_report**
-> str get_eth_report(validators=validators, wallets=wallets, accounts=accounts)
+> str kiln.eth.get_eth_report(validators=validators, wallets=wallets, accounts=accounts)
 
 Report
 
@@ -120,7 +112,6 @@ Generates a report sheet for the stakes
 
 ### Example
 
-* Bearer Authentication (bearerAuth):
 ```python
 import kiln_connect
 import os
@@ -135,6 +126,7 @@ with kiln_connect.KilnConnect(api_url, api_token) as kiln:
     response = kiln.eth.get_eth_report(validators=validators, wallets=wallets, accounts=accounts)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -146,10 +138,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 **str**
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -165,7 +153,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_eth_rewards**
-> GetEthRewards200Response get_eth_rewards(validators=validators, wallets=wallets, accounts=accounts)
+> GetEthRewards200Response kiln.eth.get_eth_rewards(validators=validators, wallets=wallets, accounts=accounts)
 
 Rewards
 
@@ -173,7 +161,6 @@ Get the rewards of Ethereum stakes
 
 ### Example
 
-* Bearer Authentication (bearerAuth):
 ```python
 import kiln_connect
 import os
@@ -188,6 +175,7 @@ with kiln_connect.KilnConnect(api_url, api_token) as kiln:
     response = kiln.eth.get_eth_rewards(validators=validators, wallets=wallets, accounts=accounts)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -199,10 +187,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetEthRewards200Response**](GetEthRewards200Response.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -218,7 +202,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_eth_stake_transaction_status**
-> PostEthStakeTransaction201Response get_eth_stake_transaction_status(tx_hash)
+> PostEthStakeTransaction201Response kiln.eth.get_eth_stake_transaction_status(tx_hash)
 
 Transaction status
 
@@ -226,7 +210,6 @@ Get the status of an Ethereum transaction
 
 ### Example
 
-* Bearer Authentication (bearerAuth):
 ```python
 import kiln_connect
 import os
@@ -239,6 +222,7 @@ with kiln_connect.KilnConnect(api_url, api_token) as kiln:
     response = kiln.eth.get_eth_stake_transaction_status(tx_hash)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -248,10 +232,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PostEthStakeTransaction201Response**](PostEthStakeTransaction201Response.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -267,7 +247,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_eth_stakes**
-> GetEthStakes200Response get_eth_stakes(validators=validators, wallets=wallets, accounts=accounts)
+> GetEthStakes200Response kiln.eth.get_eth_stakes(validators=validators, wallets=wallets, accounts=accounts)
 
 Ethereum stakes
 
@@ -275,7 +255,6 @@ Get the status of Ethereum stakes
 
 ### Example
 
-* Bearer Authentication (bearerAuth):
 ```python
 import kiln_connect
 import os
@@ -290,6 +269,7 @@ with kiln_connect.KilnConnect(api_url, api_token) as kiln:
     response = kiln.eth.get_eth_stakes(validators=validators, wallets=wallets, accounts=accounts)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -301,10 +281,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetEthStakes200Response**](GetEthStakes200Response.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -320,7 +296,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_eth_stake_transaction**
-> PostEthStakeTransaction201Response post_eth_stake_transaction()
+> PostEthStakeTransaction201Response kiln.eth.post_eth_stake_transaction()
 
 Stake creation
 
@@ -328,7 +304,6 @@ Generates a stake transaction for Ethereum
 
 ### Example
 
-* Bearer Authentication (bearerAuth):
 ```python
 import kiln_connect
 import os
@@ -340,16 +315,13 @@ with kiln_connect.KilnConnect(api_url, api_token) as kiln:
     response = kiln.eth.post_eth_stake_transaction()
 ```
 
+
 ### Parameters
 This endpoint does not need any parameter.
 
 ### Return type
 
 [**PostEthStakeTransaction201Response**](PostEthStakeTransaction201Response.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -365,7 +337,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_eth_transaction_broadcast**
-> PostEthTransactionBroadcast201Response post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
+> PostEthTransactionBroadcast201Response kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
 
 Transaction broadcast
 
@@ -373,7 +345,6 @@ Broadcasts a transaction for Ethereum
 
 ### Example
 
-* Bearer Authentication (bearerAuth):
 ```python
 import kiln_connect
 import os
@@ -386,6 +357,7 @@ with kiln_connect.KilnConnect(api_url, api_token) as kiln:
     response = kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
 ```
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -395,10 +367,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PostEthTransactionBroadcast201Response**](PostEthTransactionBroadcast201Response.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

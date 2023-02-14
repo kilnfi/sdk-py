@@ -1,4 +1,4 @@
-# {{packageName}}.{{classname}}{{#description}}
+# Documentation for {{classname}}{{#description}}
 {{.}}{{/description}}
 
 All URIs are relative to *{{basePath}}*
@@ -11,7 +11,7 @@ Method | HTTP request | Description
 {{#operations}}
 {{#operation}}
 # **{{{operationId}}}**
-> {{#returnType}}{{{.}}} {{/returnType}}{{{operationId}}}({{#allParams}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}={{{paramName}}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}})
+> {{#returnType}}{{{.}}} {{/returnType}}kiln.{{tags.0.name}}.{{{operationId}}}({{#allParams}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}={{{paramName}}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}})
 
 {{{summary}}}{{#notes}}
 
@@ -19,28 +19,8 @@ Method | HTTP request | Description
 
 ### Example
 
-{{#hasAuthMethods}}
-{{#authMethods}}
-{{#isBasic}}
-{{#isBasicBasic}}
-* Basic Authentication ({{name}}):
-{{/isBasicBasic}}
-{{#isBasicBearer}}
-* Bearer{{#bearerFormat}} ({{{.}}}){{/bearerFormat}} Authentication ({{name}}):
-{{/isBasicBearer}}
-{{/isBasic}}
-{{#isApiKey}}
-* Api Key Authentication ({{name}}):
-{{/isApiKey }}
-{{#isOAuth}}
-* OAuth Authentication ({{name}}):
-{{/isOAuth }}
 {{> api_doc_example }}
-{{/authMethods}}
-{{/hasAuthMethods}}
-{{^hasAuthMethods}}
-{{> api_doc_example }}
-{{/hasAuthMethods}}
+
 ### Parameters
 {{^allParams}}This endpoint does not need any parameter.{{/allParams}}{{#allParams}}{{#-last}}
 Name | Type | Description  | Notes
@@ -51,10 +31,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 {{#returnType}}{{#returnTypeIsPrimitive}}**{{{returnType}}}**{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}[**{{{returnType}}}**]({{returnBaseType}}.md){{/returnTypeIsPrimitive}}{{/returnType}}{{^returnType}}void (empty response body){{/returnType}}
-
-### Authorization
-
-{{^authMethods}}No authorization required{{/authMethods}}{{#authMethods}}[{{{name}}}](../README.md#{{{name}}}){{^-last}}, {{/-last}}{{/authMethods}}
 
 ### HTTP request headers
 
