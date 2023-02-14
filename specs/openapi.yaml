@@ -380,7 +380,7 @@ components:
           type: string
           description: State of the Ethereum stake as seen be the consensus layer
           example: "active_ongoing"
-          enum: ["unknown", "unstaked", "pending_initialized", "pending_queued", "active_ongoing", "active_exiting", "actived_slashed", "exited_unslashed", "exited_slashed", "withdrawal_possible", "withdrawal_done"]
+          x-extensible-enum: ["unknown", "unstaked", "pending_initialized", "pending_queued", "active_ongoing", "active_exiting", "actived_slashed", "exited_unslashed", "exited_slashed", "withdrawal_possible", "withdrawal_done"]
         activated_at:
           type: string
           description: Date of activation on the Ethereum consensus layer

@@ -9,7 +9,7 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
 **validator_address** | str,  | str,  |  | [optional] 
-**state** | str,  | str,  | State of the Ethereum stake as seen be the consensus layer | [optional] must be one of ["unknown", "unstaked", "pending_initialized", "pending_queued", "active_ongoing", "active_exiting", "actived_slashed", "exited_unslashed", "exited_slashed", "withdrawal_possible", "withdrawal_done", ] 
+**state** | str,  | str,  | State of the Ethereum stake as seen be the consensus layer | [optional] 
 **activated_at** | None, str, datetime,  | NoneClass, str,  | Date of activation on the Ethereum consensus layer | [optional] value must conform to RFC-3339 date-time
 **activated_epoch** | None, decimal.Decimal, int,  | NoneClass, decimal.Decimal,  | Epoch of activation on the Ethereum consensus layer | [optional] 
 **delegated_block** | None, decimal.Decimal, int,  | NoneClass, decimal.Decimal,  | Block at which the corresponding staking transaction was executed | [optional] 
