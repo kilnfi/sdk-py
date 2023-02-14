@@ -13,23 +13,4 @@ Name | Type | Description | Notes
 **cl_apy** | **float** | Consensus annual percentage yield | [optional] 
 **el_apy** | **float** | Execution annual percentage yield | [optional] 
 
-## Example
-
-```python
-from kiln_connect.openapi_client.models.ethereum_reward import EthereumReward
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of EthereumReward from a JSON string
-ethereum_reward_instance = EthereumReward.from_json(json)
-# print the JSON string representation of the object
-print EthereumReward.to_json()
-
-# convert the object into a dict
-ethereum_reward_dict = ethereum_reward_instance.to_dict()
-# create an instance of EthereumReward from a dict
-ethereum_reward_form_dict = ethereum_reward.from_dict(ethereum_reward_dict)
-```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
 

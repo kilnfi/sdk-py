@@ -15,23 +15,4 @@ Name | Type | Description | Notes
 **withdrawal_credentials** | **str** | Withdrawal credentials of the deposit | [optional] 
 **amount** | **str** | Amount in WEI of the deposit transaction | [optional] 
 
-## Example
-
-```python
-from kiln_connect.openapi_client.models.ethereum_operation_deposit import EthereumOperationDeposit
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of EthereumOperationDeposit from a JSON string
-ethereum_operation_deposit_instance = EthereumOperationDeposit.from_json(json)
-# print the JSON string representation of the object
-print EthereumOperationDeposit.to_json()
-
-# convert the object into a dict
-ethereum_operation_deposit_dict = ethereum_operation_deposit_instance.to_dict()
-# create an instance of EthereumOperationDeposit from a dict
-ethereum_operation_deposit_form_dict = ethereum_operation_deposit.from_dict(ethereum_operation_deposit_dict)
-```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
 
