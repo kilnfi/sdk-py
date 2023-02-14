@@ -19,23 +19,4 @@ Name | Type | Description | Notes
 **rewards** | **str** | Sum of consensus and execution rewards in WEI earned by this stake | [optional] 
 **gross_apy** | **float** | Gross annual percentage yield | [optional] 
 
-## Example
-
-```python
-from kiln_connect.openapi_client.models.ethereum_stake import EthereumStake
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of EthereumStake from a JSON string
-ethereum_stake_instance = EthereumStake.from_json(json)
-# print the JSON string representation of the object
-print EthereumStake.to_json()
-
-# convert the object into a dict
-ethereum_stake_dict = ethereum_stake_instance.to_dict()
-# create an instance of EthereumStake from a dict
-ethereum_stake_form_dict = ethereum_stake.from_dict(ethereum_stake_dict)
-```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
 

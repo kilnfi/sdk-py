@@ -53,8 +53,7 @@ This endpoint does not need any parameter.
 **200** | successful operation |  -  |
 **400** | Invalid status value |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
+[[Back to top]](#)
 # **get_eth_operations**
 > GetEthOperations200Response kiln.eth.get_eth_operations(validators=validators, wallets=wallets, accounts=accounts)
 
@@ -101,8 +100,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
+[[Back to top]](#)
 # **get_eth_report**
 > str kiln.eth.get_eth_report(validators=validators, wallets=wallets, accounts=accounts)
 
@@ -150,8 +148,7 @@ Name | Type | Description  | Notes
 **200** | successful operation |  -  |
 **400** | Invalid status value |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
+[[Back to top]](#)
 # **get_eth_rewards**
 > GetEthRewards200Response kiln.eth.get_eth_rewards(validators=validators, wallets=wallets, accounts=accounts)
 
@@ -199,8 +196,7 @@ Name | Type | Description  | Notes
 **200** | successful operation |  -  |
 **400** | Invalid status value |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
+[[Back to top]](#)
 # **get_eth_stake_transaction_status**
 > PostEthStakeTransaction201Response kiln.eth.get_eth_stake_transaction_status(tx_hash)
 
@@ -244,8 +240,7 @@ Name | Type | Description  | Notes
 **200** | successful operation |  -  |
 **400** | Invalid status value |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
+[[Back to top]](#)
 # **get_eth_stakes**
 > GetEthStakes200Response kiln.eth.get_eth_stakes(validators=validators, wallets=wallets, accounts=accounts)
 
@@ -293,8 +288,7 @@ Name | Type | Description  | Notes
 **200** | successful operation |  -  |
 **400** | Invalid parameters |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
+[[Back to top]](#)
 # **post_eth_stake_transaction**
 > PostEthStakeTransaction201Response kiln.eth.post_eth_stake_transaction()
 
@@ -334,8 +328,7 @@ This endpoint does not need any parameter.
 **201** | successful operation |  -  |
 **400** | Invalid status value |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
+[[Back to top]](#)
 # **post_eth_transaction_broadcast**
 > PostEthTransactionBroadcast201Response kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
 
@@ -379,5 +372,4 @@ Name | Type | Description  | Notes
 **201** | successful operation |  -  |
 **400** | Invalid status value |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
+[[Back to top]](#)
