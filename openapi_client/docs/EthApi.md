@@ -1,6 +1,6 @@
 # openapi_client.EthApi
 
-All URIs are relative to *https://api.devnet.kiln.fi*
+All URIs are relative to *https://api.testnet.kiln.fi*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
