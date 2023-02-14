@@ -1,3 +1,8 @@
+# This makefile is meant to be used locally to rebuild the automatic
+# SDK from an OpenAPI spec. For now it's not fully CI-ed which is fine
+# considering we are at the early stages here and it may evolve in
+# many directions.
+
 TMP_DIR=/tmp/kiln-openapi
 TARGET_SDK=openapi_client
 
