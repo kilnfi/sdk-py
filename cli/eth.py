@@ -30,7 +30,14 @@ console = Console()
 error_console = Console(stderr=True)
 
 
-@eth.command("stakes")
+def wei_to_eth(wei: str) -> str:
+    """Quick helper to pretty print WEI to ETH.
+    """
+    eth = str(round(int(wei) / 1e18, 3))
+    return f"{eth}Ξ"
+
+
+@ eth.command("stakes")
 def ethereum_stakes(
         validators: Optional[list[str]] = None,
         wallets: Optional[list[str]] = None,
@@ -56,11 +63,11 @@ def ethereum_stakes(
     table = Table('Stake', 'Status', 'Balance', 'Rewards')
     for stake in stakes:
         table.add_row(
-            stake.validator_address, stake.state, stake.balance, stake.rewards)
+            stake.validator_address, stake.state, wei_to_eth(stake.balance), wei_to_eth(stake.rewards))
     console.print(table)
 
 
-@eth.command("network-stats")
+@ eth.command("network-stats")
 def ethereum_network_stats():
     """Show Ethereum Network Stats.
     """
