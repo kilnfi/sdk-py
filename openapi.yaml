@@ -1,7 +1,12 @@
 openapi: 3.0.3
 info:
   title: Kiln Connect
-  description:  This is Kiln Connect
+  description: |-
+    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.
+    
+    In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.
+    
+    Once you have your API token, you can set it as a bearer token in your request headers.
   termsOfService: https://kiln.fi/
   contact:
     email: contact@kiln.fi
@@ -21,7 +26,7 @@ paths:
     get:
       tags:
         - ETH
-      summary: Get Ethereum stakes
+      summary: Ethereum stakes
       description: Get the status of Ethereum stakes
       operationId: getEthereumStakes
       parameters:
@@ -30,10 +35,9 @@ paths:
       - $ref: '#/components/parameters/KilnAccountsParam'
       responses:
         '200':
-
           description: successful operation
           content:
-            application/json:
+            "application/json; charset=utf-8":
               schema:
                 type: object
                 properties:
@@ -47,7 +51,7 @@ paths:
     get:
       tags:
         - ETH
-      summary: Get Ethereum rewards
+      summary: Rewards
       description: Get the rewards of Ethereum stakes
       operationId: getEthereumRewards
       parameters:
@@ -58,7 +62,7 @@ paths:
         '200':
           description: successful operation
           content:
-            application/json:
+            "application/json; charset=utf-8":
               schema:
                 type: object
                 properties:
@@ -72,7 +76,7 @@ paths:
     get:
       tags:
         - ETH
-      summary: Get Ethereum operations
+      summary: Operations
       description: Get the operations of Ethereum stakes
       operationId: getEthereumOperations
       parameters:
@@ -83,7 +87,7 @@ paths:
         '200':
           description: successful operation
           content:
-            application/json:
+            "application/json; charset=utf-8":
               schema:
                 type: object
                 properties:
@@ -101,14 +105,14 @@ paths:
     get:
       tags:
         - ETH
-      summary: Get Ethereum network stats
+      summary: Network stats
       description: Get the network statistics of Ethereum staking
       operationId: getEthereumNetworkStats
       responses:
         '200':
           description: successful operation
           content:
-            application/json:
+            "application/json; charset=utf-8":
               schema:
                 type: object
                 properties:
@@ -116,11 +120,85 @@ paths:
                     $ref: '#/components/schemas/EthereumNetworkStats'
         '400':
           description: Invalid status value
+  /v1/eth/transaction/stake:
+    post:
+      tags:
+        - ETH
+      summary: Stake creation
+      description: Generates a stake transaction for Ethereum
+      operationId: postEthStakeTransaction
+      responses:
+        '201':
+          description: successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EthereumUnsignedStakeTx'
+        '400':
+          description: Invalid status value
+  /v1/eth/transaction/broadcast:
+    post:
+      tags:
+        - ETH
+      summary: Transaction broadcast
+      description: Broadcasts a transaction for Ethereum
+      operationId: postEthTransactionBroadcast
+      requestBody:
+        description: Transaction to broadcast
+        required: true
+        content:
+          "application/json; charset=utf-8":
+            schema:
+              $ref: '#/components/schemas/EthereumBroadcastTxQuery'
+      responses:
+        '201':
+          description: successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EthereumBroadcastTxResponse'
+        '400':
+          description: Invalid status value
+  /v1/eth/transaction/status:
+    get:
+      tags:
+        - ETH
+      summary: Transaction status
+      description: Get the status of an Ethereum transaction
+      operationId: getEthStakeTransactionStatus
+      parameters:
+      - name: tx_hash
+        in: query
+        description: Hash of the transaction
+        required: true
+        style: form
+        explode: false
+        schema:
+          type: string
+          example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EthereumUnsignedStakeTx'
+        '400':
+          description: Invalid status value
   /v1/eth/reports:
     get:
       tags:
         - ETH
-      summary: Get Ethereum report
+      summary: Report
       description: Generates a report sheet for the stakes
       operationId: getEthereumReport
       parameters:
@@ -152,7 +230,6 @@ components:
       required: false
       style: form
       explode: false
-      example: "0x95373bcf8e2c64e1c373a6e534c002f210adbcc84c5abda3b6306677e171430ae50781a51c9f579a47622e334dba2412,0xb2091fcb455b83cb83513d765ef06bd9bc3e55b92eec416374f299c0a39d3387bf1b6bb8756ca003c6d1685eaa8aab96"
       schema:
         type: array
         items:
@@ -165,7 +242,6 @@ components:
       required: false
       style: form
       explode: false
-      example: "0xe1f4acc0affB36a805474e3b6ab786738C6900A2,0x41bF25fC8C52d292bD66D3BCEcd8a919ecB9EF88"
       schema:
         type: array
         items:
@@ -178,7 +254,6 @@ components:
       required: false
       style: form
       explode: false
-      example: "b7177fd2-fbb3-479f-aa92-db9fb16e229f,1ad625a7-6911-465c-b973-e788ea86c848"
       schema:
         type: array
         items:
@@ -414,5 +489,27 @@ components:
           type: number
           description: Supply of Ethereum currently staked
           example: 12.4
+    EthereumUnsignedStakeTx:
+      type: object
+      properties:
+        unsigned_tx_hash:
+          type: string
+          description: Hash of the unsigned transaction
+        unsigned_tx_serialized:
+          type: string
+          description: Serialized transaction
+    EthereumBroadcastTxQuery:
+      type: object
+      properties:
+        serialized_tx:
+          type: string
+          description: Serialized transaction
+    EthereumBroadcastTxResponse:
+      type: object
+      properties:
+        tx_hash:
+          type: string
+          description: Hash of the transaction once broadcasted
 security:
-  - bearerAuth: []  
+  - bearerAuth: []
+
