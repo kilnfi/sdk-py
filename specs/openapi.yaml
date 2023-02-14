@@ -19,13 +19,13 @@ servers:
   - url: https://api.testnet.kiln.fi
   - url: https://api.kiln.fi
 tags:
-  - name: ETH
+  - name: eth
     description: Staking facilities for the Ethereum protocol
 paths:
   /v1/eth/stakes:
     get:
       tags:
-        - ETH
+        - eth
       summary: Ethereum stakes
       description: Get the status of Ethereum stakes
       operationId: getEthStakes
@@ -50,7 +50,7 @@ paths:
   /v1/eth/rewards:
     get:
       tags:
-        - ETH
+        - eth
       summary: Rewards
       description: Get the rewards of Ethereum stakes
       operationId: getEthRewards
@@ -75,7 +75,7 @@ paths:
   /v1/eth/operations:
     get:
       tags:
-        - ETH
+        - eth
       summary: Operations
       description: Get the operations of Ethereum stakes
       operationId: getEthOperations
@@ -104,7 +104,7 @@ paths:
   /v1/eth/network-stats:
     get:
       tags:
-        - ETH
+        - eth
       summary: Network stats
       description: Get the network statistics of Ethereum staking
       operationId: getEthNetworkStats
@@ -123,7 +123,7 @@ paths:
   /v1/eth/transaction/stake:
     post:
       tags:
-        - ETH
+        - eth
       summary: Stake creation
       description: Generates a stake transaction for Ethereum
       operationId: postEthStakeTransaction
@@ -142,7 +142,7 @@ paths:
   /v1/eth/transaction/broadcast:
     post:
       tags:
-        - ETH
+        - eth
       summary: Transaction broadcast
       description: Broadcasts a transaction for Ethereum
       operationId: postEthTransactionBroadcast
@@ -168,7 +168,7 @@ paths:
   /v1/eth/transaction/status:
     get:
       tags:
-        - ETH
+        - eth
       summary: Transaction status
       description: Get the status of an Ethereum transaction
       operationId: getEthStakeTransactionStatus
@@ -197,7 +197,7 @@ paths:
   /v1/eth/reports:
     get:
       tags:
-        - ETH
+        - eth
       summary: Report
       description: Generates a report sheet for the stakes
       operationId: getEthReport

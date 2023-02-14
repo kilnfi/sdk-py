@@ -16,15 +16,15 @@ from __future__ import absolute_import
 import unittest
 
 import openapi_client
-from openapi_client.api.eth_api import ETHApi  # noqa: E501
+from openapi_client.api.eth_api import EthApi  # noqa: E501
 from openapi_client.rest import ApiException
 
 
-class TestETHApi(unittest.TestCase):
-    """ETHApi unit test stubs"""
+class TestEthApi(unittest.TestCase):
+    """EthApi unit test stubs"""
 
     def setUp(self):
-        self.api = openapi_client.api.eth_api.ETHApi()  # noqa: E501
+        self.api = openapi_client.api.eth_api.EthApi()  # noqa: E501
 
     def tearDown(self):
         pass

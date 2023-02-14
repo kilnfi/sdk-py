@@ -18,7 +18,7 @@ from __future__ import absolute_import
 __version__ = "1.0.0"
 
 # import apis into sdk package
-from openapi_client.api.eth_api import ETHApi
+from openapi_client.api.eth_api import EthApi
 
 # import ApiClient
 from openapi_client.api_client import ApiClient
