@@ -1,5 +1,5 @@
 from openapi_client import ApiClient, Configuration
-from openapi_client.apis.tags import eth_api
+from openapi_client.api import eth_api
 
 
 class KilnConnect:
