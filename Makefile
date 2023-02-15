@@ -21,5 +21,6 @@ kiln_connect:
 
 	rm -rf $(TARGET_SDK)
 	cp -R $(TMP_DIR)/kiln_connect/openapi_client $(TARGET_SDK)
+	mv ${TARGET_SDK}/docs docs
 
 .PHONY: kiln_connect
