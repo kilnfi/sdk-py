@@ -445,9 +445,8 @@ components:
     EthereumReward:
       type: object
       properties:
-        time:
+        date:
           type: string
-          format: date
           description: Day for this reward entry
           example: "2023-01-15"
         consensus_rewards:
@@ -477,7 +476,7 @@ components:
         el_apy:
           type: number
           description: Execution annual percentage yield
-          example: 0
+          example: 0.0
     EthereumNetworkStats:
       type: object
       properties:

@@ -1,2 +1,3 @@
 projectName: KilnApi
 generateSourceCodeOnly: true
+floatStrictType: false

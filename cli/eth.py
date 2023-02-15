@@ -30,7 +30,7 @@ console = Console()
 error_console = Console(stderr=True)
 
 
-def wei_to_eth(wei: str) -> str:
+def pretty_wei_to_eth(wei: str) -> str:
     """Quick helper to pretty print WEI to ETH.
     """
     eth = str(round(int(wei) / 1e18, 3))
@@ -38,38 +38,46 @@ def wei_to_eth(wei: str) -> str:
 
 
 @eth.command("stakes")
-def ethereum_stakes(
-        validators: Optional[list[str]] = None,
-        wallets: Optional[list[str]] = None,
-        accounts: Optional[list[str]] = None):
+def ethereum_stakes(validators: list[str]):
     """Show Ethereum Stake status.
     """
-    if not validators and not wallets and not accounts:
-        raise typer.BadParameter(
-            'need at least one of --validators, --wallets, --accounts')
-
     host = os.getenv('KILN_API_URL')
     access_token = os.getenv('KILN_API_TOKEN')
     kc = kiln_connect.KilnConnect(host, access_token)
 
-    stakes = []
-    if validators:
-        stakes.extend(kc.eth.get_eth_stakes(validators=validators).data)
-    if wallets:
-        stakes.extend(kc.eth.get_eth_stakes(wallets=wallets).data)
-    if accounts:
-        stakes.extend(kc.eth.get_eth_stakes(accounts=accounts).data)
+    stakes = kc.eth.get_eth_stakes(validators=validators).data
 
     table = Table('Stake(s)', 'Status', 'Balance', 'Rewards')
-    total_balance = 0
-    total_rewards = 0
     for stake in stakes:
-        total_balance += int(stake.balance)
-        total_rewards += int(stake.rewards)
         table.add_row(
-            stake.validator_address, stake.state, wei_to_eth(stake.balance), wei_to_eth(stake.rewards))
-    table.add_row(
-        "[b]Total[/b]", "[b]N/A[/b]", f"[b]{wei_to_eth(total_balance)}[/b]", f"[b]{wei_to_eth(total_rewards)}[/b]")
+            stake.validator_address,
+            stake.state,
+            pretty_wei_to_eth(stake.balance),
+            pretty_wei_to_eth(stake.rewards))
+
+    console.print(table)
+
+
+@eth.command("rewards")
+def ethereum_rewards(validators: list[str]):
+    """Show Ethereum rewards.
+    """
+    host = os.getenv('KILN_API_URL')
+    access_token = os.getenv('KILN_API_TOKEN')
+    kc = kiln_connect.KilnConnect(host, access_token)
+
+    rewards = kc.eth.get_eth_rewards(validators=validators).data
+
+    table = Table(
+        'Time', 'Stake Balance', 'Consensus', 'Execution', 'Rewards', 'Gross APY')
+    for reward in rewards:
+        table.add_row(
+            str(reward.var_date),
+            pretty_wei_to_eth(reward.stake_balance),
+            pretty_wei_to_eth(reward.consensus_rewards),
+            pretty_wei_to_eth(reward.execution_rewards),
+            pretty_wei_to_eth(reward.rewards),
+            str(round(reward.gross_apy, 3)))
     console.print(table)
 
 
@@ -84,5 +92,6 @@ def ethereum_network_stats():
 
     table = Table('Network Gross APY %', 'Supply Staked %')
     table.add_row(
-        str(ns.data.network_gross_apy), str(ns.data.supply_staked_percent))
+        str(round(ns.data.network_gross_apy, 3)),
+        str(round(ns.data.supply_staked_percent, 3)))
     console.print(table)
