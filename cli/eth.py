@@ -19,7 +19,7 @@ from rich.console import Console
 from rich.table import Table
 from typing import Optional
 
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 
 
 eth = typer.Typer(
@@ -41,10 +41,7 @@ def pretty_wei_to_eth(wei: str) -> str:
 def ethereum_stakes(validators: list[str]):
     """Show Ethereum Stake status.
     """
-    host = os.getenv('KILN_API_URL')
-    access_token = os.getenv('KILN_API_TOKEN')
-
-    with kiln_connect.KilnConnect(host, access_token) as kc:
+    with KilnConnect(KilnConfig.from_env()) as kc:
         stakes = kc.eth.get_eth_stakes(validators=validators).data
 
         table = Table('Stake(s)', 'Status', 'Balance', 'Rewards')
@@ -62,10 +59,7 @@ def ethereum_stakes(validators: list[str]):
 def ethereum_rewards(validators: list[str]):
     """Show Ethereum rewards.
     """
-    host = os.getenv('KILN_API_URL')
-    access_token = os.getenv('KILN_API_TOKEN')
-
-    with kiln_connect.KilnConnect(host, access_token) as kc:
+    with KilnConnect(KilnConfig.from_env()) as kc:
         rewards = kc.eth.get_eth_rewards(validators=validators).data
 
         table = Table(
@@ -86,10 +80,7 @@ def ethereum_rewards(validators: list[str]):
 def ethereum_network_stats():
     """Show Ethereum Network Stats.
     """
-    host = os.getenv('KILN_API_URL')
-    access_token = os.getenv('KILN_API_TOKEN')
-
-    with kiln_connect.KilnConnect(host, access_token) as kc:
+    with KilnConnect(KilnConfig.from_env()) as kc:
         ns = kc.eth.get_eth_network_stats()
 
         table = Table('Network Gross APY %', 'Supply Staked %')

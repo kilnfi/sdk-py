@@ -1,1 +1,1 @@
-from .kiln_connect import KilnConnect
+from .kiln_connect import KilnConfig, KilnConnect

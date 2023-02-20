@@ -24,13 +24,10 @@ Get the network statistics of Ethereum staking
 ### Example
 
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     response = kiln.eth.get_eth_network_stats()
 ```
 
@@ -64,13 +61,10 @@ Get the operations of Ethereum stakes
 ### Example
 
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
@@ -111,13 +105,10 @@ Generates a report sheet for the stakes
 ### Example
 
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
@@ -159,13 +150,10 @@ Get the rewards of Ethereum stakes
 ### Example
 
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
@@ -207,13 +195,10 @@ Get the status of an Ethereum transaction
 ### Example
 
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     tx_hash = '0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94' # str | Hash of the transaction
     response = kiln.eth.get_eth_stake_transaction_status(tx_hash)
 ```
@@ -251,13 +236,10 @@ Get the status of Ethereum stakes
 ### Example
 
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
@@ -299,13 +281,10 @@ Generates a stake transaction for Ethereum
 ### Example
 
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     response = kiln.eth.post_eth_stake_transaction()
 ```
 
@@ -339,13 +318,10 @@ Broadcasts a transaction for Ethereum
 ### Example
 
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     ethereum_broadcast_tx_query = kiln_connect.openapi_client.EthereumBroadcastTxQuery() # EthereumBroadcastTxQuery | Transaction to broadcast
     response = kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
 ```

@@ -1,11 +1,8 @@
 ```python
-import kiln_connect
+from kiln_connect import KilnConfig, KilnConnect
 import os
 
-api_url = os.getenv('KILN_API_URL')
-api_token = os.getenv('KILN_API_TOKEN')
-
-with kiln_connect.KilnConnect(api_url, api_token) as kiln:
+with KilnConnect(KilnConfig.from_env()) as kiln:
     {{#allParams}}
     {{paramName}} = {{{example}}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
     {{/allParams}}
