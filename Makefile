@@ -6,21 +6,30 @@
 LOCAL_IMAGE=openapi-generator
 TMP_DIR=tmp/kiln-openapi
 TARGET_SDK=kiln_connect/openapi_client
+SPEC_SOURCE=https://docs.api.devnet.kiln.fi/openapi.public.yaml
 
 all:
 
 regenerate: kiln_connect
 
-kiln_connect:
+specs/openapi.yaml:
+	wget $(SPEC_SOURCE) -O $@
+
+clean_specs:
+	rm -f specs/openapi.yaml
+
+kiln_connect: specs/openapi.yaml
 	# Need sudo here as docker may output as root.
 	sudo rm -rf $(TMP_DIR) && mkdir -p $(TMP_DIR)
 
 	docker run --rm -v "${PWD}:/local" ${LOCAL_IMAGE} generate \
 	    -c /local/specs/generator.yaml -t /local/specs/templates --package-name kiln_connect.openapi_client \
-	    -i https://docs.api.devnet.kiln.fi/openapi.public.yaml -g python-nextgen -o /local/${TMP_DIR}
+	    -i /local/specs/openapi.yaml -g python-nextgen -o /local/${TMP_DIR}
 
 	rm -rf $(TARGET_SDK)
 	cp -R $(TMP_DIR)/kiln_connect/openapi_client $(TARGET_SDK)
 	mv ${TARGET_SDK}/docs/* docs
 
-.PHONY: kiln_connect
+upgrade: clean_specs kiln_connect
+
+.PHONY: kiln_connect clean_specs
