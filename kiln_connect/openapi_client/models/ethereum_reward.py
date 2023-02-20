@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Kiln Connect
+    Kiln API
 
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
 

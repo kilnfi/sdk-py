@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Kiln Connect
+    Kiln API
 
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
 
@@ -60,28 +60,28 @@ class TestEthApi(unittest.TestCase):
     def test_get_eth_stake_transaction_status(self):
         """Test case for get_eth_stake_transaction_status
 
-        Transaction status  # noqa: E501
+        TX status  # noqa: E501
         """
         pass
 
     def test_get_eth_stakes(self):
         """Test case for get_eth_stakes
 
-        Ethereum stakes  # noqa: E501
+        Stakes  # noqa: E501
         """
         pass
 
     def test_post_eth_stake_transaction(self):
         """Test case for post_eth_stake_transaction
 
-        Stake creation  # noqa: E501
+        TX Craft  # noqa: E501
         """
         pass
 
     def test_post_eth_transaction_broadcast(self):
         """Test case for post_eth_transaction_broadcast
 
-        Transaction broadcast  # noqa: E501
+        TX Broadcast  # noqa: E501
         """
         pass
 

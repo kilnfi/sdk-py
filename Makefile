@@ -17,10 +17,10 @@ kiln_connect:
 
 	docker run --rm -v "${PWD}:/local" ${LOCAL_IMAGE} generate \
 	    -c /local/specs/generator.yaml -t /local/specs/templates --package-name kiln_connect.openapi_client \
-	    -i /local/specs/openapi.yaml -g python-nextgen -o /local/${TMP_DIR}
+	    -i https://docs.api.devnet.kiln.fi/openapi.public.yaml -g python-nextgen -o /local/${TMP_DIR}
 
 	rm -rf $(TARGET_SDK)
 	cp -R $(TMP_DIR)/kiln_connect/openapi_client $(TARGET_SDK)
-	mv ${TARGET_SDK}/docs docs
+	mv ${TARGET_SDK}/docs/* docs
 
 .PHONY: kiln_connect

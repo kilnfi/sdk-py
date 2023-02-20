@@ -8,10 +8,10 @@ Method | HTTP request | Description
 [**get_eth_operations**](EthApi.md#get_eth_operations) | **GET** /v1/eth/operations | Operations
 [**get_eth_report**](EthApi.md#get_eth_report) | **GET** /v1/eth/reports | Report
 [**get_eth_rewards**](EthApi.md#get_eth_rewards) | **GET** /v1/eth/rewards | Rewards
-[**get_eth_stake_transaction_status**](EthApi.md#get_eth_stake_transaction_status) | **GET** /v1/eth/transaction/status | Transaction status
-[**get_eth_stakes**](EthApi.md#get_eth_stakes) | **GET** /v1/eth/stakes | Ethereum stakes
-[**post_eth_stake_transaction**](EthApi.md#post_eth_stake_transaction) | **POST** /v1/eth/transaction/stake | Stake creation
-[**post_eth_transaction_broadcast**](EthApi.md#post_eth_transaction_broadcast) | **POST** /v1/eth/transaction/broadcast | Transaction broadcast
+[**get_eth_stake_transaction_status**](EthApi.md#get_eth_stake_transaction_status) | **GET** /v1/eth/transaction/status | TX status
+[**get_eth_stakes**](EthApi.md#get_eth_stakes) | **GET** /v1/eth/stakes | Stakes
+[**post_eth_stake_transaction**](EthApi.md#post_eth_stake_transaction) | **POST** /v1/eth/transaction/stake | TX Craft
+[**post_eth_transaction_broadcast**](EthApi.md#post_eth_transaction_broadcast) | **POST** /v1/eth/transaction/broadcast | TX Broadcast
 
 
 # **get_eth_network_stats**
@@ -200,7 +200,7 @@ Name | Type | Description  | Notes
 # **get_eth_stake_transaction_status**
 > PostEthStakeTransaction201Response kiln.eth.get_eth_stake_transaction_status(tx_hash)
 
-Transaction status
+TX status
 
 Get the status of an Ethereum transaction
 
@@ -244,7 +244,7 @@ Name | Type | Description  | Notes
 # **get_eth_stakes**
 > GetEthStakes200Response kiln.eth.get_eth_stakes(validators=validators, wallets=wallets, accounts=accounts)
 
-Ethereum stakes
+Stakes
 
 Get the status of Ethereum stakes
 
@@ -292,7 +292,7 @@ Name | Type | Description  | Notes
 # **post_eth_stake_transaction**
 > PostEthStakeTransaction201Response kiln.eth.post_eth_stake_transaction()
 
-Stake creation
+TX Craft
 
 Generates a stake transaction for Ethereum
 
@@ -332,7 +332,7 @@ This endpoint does not need any parameter.
 # **post_eth_transaction_broadcast**
 > PostEthTransactionBroadcast201Response kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
 
-Transaction broadcast
+TX Broadcast
 
 Broadcasts a transaction for Ethereum
 

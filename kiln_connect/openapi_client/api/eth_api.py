@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Kiln Connect
+    Kiln API
 
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
 
@@ -670,7 +670,7 @@ class EthApi(object):
 
     @validate_arguments
     def get_eth_stake_transaction_status(self, tx_hash : Annotated[StrictStr, Field(..., description="Hash of the transaction")], **kwargs) -> PostEthStakeTransaction201Response:  # noqa: E501
-        """Transaction status  # noqa: E501
+        """TX status  # noqa: E501
 
         Get the status of an Ethereum transaction  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -701,7 +701,7 @@ class EthApi(object):
 
     @validate_arguments
     def get_eth_stake_transaction_status_with_http_info(self, tx_hash : Annotated[StrictStr, Field(..., description="Hash of the transaction")], **kwargs):  # noqa: E501
-        """Transaction status  # noqa: E501
+        """TX status  # noqa: E501
 
         Get the status of an Ethereum transaction  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -814,7 +814,7 @@ class EthApi(object):
 
     @validate_arguments
     def get_eth_stakes(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> GetEthStakes200Response:  # noqa: E501
-        """Ethereum stakes  # noqa: E501
+        """Stakes  # noqa: E501
 
         Get the status of Ethereum stakes  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -849,7 +849,7 @@ class EthApi(object):
 
     @validate_arguments
     def get_eth_stakes_with_http_info(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
-        """Ethereum stakes  # noqa: E501
+        """Stakes  # noqa: E501
 
         Get the status of Ethereum stakes  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -975,7 +975,7 @@ class EthApi(object):
 
     @validate_arguments
     def post_eth_stake_transaction(self, **kwargs) -> PostEthStakeTransaction201Response:  # noqa: E501
-        """Stake creation  # noqa: E501
+        """TX Craft  # noqa: E501
 
         Generates a stake transaction for Ethereum  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -1004,7 +1004,7 @@ class EthApi(object):
 
     @validate_arguments
     def post_eth_stake_transaction_with_http_info(self, **kwargs):  # noqa: E501
-        """Stake creation  # noqa: E501
+        """TX Craft  # noqa: E501
 
         Generates a stake transaction for Ethereum  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -1112,7 +1112,7 @@ class EthApi(object):
 
     @validate_arguments
     def post_eth_transaction_broadcast(self, ethereum_broadcast_tx_query : Annotated[EthereumBroadcastTxQuery, Field(..., description="Transaction to broadcast")], **kwargs) -> PostEthTransactionBroadcast201Response:  # noqa: E501
-        """Transaction broadcast  # noqa: E501
+        """TX Broadcast  # noqa: E501
 
         Broadcasts a transaction for Ethereum  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -1143,7 +1143,7 @@ class EthApi(object):
 
     @validate_arguments
     def post_eth_transaction_broadcast_with_http_info(self, ethereum_broadcast_tx_query : Annotated[EthereumBroadcastTxQuery, Field(..., description="Transaction to broadcast")], **kwargs):  # noqa: E501
-        """Transaction broadcast  # noqa: E501
+        """TX Broadcast  # noqa: E501
 
         Broadcasts a transaction for Ethereum  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
