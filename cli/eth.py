@@ -43,19 +43,19 @@ def ethereum_stakes(validators: list[str]):
     """
     host = os.getenv('KILN_API_URL')
     access_token = os.getenv('KILN_API_TOKEN')
-    kc = kiln_connect.KilnConnect(host, access_token)
 
-    stakes = kc.eth.get_eth_stakes(validators=validators).data
+    with kiln_connect.KilnConnect(host, access_token) as kc:
+        stakes = kc.eth.get_eth_stakes(validators=validators).data
 
-    table = Table('Stake(s)', 'Status', 'Balance', 'Rewards')
-    for stake in stakes:
-        table.add_row(
-            stake.validator_address,
-            stake.state,
-            pretty_wei_to_eth(stake.balance),
-            pretty_wei_to_eth(stake.rewards))
+        table = Table('Stake(s)', 'Status', 'Balance', 'Rewards')
+        for stake in stakes:
+            table.add_row(
+                stake.validator_address,
+                stake.state,
+                pretty_wei_to_eth(stake.balance),
+                pretty_wei_to_eth(stake.rewards))
 
-    console.print(table)
+        console.print(table)
 
 
 @eth.command("rewards")
@@ -64,21 +64,22 @@ def ethereum_rewards(validators: list[str]):
     """
     host = os.getenv('KILN_API_URL')
     access_token = os.getenv('KILN_API_TOKEN')
-    kc = kiln_connect.KilnConnect(host, access_token)
 
-    rewards = kc.eth.get_eth_rewards(validators=validators).data
+    with kiln_connect.KilnConnect(host, access_token) as kc:
+        rewards = kc.eth.get_eth_rewards(validators=validators).data
 
-    table = Table(
-        'Time', 'Stake Balance', 'Consensus', 'Execution', 'Rewards', 'Gross APY')
-    for reward in rewards:
-        table.add_row(
-            str(reward.var_date),
-            pretty_wei_to_eth(reward.stake_balance),
-            pretty_wei_to_eth(reward.consensus_rewards),
-            pretty_wei_to_eth(reward.execution_rewards),
-            pretty_wei_to_eth(reward.rewards),
-            str(round(reward.gross_apy, 3)))
-    console.print(table)
+        table = Table(
+            'Time', 'Stake Balance', 'Consensus', 'Execution', 'Rewards', 'Gross APY')
+        for reward in rewards:
+            table.add_row(
+                str(reward.var_date),
+                pretty_wei_to_eth(reward.stake_balance),
+                pretty_wei_to_eth(reward.consensus_rewards),
+                pretty_wei_to_eth(reward.execution_rewards),
+                pretty_wei_to_eth(reward.rewards),
+                str(round(reward.gross_apy, 3)))
+
+        console.print(table)
 
 
 @eth.command("network-stats")
@@ -87,11 +88,13 @@ def ethereum_network_stats():
     """
     host = os.getenv('KILN_API_URL')
     access_token = os.getenv('KILN_API_TOKEN')
-    kc = kiln_connect.KilnConnect(host, access_token)
-    ns = kc.eth.get_eth_network_stats()
 
-    table = Table('Network Gross APY %', 'Supply Staked %')
-    table.add_row(
-        str(round(ns.data.network_gross_apy, 3)),
-        str(round(ns.data.supply_staked_percent, 3)))
-    console.print(table)
+    with kiln_connect.KilnConnect(host, access_token) as kc:
+        ns = kc.eth.get_eth_network_stats()
+
+        table = Table('Network Gross APY %', 'Supply Staked %')
+        table.add_row(
+            str(round(ns.data.network_gross_apy, 3)),
+            str(round(ns.data.supply_staked_percent, 3)))
+
+        console.print(table)

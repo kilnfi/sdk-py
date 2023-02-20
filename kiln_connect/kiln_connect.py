@@ -16,7 +16,7 @@ class KilnConnect:
 
         self.eth = eth_api.EthApi(self._api)
 
-    def __enter(self):
+    def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):

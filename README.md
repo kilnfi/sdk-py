@@ -26,8 +26,8 @@ import os
 
 host = os.getenv('KILN_API_URL')
 access_token = os.getenv('KILN_API_TOKEN')
-kc = kiln_connect.KilnConnect(host, access_token)
-network_stats = kc.eth.get_eth_network_stats()
+with kiln_connect.KilnConnect(host, access_token) as kc:
+  network_stats = kc.eth.get_eth_network_stats()
 ```
 
 Detailed documentation about available operations can be found here:
