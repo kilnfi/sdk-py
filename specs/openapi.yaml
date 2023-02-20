@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   x-logo:
-    url: logo-public.svg
-  title: Kiln API
+    url: logo-specs.png
+  title: Kiln API Specifications
   description: |-
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.
     
@@ -17,9 +17,9 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
+  - url: https://api.devnet.kiln.fi
   - url: https://api.testnet.kiln.fi
   - url: https://api.mainnet.kiln.fi
-  - url: https://api.devnet.kiln.fi
 tags:
   - name: eth
     description: Staking facilities for the Ethereum protocol
@@ -129,6 +129,13 @@ paths:
       summary: TX Craft
       description: Generates a stake transaction for Ethereum
       operationId: postEthStakeTransaction
+      requestBody:
+        description: Transaction to craft
+        required: true
+        content:
+          "application/json; charset=utf-8":
+            schema:
+              $ref: '#/components/schemas/EthereumCraftTxQuery'
       responses:
         '201':
           description: successful operation
@@ -496,21 +503,41 @@ components:
         unsigned_tx_hash:
           type: string
           description: Hash of the unsigned transaction
+          example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
         unsigned_tx_serialized:
           type: string
           description: Serialized transaction
+          example: "0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc"
     EthereumBroadcastTxQuery:
       type: object
       properties:
         serialized_tx:
           type: string
           description: Serialized transaction
+          example: "0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc"
     EthereumBroadcastTxResponse:
       type: object
       properties:
         tx_hash:
           type: string
           description: Hash of the transaction once broadcasted
+          example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
+    EthereumCraftTxQuery:
+      type: object
+      properties:
+        account_id:
+          type: string
+          example: "b7177fd2-fbb3-479f-aa92-db9fb16e229f"
+          format: uuid
+          description: Kiln Account ID to stake into
+        wallet:
+          type: string
+          example: "0xe1f4acc0affB36a805474e3b6ab786738C6900A2"
+          description: Wallet to stake from and be used as a withdrawal credentials in the deposit. Losing access to this wallet will result in losing the stake.
+        amount_wei:
+          type: string
+          example: "32000000000000000000"
+          description: Amount to stake in WEI (must be a multiple of "32000000000000000000")
 security:
   - bearerAuth: []
 

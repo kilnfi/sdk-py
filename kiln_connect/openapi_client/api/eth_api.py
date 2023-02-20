@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Kiln API
+    Kiln API Specifications
 
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
 
@@ -23,6 +23,7 @@ from pydantic import Field, StrictStr
 from typing import List, Optional
 
 from kiln_connect.openapi_client.models.ethereum_broadcast_tx_query import EthereumBroadcastTxQuery
+from kiln_connect.openapi_client.models.ethereum_craft_tx_query import EthereumCraftTxQuery
 from kiln_connect.openapi_client.models.get_eth_network_stats200_response import GetEthNetworkStats200Response
 from kiln_connect.openapi_client.models.get_eth_operations200_response import GetEthOperations200Response
 from kiln_connect.openapi_client.models.get_eth_rewards200_response import GetEthRewards200Response
@@ -974,16 +975,18 @@ class EthApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def post_eth_stake_transaction(self, **kwargs) -> PostEthStakeTransaction201Response:  # noqa: E501
+    def post_eth_stake_transaction(self, ethereum_craft_tx_query : Annotated[EthereumCraftTxQuery, Field(..., description="Transaction to craft")], **kwargs) -> PostEthStakeTransaction201Response:  # noqa: E501
         """TX Craft  # noqa: E501
 
         Generates a stake transaction for Ethereum  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_eth_stake_transaction(async_req=True)
+        >>> thread = api.post_eth_stake_transaction(ethereum_craft_tx_query, async_req=True)
         >>> result = thread.get()
 
+        :param ethereum_craft_tx_query: Transaction to craft (required)
+        :type ethereum_craft_tx_query: EthereumCraftTxQuery
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1000,19 +1003,21 @@ class EthApi(object):
         :rtype: PostEthStakeTransaction201Response
         """
         kwargs['_return_http_data_only'] = True
-        return self.post_eth_stake_transaction_with_http_info(**kwargs)  # noqa: E501
+        return self.post_eth_stake_transaction_with_http_info(ethereum_craft_tx_query, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def post_eth_stake_transaction_with_http_info(self, **kwargs):  # noqa: E501
+    def post_eth_stake_transaction_with_http_info(self, ethereum_craft_tx_query : Annotated[EthereumCraftTxQuery, Field(..., description="Transaction to craft")], **kwargs):  # noqa: E501
         """TX Craft  # noqa: E501
 
         Generates a stake transaction for Ethereum  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_eth_stake_transaction_with_http_info(async_req=True)
+        >>> thread = api.post_eth_stake_transaction_with_http_info(ethereum_craft_tx_query, async_req=True)
         >>> result = thread.get()
 
+        :param ethereum_craft_tx_query: Transaction to craft (required)
+        :type ethereum_craft_tx_query: EthereumCraftTxQuery
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _return_http_data_only: response data without head status code
@@ -1040,6 +1045,7 @@ class EthApi(object):
         _params = locals()
 
         _all_params = [
+            'ethereum_craft_tx_query'
         ]
         _all_params.extend(
             [
@@ -1080,10 +1086,19 @@ class EthApi(object):
 
         # process the body parameter
         _body_params = None
+        if _params['ethereum_craft_tx_query']:
+            _body_params = _params['ethereum_craft_tx_query']
 
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json; charset=utf-8'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json; charset=utf-8']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
         _auth_settings = ['bearerAuth']  # noqa: E501

@@ -1,6 +1,6 @@
 # Documentation for EthApi
 
-All URIs are relative to *https://api.testnet.kiln.fi*
+All URIs are relative to *https://api.devnet.kiln.fi*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -24,10 +24,10 @@ Get the network statistics of Ethereum staking
 ### Example
 
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     response = kiln.eth.get_eth_network_stats()
 ```
 
@@ -61,10 +61,10 @@ Get the operations of Ethereum stakes
 ### Example
 
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
@@ -105,10 +105,10 @@ Generates a report sheet for the stakes
 ### Example
 
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
@@ -150,10 +150,10 @@ Get the rewards of Ethereum stakes
 ### Example
 
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
@@ -195,10 +195,10 @@ Get the status of an Ethereum transaction
 ### Example
 
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     tx_hash = '0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94' # str | Hash of the transaction
     response = kiln.eth.get_eth_stake_transaction_status(tx_hash)
 ```
@@ -236,10 +236,10 @@ Get the status of Ethereum stakes
 ### Example
 
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
@@ -272,7 +272,7 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#)
 # **post_eth_stake_transaction**
-> PostEthStakeTransaction201Response kiln.eth.post_eth_stake_transaction()
+> PostEthStakeTransaction201Response kiln.eth.post_eth_stake_transaction(ethereum_craft_tx_query)
 
 TX Craft
 
@@ -281,16 +281,20 @@ Generates a stake transaction for Ethereum
 ### Example
 
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
-    response = kiln.eth.post_eth_stake_transaction()
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
+    ethereum_craft_tx_query = kiln_connect.openapi_client.EthereumCraftTxQuery() # EthereumCraftTxQuery | Transaction to craft
+    response = kiln.eth.post_eth_stake_transaction(ethereum_craft_tx_query)
 ```
 
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ethereum_craft_tx_query** | [**EthereumCraftTxQuery**](EthereumCraftTxQuery.md)| Transaction to craft | 
 
 ### Return type
 
@@ -298,7 +302,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json; charset=utf-8
  - **Accept**: application/json; charset=utf-8
 
 ### HTTP response details
@@ -318,10 +322,10 @@ Broadcasts a transaction for Ethereum
 ### Example
 
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     ethereum_broadcast_tx_query = kiln_connect.openapi_client.EthereumBroadcastTxQuery() # EthereumBroadcastTxQuery | Transaction to broadcast
     response = kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
 ```

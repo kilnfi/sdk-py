@@ -17,11 +17,11 @@ import unittest
 import datetime
 
 import kiln_connect.openapi_client
-from kiln_connect.openapi_client.models.get_eth_rewards200_response import GetEthRewards200Response  # noqa: E501
+from kiln_connect.openapi_client.models.ethereum_craft_tx_query import EthereumCraftTxQuery  # noqa: E501
 from kiln_connect.openapi_client.rest import ApiException
 
-class TestGetEthRewards200Response(unittest.TestCase):
-    """GetEthRewards200Response unit test stubs"""
+class TestEthereumCraftTxQuery(unittest.TestCase):
+    """EthereumCraftTxQuery unit test stubs"""
 
     def setUp(self):
         pass
@@ -30,34 +30,26 @@ class TestGetEthRewards200Response(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test GetEthRewards200Response
+        """Test EthereumCraftTxQuery
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `GetEthRewards200Response`
+        # uncomment below to create an instance of `EthereumCraftTxQuery`
         """
-        model = kiln_connect.openapi_client.models.get_eth_rewards200_response.GetEthRewards200Response()  # noqa: E501
+        model = kiln_connect.openapi_client.models.ethereum_craft_tx_query.EthereumCraftTxQuery()  # noqa: E501
         if include_optional :
-            return GetEthRewards200Response(
-                data = [
-                    kiln_connect.openapi_client.models.ethereum_reward.EthereumReward(
-                        date = '2023-01-15', 
-                        consensus_rewards = '2988504000000000', 
-                        execution_rewards = '0', 
-                        rewards = '2988504000000000', 
-                        stake_balance = '64000000000000000000', 
-                        gross_apy = 3.407, 
-                        cl_apy = 3.407, 
-                        el_apy = 0.0, )
-                    ]
+            return EthereumCraftTxQuery(
+                account_id = 'b7177fd2-fbb3-479f-aa92-db9fb16e229f', 
+                wallet = '0xe1f4acc0affB36a805474e3b6ab786738C6900A2', 
+                amount_wei = '32000000000000000000'
             )
         else :
-            return GetEthRewards200Response(
+            return EthereumCraftTxQuery(
         )
         """
 
-    def testGetEthRewards200Response(self):
-        """Test GetEthRewards200Response"""
+    def testEthereumCraftTxQuery(self):
+        """Test EthereumCraftTxQuery"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

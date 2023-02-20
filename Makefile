@@ -6,7 +6,7 @@
 LOCAL_IMAGE=openapi-generator
 TMP_DIR=tmp/kiln-openapi
 TARGET_SDK=kiln_connect/openapi_client
-SPEC_SOURCE=https://docs.api.devnet.kiln.fi/openapi.public.yaml
+SPEC_SOURCE=https://docs.api.devnet.kiln.fi/openapi.specs.yaml
 
 all:
 

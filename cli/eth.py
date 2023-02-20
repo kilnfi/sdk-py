@@ -19,7 +19,7 @@ from rich.console import Console
 from rich.table import Table
 from typing import Optional
 
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 
 
 eth = typer.Typer(
@@ -41,7 +41,7 @@ def pretty_wei_to_eth(wei: str) -> str:
 def ethereum_stakes(validators: list[str]):
     """Show Ethereum Stake status.
     """
-    with KilnConnect(KilnConfig.from_env()) as kc:
+    with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
         stakes = kc.eth.get_eth_stakes(validators=validators).data
 
         table = Table('Stake(s)', 'Status', 'Balance', 'Rewards')
@@ -59,7 +59,7 @@ def ethereum_stakes(validators: list[str]):
 def ethereum_rewards(validators: list[str]):
     """Show Ethereum rewards.
     """
-    with KilnConnect(KilnConfig.from_env()) as kc:
+    with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
         rewards = kc.eth.get_eth_rewards(validators=validators).data
 
         table = Table(
@@ -80,7 +80,7 @@ def ethereum_rewards(validators: list[str]):
 def ethereum_network_stats():
     """Show Ethereum Network Stats.
     """
-    with KilnConnect(KilnConfig.from_env()) as kc:
+    with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
         ns = kc.eth.get_eth_network_stats()
 
         table = Table('Network Gross APY %', 'Supply Staked %')
@@ -89,3 +89,17 @@ def ethereum_network_stats():
             str(round(ns.data.supply_staked_percent, 3)))
 
         console.print(table)
+
+
+@eth.command("stake-via-fireblocks")
+def ethereum_stake_via_fireblocks(account_id: str, wallet: str):
+    """Stake ETH via fireblocks.
+    """
+    with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
+        query = kiln_connect.openapi_client.EthereumCraftTxQuery(
+            account_id=account_id,
+            wallet=wallet,
+            amount_wei='32000000000000000000',
+        )
+        print(query)
+        response = kc.eth.post_eth_stake_transaction(query)

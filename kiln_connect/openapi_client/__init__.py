@@ -3,7 +3,7 @@
 # flake8: noqa
 
 """
-    Kiln API
+    Kiln API Specifications
 
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
 
@@ -32,6 +32,7 @@ from kiln_connect.openapi_client.exceptions import ApiException
 # import models into sdk package
 from kiln_connect.openapi_client.models.ethereum_broadcast_tx_query import EthereumBroadcastTxQuery
 from kiln_connect.openapi_client.models.ethereum_broadcast_tx_response import EthereumBroadcastTxResponse
+from kiln_connect.openapi_client.models.ethereum_craft_tx_query import EthereumCraftTxQuery
 from kiln_connect.openapi_client.models.ethereum_network_stats import EthereumNetworkStats
 from kiln_connect.openapi_client.models.ethereum_operation_consensus_withdrawal import EthereumOperationConsensusWithdrawal
 from kiln_connect.openapi_client.models.ethereum_operation_deposit import EthereumOperationDeposit

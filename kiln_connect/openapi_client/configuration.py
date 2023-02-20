@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Kiln API
+    Kiln API Specifications
 
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
 
@@ -97,7 +97,7 @@ class Configuration(object):
                  ):
         """Constructor
         """
-        self._base_path = "https://api.testnet.kiln.fi" if host is None else host
+        self._base_path = "https://api.devnet.kiln.fi" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -409,15 +409,15 @@ class Configuration(object):
         """
         return [
             {
+                'url': "https://api.devnet.kiln.fi",
+                'description': "No description provided",
+            },
+            {
                 'url': "https://api.testnet.kiln.fi",
                 'description': "No description provided",
             },
             {
                 'url': "https://api.mainnet.kiln.fi",
-                'description': "No description provided",
-            },
-            {
-                'url': "https://api.devnet.kiln.fi",
                 'description': "No description provided",
             }
         ]

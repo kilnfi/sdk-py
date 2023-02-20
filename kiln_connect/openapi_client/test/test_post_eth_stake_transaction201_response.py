@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Kiln API
+    Kiln API Specifications
 
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
 
@@ -40,8 +40,8 @@ class TestPostEthStakeTransaction201Response(unittest.TestCase):
         if include_optional :
             return PostEthStakeTransaction201Response(
                 data = kiln_connect.openapi_client.models.ethereum_unsigned_stake_tx.EthereumUnsignedStakeTx(
-                    unsigned_tx_hash = '', 
-                    unsigned_tx_serialized = '', )
+                    unsigned_tx_hash = '0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94', 
+                    unsigned_tx_serialized = '0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc', )
             )
         else :
             return PostEthStakeTransaction201Response(

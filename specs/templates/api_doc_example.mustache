@@ -1,8 +1,8 @@
 ```python
-from kiln_connect import KilnConfig, KilnConnect
+import kiln_connect
 import os
 
-with KilnConnect(KilnConfig.from_env()) as kiln:
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     {{#allParams}}
     {{paramName}} = {{{example}}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
     {{/allParams}}

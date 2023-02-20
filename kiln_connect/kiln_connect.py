@@ -2,8 +2,14 @@ import os
 
 from dataclasses import dataclass
 
+from fireblocks_sdk import FireblocksSDK
 from kiln_connect.openapi_client import ApiClient, Configuration
 from kiln_connect.openapi_client.api import eth_api
+
+
+class KilnError(Exception):
+    """Base class for Kiln errors.
+    """
 
 
 @dataclass
@@ -40,6 +46,13 @@ class KilnConnect:
         self._api = ApiClient(
             configuration=cfg,
         )
+
+        self.fireblocks = None
+        if config.fireblocks_api_token:
+            with open(config.fireblocks_raw_key_path, 'r') as pk:
+                d = pk.read()
+                self.fireblocks = FireblocksSDK(
+                    d, config.fireblocks_api_token)
 
         self.eth = eth_api.EthApi(self._api)
 
