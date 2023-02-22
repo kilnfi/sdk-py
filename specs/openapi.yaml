@@ -37,7 +37,7 @@ paths:
       - $ref: '#/components/parameters/KilnAccountsParam'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             "application/json; charset=utf-8":
               schema:
@@ -49,20 +49,24 @@ paths:
                       $ref: '#/components/schemas/EthereumStake'
         '400':
           description: Invalid parameters
+        '500':
+          description: Internal server error
   /v1/eth/rewards:
     get:
       tags:
         - eth
       summary: Rewards
-      description: Get the rewards of Ethereum stakes
+      description: Get historical rewards by day of Ethereum stakes
       operationId: getEthRewards
       parameters:
       - $ref: '#/components/parameters/EthereumValidatorsParam'
       - $ref: '#/components/parameters/EthereumWalletsParam'
       - $ref: '#/components/parameters/KilnAccountsParam'
+      - $ref: '#/components/parameters/StartDateParam'
+      - $ref: '#/components/parameters/EndDateParam'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             "application/json; charset=utf-8":
               schema:
@@ -73,7 +77,9 @@ paths:
                     items:
                       $ref: '#/components/schemas/EthereumReward'
         '400':
-          description: Invalid status value
+          description: Invalid parameters
+        '500':
+          description: Internal server error
   /v1/eth/operations:
     get:
       tags:
@@ -87,7 +93,7 @@ paths:
       - $ref: '#/components/parameters/KilnAccountsParam'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             "application/json; charset=utf-8":
               schema:
@@ -102,17 +108,21 @@ paths:
                       - $ref: '#/components/schemas/EthereumOperationExecutionReward'
                       discriminator:
                         propertyName: type
+        '400':
+          description: Invalid parameters
+        '500':
+          description: Internal server error
 
   /v1/eth/network-stats:
     get:
       tags:
         - eth
       summary: Network stats
-      description: Get the network statistics of Ethereum staking
+      description: Get some network statistics on Ethereum staking
       operationId: getEthNetworkStats
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             "application/json; charset=utf-8":
               schema:
@@ -120,14 +130,33 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/EthereumNetworkStats'
-        '400':
-          description: Invalid status value
+        '500':
+          description: Internal server error
+  /v1/eth/kiln-stats:
+    get:
+      tags:
+        - eth
+      summary: Kiln stats
+      description: Get some Kiln statistics on Ethereum staking
+      operationId: getEthKilnStats
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EthereumKilnStats'
+        '500':
+          description: Internal server error
   /v1/eth/transaction/stake:
     post:
       tags:
         - eth
-      summary: TX Craft
-      description: Generates a stake transaction for Ethereum
+      summary: Craft stake transaction
+      description: Generates an Ethereum EIP 1559 stake transaction
       operationId: postEthStakeTransaction
       requestBody:
         description: Transaction to craft
@@ -135,10 +164,10 @@ paths:
         content:
           "application/json; charset=utf-8":
             schema:
-              $ref: '#/components/schemas/EthereumCraftTxQuery'
+              $ref: '#/components/schemas/EthereumCraftStakeTxPayload'
       responses:
         '201':
-          description: successful operation
+          description: Successful operation
           content:
             "application/json; charset=utf-8":
               schema:
@@ -147,13 +176,42 @@ paths:
                   data:
                     $ref: '#/components/schemas/EthereumUnsignedStakeTx'
         '400':
-          description: Invalid status value
+          description: Invalid parameters
+        '500':
+          description: Internal server error
+  /v1/eth/transaction/prepare:
+    post:
+      tags:
+        - eth
+      summary: Prepare transaction
+      description: Prepare an Ethereum transaction for broadcasting. It takes a serialized transaction and its signatures and returns a serialized signed transaction that can be broadcasted.
+      requestBody:
+        description: Transaction to prepare
+        required: true
+        content:
+          "application/json; charset=utf-8":
+            schema:
+              $ref: '#/components/schemas/EthereumPrepareTxPayload'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EthereumSignedTx'
+        '400':
+          description: Invalid parameters
+        '500':
+          description: Internal server error
   /v1/eth/transaction/broadcast:
     post:
       tags:
         - eth
-      summary: TX Broadcast
-      description: Broadcasts a transaction for Ethereum
+      summary: Broadcast transaction
+      description: Broadcasts a signed Ethereum transaction
       operationId: postEthTransactionBroadcast
       requestBody:
         description: Transaction to broadcast
@@ -161,10 +219,10 @@ paths:
         content:
           "application/json; charset=utf-8":
             schema:
-              $ref: '#/components/schemas/EthereumBroadcastTxQuery'
+              $ref: '#/components/schemas/EthereumBroadcastTxPayload'
       responses:
         '201':
-          description: successful operation
+          description: Successful operation
           content:
             "application/json; charset=utf-8":
               schema:
@@ -173,12 +231,14 @@ paths:
                   data:
                     $ref: '#/components/schemas/EthereumBroadcastTxResponse'
         '400':
-          description: Invalid status value
+          description: Invalid parameters
+        '500':
+          description: Internal server error
   /v1/eth/transaction/status:
     get:
       tags:
         - eth
-      summary: TX status
+      summary: Transaction status
       description: Get the status of an Ethereum transaction
       operationId: getEthStakeTransactionStatus
       parameters:
@@ -193,7 +253,7 @@ paths:
           example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             "application/json; charset=utf-8":
               schema:
@@ -202,13 +262,15 @@ paths:
                   data:
                     $ref: '#/components/schemas/EthereumUnsignedStakeTx'
         '400':
-          description: Invalid status value
+          description: Invalid parameters
+        '500':
+          description: Internal server error
   /v1/eth/reports:
     get:
       tags:
         - eth
-      summary: Report
-      description: Generates a report sheet for the stakes
+      summary: Excel reports
+      description: Generates an Excel report sheet for your stakes and rewards
       operationId: getEthReport
       parameters:
       - $ref: '#/components/parameters/EthereumValidatorsParam'
@@ -217,7 +279,7 @@ paths:
 
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             application/octet-stream:
               schema:
@@ -225,7 +287,9 @@ paths:
                 format: binary
                 example: ...
         '400':
-          description: Invalid status value
+          description: Invalid parameters
+        '500':
+          description: Internal server error
 components:
   securitySchemes:
     bearerAuth:
@@ -269,6 +333,24 @@ components:
           type: string
           example: "b7177fd2-fbb3-479f-aa92-db9fb16e229f"
           format: uuid
+    StartDateParam:
+      name: start_date
+      in: query
+      description: Get rewards from this date (YYYY-MM-DD)
+      required: false
+      schema:
+        type: string
+        format: date
+        example: "2023-01-10"
+    EndDateParam:
+      name: end_date
+      in: query
+      description: Get rewards to this date (YYYY-MM-DD)
+      required: false
+      schema:
+        type: string
+        format: date
+        example: "2023-01-20"
   schemas:
     EthereumOperationDeposit:
       type: object
@@ -451,6 +533,12 @@ components:
           description: Gross annual percentage yield
           nullable: true
           example: 3.407
+        updated_at:
+          type: string
+          description: Last date this data was updated
+          nullable: true
+          format: date-time
+          example: "2023-01-14T01:13:59Z"
     EthereumReward:
       type: object
       properties:
@@ -497,6 +585,21 @@ components:
           type: number
           description: Supply of Ethereum currently staked
           example: 12.4
+    EthereumKilnStats:
+      type: object
+      properties:
+        gross_apy:
+          type: object
+          properties:
+            last_1d:
+              type: number
+              description: Kiln's average APR from yesterday
+            last_7d:
+              type: number
+              description: Kiln's average APR from the last 7 days
+            last_30d:
+              type: number
+              description: Kiln's average APR from the last 30 days
     EthereumUnsignedStakeTx:
       type: object
       properties:
@@ -506,14 +609,21 @@ components:
           example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
         unsigned_tx_serialized:
           type: string
-          description: Serialized transaction
+          description: Unsigned serialized transaction
           example: "0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc"
-    EthereumBroadcastTxQuery:
+    EthereumSignedTx:
       type: object
       properties:
-        serialized_tx:
+        signed_tx_serialized:
           type: string
-          description: Serialized transaction
+          description: Signed serialized transaction
+          example: "0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc"
+    EthereumBroadcastTxPayload:
+      type: object
+      properties:
+        tx_serialized:
+          type: string
+          description: Signed serialized transaction
           example: "0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc"
     EthereumBroadcastTxResponse:
       type: object
@@ -522,7 +632,7 @@ components:
           type: string
           description: Hash of the transaction once broadcasted
           example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
-    EthereumCraftTxQuery:
+    EthereumCraftStakeTxPayload:
       type: object
       properties:
         account_id:
@@ -538,6 +648,25 @@ components:
           type: string
           example: "32000000000000000000"
           description: Amount to stake in WEI (must be a multiple of "32000000000000000000")
+    EthereumPrepareTxPayload:
+      type: object
+      properties:
+        unsigned_tx_serialized:
+          type: string
+          description: Unsigned serialized transaction
+          example: "0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc"
+        r:
+          type: string
+          description: r part of the ECDSA signature in hex
+          example: "de28e9efee4c8de422a3c64bfaaee11a32f7cf12bdd3f00dcce41a79fe776c65"
+        s:
+          type: string
+          description: s part of the ECDSA signature in hex
+          example: "3f233eb69495fa4741ad28ef0ba40612bacaf08331fd76041c371f5a2ecc2ab5"
+        v:
+          type: number
+          description: v part of the ECDSA signature (0 or 1)
+          example: 0
 security:
   - bearerAuth: []
 

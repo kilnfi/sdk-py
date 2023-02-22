@@ -41,7 +41,8 @@ class EthereumStake(BaseModel):
     execution_rewards: Optional[StrictStr] = Field(None, description="Sum of execution rewards in WEI earned by this stake")
     rewards: Optional[StrictStr] = Field(None, description="Sum of consensus and execution rewards in WEI earned by this stake")
     gross_apy: Optional[float] = Field(None, description="Gross annual percentage yield")
-    __properties = ["validator_address", "state", "activated_at", "activated_epoch", "delegated_block", "deposit_tx_sender", "execution_fee_recipient", "withdrawal_credentials", "effective_balance", "balance", "consensus_rewards", "execution_rewards", "rewards", "gross_apy"]
+    updated_at: Optional[datetime] = Field(None, description="Last date this data was updated")
+    __properties = ["validator_address", "state", "activated_at", "activated_epoch", "delegated_block", "deposit_tx_sender", "execution_fee_recipient", "withdrawal_credentials", "effective_balance", "balance", "consensus_rewards", "execution_rewards", "rewards", "gross_apy", "updated_at"]
 
     class Config:
         allow_population_by_field_name = True
@@ -114,6 +115,10 @@ class EthereumStake(BaseModel):
         if self.gross_apy is None:
             _dict['gross_apy'] = None
 
+        # set to None if updated_at (nullable) is None
+        if self.updated_at is None:
+            _dict['updated_at'] = None
+
         return _dict
 
     @classmethod
@@ -139,7 +144,8 @@ class EthereumStake(BaseModel):
             "consensus_rewards": obj.get("consensus_rewards"),
             "execution_rewards": obj.get("execution_rewards"),
             "rewards": obj.get("rewards"),
-            "gross_apy": obj.get("gross_apy")
+            "gross_apy": obj.get("gross_apy"),
+            "updated_at": obj.get("updated_at")
         })
         return _obj
 

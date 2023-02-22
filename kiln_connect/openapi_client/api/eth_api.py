@@ -18,18 +18,23 @@ import re  # noqa: F401
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 
+from datetime import date
+
 from pydantic import Field, StrictStr
 
 from typing import List, Optional
 
-from kiln_connect.openapi_client.models.ethereum_broadcast_tx_query import EthereumBroadcastTxQuery
-from kiln_connect.openapi_client.models.ethereum_craft_tx_query import EthereumCraftTxQuery
+from kiln_connect.openapi_client.models.ethereum_broadcast_tx_payload import EthereumBroadcastTxPayload
+from kiln_connect.openapi_client.models.ethereum_craft_stake_tx_payload import EthereumCraftStakeTxPayload
+from kiln_connect.openapi_client.models.ethereum_prepare_tx_payload import EthereumPrepareTxPayload
+from kiln_connect.openapi_client.models.get_eth_kiln_stats200_response import GetEthKilnStats200Response
 from kiln_connect.openapi_client.models.get_eth_network_stats200_response import GetEthNetworkStats200Response
 from kiln_connect.openapi_client.models.get_eth_operations200_response import GetEthOperations200Response
 from kiln_connect.openapi_client.models.get_eth_rewards200_response import GetEthRewards200Response
 from kiln_connect.openapi_client.models.get_eth_stakes200_response import GetEthStakes200Response
 from kiln_connect.openapi_client.models.post_eth_stake_transaction201_response import PostEthStakeTransaction201Response
 from kiln_connect.openapi_client.models.post_eth_transaction_broadcast201_response import PostEthTransactionBroadcast201Response
+from kiln_connect.openapi_client.models.v1_eth_transaction_prepare_post201_response import V1EthTransactionPreparePost201Response
 
 from kiln_connect.openapi_client.api_client import ApiClient
 from kiln_connect.openapi_client.exceptions import (  # noqa: F401
@@ -51,10 +56,147 @@ class EthApi(object):
         self.api_client = api_client
 
     @validate_arguments
+    def get_eth_kiln_stats(self, **kwargs) -> GetEthKilnStats200Response:  # noqa: E501
+        """Kiln stats  # noqa: E501
+
+        Get some Kiln statistics on Ethereum staking  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_eth_kiln_stats(async_req=True)
+        >>> result = thread.get()
+
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :type _preload_content: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: GetEthKilnStats200Response
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.get_eth_kiln_stats_with_http_info(**kwargs)  # noqa: E501
+
+    @validate_arguments
+    def get_eth_kiln_stats_with_http_info(self, **kwargs):  # noqa: E501
+        """Kiln stats  # noqa: E501
+
+        Get some Kiln statistics on Ethereum staking  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_eth_kiln_stats_with_http_info(async_req=True)
+        >>> result = thread.get()
+
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :type _return_http_data_only: bool, optional
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :type _preload_content: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(GetEthKilnStats200Response, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_eth_kiln_stats" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+
+        # process the form parameters
+        _form_params = []
+        _files = {}
+
+        # process the body parameter
+        _body_params = None
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json; charset=utf-8'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['bearerAuth']  # noqa: E501
+
+        _response_types_map = {
+            '200': "GetEthKilnStats200Response",
+            '500': None,
+        }
+
+        return self.api_client.call_api(
+            '/v1/eth/kiln-stats', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
     def get_eth_network_stats(self, **kwargs) -> GetEthNetworkStats200Response:  # noqa: E501
         """Network stats  # noqa: E501
 
-        Get the network statistics of Ethereum staking  # noqa: E501
+        Get some network statistics on Ethereum staking  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -83,7 +225,7 @@ class EthApi(object):
     def get_eth_network_stats_with_http_info(self, **kwargs):  # noqa: E501
         """Network stats  # noqa: E501
 
-        Get the network statistics of Ethereum staking  # noqa: E501
+        Get some network statistics on Ethereum staking  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -167,7 +309,7 @@ class EthApi(object):
 
         _response_types_map = {
             '200': "GetEthNetworkStats200Response",
-            '400': None,
+            '500': None,
         }
 
         return self.api_client.call_api(
@@ -328,6 +470,8 @@ class EthApi(object):
 
         _response_types_map = {
             '200': "GetEthOperations200Response",
+            '400': None,
+            '500': None,
         }
 
         return self.api_client.call_api(
@@ -349,9 +493,9 @@ class EthApi(object):
 
     @validate_arguments
     def get_eth_report(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> str:  # noqa: E501
-        """Report  # noqa: E501
+        """Excel reports  # noqa: E501
 
-        Generates a report sheet for the stakes  # noqa: E501
+        Generates an Excel report sheet for your stakes and rewards  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -384,9 +528,9 @@ class EthApi(object):
 
     @validate_arguments
     def get_eth_report_with_http_info(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
-        """Report  # noqa: E501
+        """Excel reports  # noqa: E501
 
-        Generates a report sheet for the stakes  # noqa: E501
+        Generates an Excel report sheet for your stakes and rewards  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -489,6 +633,7 @@ class EthApi(object):
         _response_types_map = {
             '200': "str",
             '400': None,
+            '500': None,
         }
 
         return self.api_client.call_api(
@@ -509,14 +654,14 @@ class EthApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_eth_rewards(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> GetEthRewards200Response:  # noqa: E501
+    def get_eth_rewards(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, start_date : Annotated[Optional[date], Field(description="Get rewards from this date (YYYY-MM-DD)")] = None, end_date : Annotated[Optional[date], Field(description="Get rewards to this date (YYYY-MM-DD)")] = None, **kwargs) -> GetEthRewards200Response:  # noqa: E501
         """Rewards  # noqa: E501
 
-        Get the rewards of Ethereum stakes  # noqa: E501
+        Get historical rewards by day of Ethereum stakes  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_eth_rewards(validators, wallets, accounts, async_req=True)
+        >>> thread = api.get_eth_rewards(validators, wallets, accounts, start_date, end_date, async_req=True)
         >>> result = thread.get()
 
         :param validators: Comma-separated list of validators addresses
@@ -525,6 +670,10 @@ class EthApi(object):
         :type wallets: List[str]
         :param accounts: Comma-separated list of Kiln accounts identifiers
         :type accounts: List[str]
+        :param start_date: Get rewards from this date (YYYY-MM-DD)
+        :type start_date: date
+        :param end_date: Get rewards to this date (YYYY-MM-DD)
+        :type end_date: date
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -541,17 +690,17 @@ class EthApi(object):
         :rtype: GetEthRewards200Response
         """
         kwargs['_return_http_data_only'] = True
-        return self.get_eth_rewards_with_http_info(validators, wallets, accounts, **kwargs)  # noqa: E501
+        return self.get_eth_rewards_with_http_info(validators, wallets, accounts, start_date, end_date, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_eth_rewards_with_http_info(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
+    def get_eth_rewards_with_http_info(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, start_date : Annotated[Optional[date], Field(description="Get rewards from this date (YYYY-MM-DD)")] = None, end_date : Annotated[Optional[date], Field(description="Get rewards to this date (YYYY-MM-DD)")] = None, **kwargs):  # noqa: E501
         """Rewards  # noqa: E501
 
-        Get the rewards of Ethereum stakes  # noqa: E501
+        Get historical rewards by day of Ethereum stakes  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_eth_rewards_with_http_info(validators, wallets, accounts, async_req=True)
+        >>> thread = api.get_eth_rewards_with_http_info(validators, wallets, accounts, start_date, end_date, async_req=True)
         >>> result = thread.get()
 
         :param validators: Comma-separated list of validators addresses
@@ -560,6 +709,10 @@ class EthApi(object):
         :type wallets: List[str]
         :param accounts: Comma-separated list of Kiln accounts identifiers
         :type accounts: List[str]
+        :param start_date: Get rewards from this date (YYYY-MM-DD)
+        :type start_date: date
+        :param end_date: Get rewards to this date (YYYY-MM-DD)
+        :type end_date: date
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _return_http_data_only: response data without head status code
@@ -589,7 +742,9 @@ class EthApi(object):
         _all_params = [
             'validators',
             'wallets',
-            'accounts'
+            'accounts',
+            'start_date',
+            'end_date'
         ]
         _all_params.extend(
             [
@@ -629,6 +784,10 @@ class EthApi(object):
         if _params.get('accounts') is not None:  # noqa: E501
             _query_params.append(('accounts', _params['accounts']))
             _collection_formats['accounts'] = 'csv'
+        if _params.get('start_date') is not None:  # noqa: E501
+            _query_params.append(('start_date', _params['start_date']))
+        if _params.get('end_date') is not None:  # noqa: E501
+            _query_params.append(('end_date', _params['end_date']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -650,6 +809,7 @@ class EthApi(object):
         _response_types_map = {
             '200': "GetEthRewards200Response",
             '400': None,
+            '500': None,
         }
 
         return self.api_client.call_api(
@@ -671,7 +831,7 @@ class EthApi(object):
 
     @validate_arguments
     def get_eth_stake_transaction_status(self, tx_hash : Annotated[StrictStr, Field(..., description="Hash of the transaction")], **kwargs) -> PostEthStakeTransaction201Response:  # noqa: E501
-        """TX status  # noqa: E501
+        """Transaction status  # noqa: E501
 
         Get the status of an Ethereum transaction  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -702,7 +862,7 @@ class EthApi(object):
 
     @validate_arguments
     def get_eth_stake_transaction_status_with_http_info(self, tx_hash : Annotated[StrictStr, Field(..., description="Hash of the transaction")], **kwargs):  # noqa: E501
-        """TX status  # noqa: E501
+        """Transaction status  # noqa: E501
 
         Get the status of an Ethereum transaction  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -794,6 +954,7 @@ class EthApi(object):
         _response_types_map = {
             '200': "PostEthStakeTransaction201Response",
             '400': None,
+            '500': None,
         }
 
         return self.api_client.call_api(
@@ -955,6 +1116,7 @@ class EthApi(object):
         _response_types_map = {
             '200': "GetEthStakes200Response",
             '400': None,
+            '500': None,
         }
 
         return self.api_client.call_api(
@@ -975,18 +1137,18 @@ class EthApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def post_eth_stake_transaction(self, ethereum_craft_tx_query : Annotated[EthereumCraftTxQuery, Field(..., description="Transaction to craft")], **kwargs) -> PostEthStakeTransaction201Response:  # noqa: E501
-        """TX Craft  # noqa: E501
+    def post_eth_stake_transaction(self, ethereum_craft_stake_tx_payload : Annotated[EthereumCraftStakeTxPayload, Field(..., description="Transaction to craft")], **kwargs) -> PostEthStakeTransaction201Response:  # noqa: E501
+        """Craft stake transaction  # noqa: E501
 
-        Generates a stake transaction for Ethereum  # noqa: E501
+        Generates an Ethereum EIP 1559 stake transaction  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_eth_stake_transaction(ethereum_craft_tx_query, async_req=True)
+        >>> thread = api.post_eth_stake_transaction(ethereum_craft_stake_tx_payload, async_req=True)
         >>> result = thread.get()
 
-        :param ethereum_craft_tx_query: Transaction to craft (required)
-        :type ethereum_craft_tx_query: EthereumCraftTxQuery
+        :param ethereum_craft_stake_tx_payload: Transaction to craft (required)
+        :type ethereum_craft_stake_tx_payload: EthereumCraftStakeTxPayload
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1003,21 +1165,21 @@ class EthApi(object):
         :rtype: PostEthStakeTransaction201Response
         """
         kwargs['_return_http_data_only'] = True
-        return self.post_eth_stake_transaction_with_http_info(ethereum_craft_tx_query, **kwargs)  # noqa: E501
+        return self.post_eth_stake_transaction_with_http_info(ethereum_craft_stake_tx_payload, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def post_eth_stake_transaction_with_http_info(self, ethereum_craft_tx_query : Annotated[EthereumCraftTxQuery, Field(..., description="Transaction to craft")], **kwargs):  # noqa: E501
-        """TX Craft  # noqa: E501
+    def post_eth_stake_transaction_with_http_info(self, ethereum_craft_stake_tx_payload : Annotated[EthereumCraftStakeTxPayload, Field(..., description="Transaction to craft")], **kwargs):  # noqa: E501
+        """Craft stake transaction  # noqa: E501
 
-        Generates a stake transaction for Ethereum  # noqa: E501
+        Generates an Ethereum EIP 1559 stake transaction  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_eth_stake_transaction_with_http_info(ethereum_craft_tx_query, async_req=True)
+        >>> thread = api.post_eth_stake_transaction_with_http_info(ethereum_craft_stake_tx_payload, async_req=True)
         >>> result = thread.get()
 
-        :param ethereum_craft_tx_query: Transaction to craft (required)
-        :type ethereum_craft_tx_query: EthereumCraftTxQuery
+        :param ethereum_craft_stake_tx_payload: Transaction to craft (required)
+        :type ethereum_craft_stake_tx_payload: EthereumCraftStakeTxPayload
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _return_http_data_only: response data without head status code
@@ -1045,7 +1207,7 @@ class EthApi(object):
         _params = locals()
 
         _all_params = [
-            'ethereum_craft_tx_query'
+            'ethereum_craft_stake_tx_payload'
         ]
         _all_params.extend(
             [
@@ -1086,8 +1248,8 @@ class EthApi(object):
 
         # process the body parameter
         _body_params = None
-        if _params['ethereum_craft_tx_query']:
-            _body_params = _params['ethereum_craft_tx_query']
+        if _params['ethereum_craft_stake_tx_payload']:
+            _body_params = _params['ethereum_craft_stake_tx_payload']
 
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
@@ -1106,6 +1268,7 @@ class EthApi(object):
         _response_types_map = {
             '201': "PostEthStakeTransaction201Response",
             '400': None,
+            '500': None,
         }
 
         return self.api_client.call_api(
@@ -1126,18 +1289,18 @@ class EthApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def post_eth_transaction_broadcast(self, ethereum_broadcast_tx_query : Annotated[EthereumBroadcastTxQuery, Field(..., description="Transaction to broadcast")], **kwargs) -> PostEthTransactionBroadcast201Response:  # noqa: E501
-        """TX Broadcast  # noqa: E501
+    def post_eth_transaction_broadcast(self, ethereum_broadcast_tx_payload : Annotated[EthereumBroadcastTxPayload, Field(..., description="Transaction to broadcast")], **kwargs) -> PostEthTransactionBroadcast201Response:  # noqa: E501
+        """Broadcast transaction  # noqa: E501
 
-        Broadcasts a transaction for Ethereum  # noqa: E501
+        Broadcasts a signed Ethereum transaction  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_eth_transaction_broadcast(ethereum_broadcast_tx_query, async_req=True)
+        >>> thread = api.post_eth_transaction_broadcast(ethereum_broadcast_tx_payload, async_req=True)
         >>> result = thread.get()
 
-        :param ethereum_broadcast_tx_query: Transaction to broadcast (required)
-        :type ethereum_broadcast_tx_query: EthereumBroadcastTxQuery
+        :param ethereum_broadcast_tx_payload: Transaction to broadcast (required)
+        :type ethereum_broadcast_tx_payload: EthereumBroadcastTxPayload
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1154,21 +1317,21 @@ class EthApi(object):
         :rtype: PostEthTransactionBroadcast201Response
         """
         kwargs['_return_http_data_only'] = True
-        return self.post_eth_transaction_broadcast_with_http_info(ethereum_broadcast_tx_query, **kwargs)  # noqa: E501
+        return self.post_eth_transaction_broadcast_with_http_info(ethereum_broadcast_tx_payload, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def post_eth_transaction_broadcast_with_http_info(self, ethereum_broadcast_tx_query : Annotated[EthereumBroadcastTxQuery, Field(..., description="Transaction to broadcast")], **kwargs):  # noqa: E501
-        """TX Broadcast  # noqa: E501
+    def post_eth_transaction_broadcast_with_http_info(self, ethereum_broadcast_tx_payload : Annotated[EthereumBroadcastTxPayload, Field(..., description="Transaction to broadcast")], **kwargs):  # noqa: E501
+        """Broadcast transaction  # noqa: E501
 
-        Broadcasts a transaction for Ethereum  # noqa: E501
+        Broadcasts a signed Ethereum transaction  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_eth_transaction_broadcast_with_http_info(ethereum_broadcast_tx_query, async_req=True)
+        >>> thread = api.post_eth_transaction_broadcast_with_http_info(ethereum_broadcast_tx_payload, async_req=True)
         >>> result = thread.get()
 
-        :param ethereum_broadcast_tx_query: Transaction to broadcast (required)
-        :type ethereum_broadcast_tx_query: EthereumBroadcastTxQuery
+        :param ethereum_broadcast_tx_payload: Transaction to broadcast (required)
+        :type ethereum_broadcast_tx_payload: EthereumBroadcastTxPayload
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _return_http_data_only: response data without head status code
@@ -1196,7 +1359,7 @@ class EthApi(object):
         _params = locals()
 
         _all_params = [
-            'ethereum_broadcast_tx_query'
+            'ethereum_broadcast_tx_payload'
         ]
         _all_params.extend(
             [
@@ -1237,8 +1400,8 @@ class EthApi(object):
 
         # process the body parameter
         _body_params = None
-        if _params['ethereum_broadcast_tx_query']:
-            _body_params = _params['ethereum_broadcast_tx_query']
+        if _params['ethereum_broadcast_tx_payload']:
+            _body_params = _params['ethereum_broadcast_tx_payload']
 
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
@@ -1257,10 +1420,163 @@ class EthApi(object):
         _response_types_map = {
             '201': "PostEthTransactionBroadcast201Response",
             '400': None,
+            '500': None,
         }
 
         return self.api_client.call_api(
             '/v1/eth/transaction/broadcast', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def v1_eth_transaction_prepare_post(self, ethereum_prepare_tx_payload : Annotated[EthereumPrepareTxPayload, Field(..., description="Transaction to prepare")], **kwargs) -> V1EthTransactionPreparePost201Response:  # noqa: E501
+        """Prepare transaction  # noqa: E501
+
+        Prepare an Ethereum transaction for broadcasting. It takes a serialized transaction and its signatures and returns a serialized signed transaction that can be broadcasted.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.v1_eth_transaction_prepare_post(ethereum_prepare_tx_payload, async_req=True)
+        >>> result = thread.get()
+
+        :param ethereum_prepare_tx_payload: Transaction to prepare (required)
+        :type ethereum_prepare_tx_payload: EthereumPrepareTxPayload
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :type _preload_content: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: V1EthTransactionPreparePost201Response
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.v1_eth_transaction_prepare_post_with_http_info(ethereum_prepare_tx_payload, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def v1_eth_transaction_prepare_post_with_http_info(self, ethereum_prepare_tx_payload : Annotated[EthereumPrepareTxPayload, Field(..., description="Transaction to prepare")], **kwargs):  # noqa: E501
+        """Prepare transaction  # noqa: E501
+
+        Prepare an Ethereum transaction for broadcasting. It takes a serialized transaction and its signatures and returns a serialized signed transaction that can be broadcasted.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.v1_eth_transaction_prepare_post_with_http_info(ethereum_prepare_tx_payload, async_req=True)
+        >>> result = thread.get()
+
+        :param ethereum_prepare_tx_payload: Transaction to prepare (required)
+        :type ethereum_prepare_tx_payload: EthereumPrepareTxPayload
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :type _return_http_data_only: bool, optional
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :type _preload_content: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(V1EthTransactionPreparePost201Response, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'ethereum_prepare_tx_payload'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method v1_eth_transaction_prepare_post" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+
+        # process the form parameters
+        _form_params = []
+        _files = {}
+
+        # process the body parameter
+        _body_params = None
+        if _params['ethereum_prepare_tx_payload']:
+            _body_params = _params['ethereum_prepare_tx_payload']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json; charset=utf-8'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json; charset=utf-8']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['bearerAuth']  # noqa: E501
+
+        _response_types_map = {
+            '201': "V1EthTransactionPreparePost201Response",
+            '400': None,
+            '500': None,
+        }
+
+        return self.api_client.call_api(
+            '/v1/eth/transaction/prepare', 'POST',
             _path_params,
             _query_params,
             _header_params,

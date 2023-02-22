@@ -30,6 +30,8 @@ kiln_connect: specs/openapi.yaml
 	cp -R $(TMP_DIR)/kiln_connect/openapi_client $(TARGET_SDK)
 	mv ${TARGET_SDK}/docs/* docs
 
+update: kiln_connect
+
 upgrade: clean_specs kiln_connect
 
 .PHONY: kiln_connect clean_specs

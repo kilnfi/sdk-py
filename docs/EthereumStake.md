@@ -18,5 +18,6 @@ Name | Type | Description | Notes
 **execution_rewards** | **str** | Sum of execution rewards in WEI earned by this stake | [optional] 
 **rewards** | **str** | Sum of consensus and execution rewards in WEI earned by this stake | [optional] 
 **gross_apy** | **float** | Gross annual percentage yield | [optional] 
+**updated_at** | **datetime** | Last date this data was updated | [optional] 
 
 

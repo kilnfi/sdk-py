@@ -4,22 +4,61 @@ All URIs are relative to *https://api.devnet.kiln.fi*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**get_eth_kiln_stats**](EthApi.md#get_eth_kiln_stats) | **GET** /v1/eth/kiln-stats | Kiln stats
 [**get_eth_network_stats**](EthApi.md#get_eth_network_stats) | **GET** /v1/eth/network-stats | Network stats
 [**get_eth_operations**](EthApi.md#get_eth_operations) | **GET** /v1/eth/operations | Operations
-[**get_eth_report**](EthApi.md#get_eth_report) | **GET** /v1/eth/reports | Report
+[**get_eth_report**](EthApi.md#get_eth_report) | **GET** /v1/eth/reports | Excel reports
 [**get_eth_rewards**](EthApi.md#get_eth_rewards) | **GET** /v1/eth/rewards | Rewards
-[**get_eth_stake_transaction_status**](EthApi.md#get_eth_stake_transaction_status) | **GET** /v1/eth/transaction/status | TX status
+[**get_eth_stake_transaction_status**](EthApi.md#get_eth_stake_transaction_status) | **GET** /v1/eth/transaction/status | Transaction status
 [**get_eth_stakes**](EthApi.md#get_eth_stakes) | **GET** /v1/eth/stakes | Stakes
-[**post_eth_stake_transaction**](EthApi.md#post_eth_stake_transaction) | **POST** /v1/eth/transaction/stake | TX Craft
-[**post_eth_transaction_broadcast**](EthApi.md#post_eth_transaction_broadcast) | **POST** /v1/eth/transaction/broadcast | TX Broadcast
+[**post_eth_stake_transaction**](EthApi.md#post_eth_stake_transaction) | **POST** /v1/eth/transaction/stake | Craft stake transaction
+[**post_eth_transaction_broadcast**](EthApi.md#post_eth_transaction_broadcast) | **POST** /v1/eth/transaction/broadcast | Broadcast transaction
+[**v1_eth_transaction_prepare_post**](EthApi.md#v1_eth_transaction_prepare_post) | **POST** /v1/eth/transaction/prepare | Prepare transaction
 
 
+# **get_eth_kiln_stats**
+> GetEthKilnStats200Response kiln.eth.get_eth_kiln_stats()
+
+Kiln stats
+
+Get some Kiln statistics on Ethereum staking
+
+### Example
+
+```python
+import kiln_connect
+import os
+
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
+    response = kiln.eth.get_eth_kiln_stats()
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**GetEthKilnStats200Response**](GetEthKilnStats200Response.md)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json; charset=utf-8
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful operation |  -  |
+**500** | Internal server error |  -  |
+
+[[Back to top]](#)
 # **get_eth_network_stats**
 > GetEthNetworkStats200Response kiln.eth.get_eth_network_stats()
 
 Network stats
 
-Get the network statistics of Ethereum staking
+Get some network statistics on Ethereum staking
 
 ### Example
 
@@ -47,8 +86,8 @@ This endpoint does not need any parameter.
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | successful operation |  -  |
-**400** | Invalid status value |  -  |
+**200** | Successful operation |  -  |
+**500** | Internal server error |  -  |
 
 [[Back to top]](#)
 # **get_eth_operations**
@@ -92,15 +131,17 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | successful operation |  -  |
+**200** | Successful operation |  -  |
+**400** | Invalid parameters |  -  |
+**500** | Internal server error |  -  |
 
 [[Back to top]](#)
 # **get_eth_report**
 > str kiln.eth.get_eth_report(validators=validators, wallets=wallets, accounts=accounts)
 
-Report
+Excel reports
 
-Generates a report sheet for the stakes
+Generates an Excel report sheet for your stakes and rewards
 
 ### Example
 
@@ -136,16 +177,17 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | successful operation |  -  |
-**400** | Invalid status value |  -  |
+**200** | Successful operation |  -  |
+**400** | Invalid parameters |  -  |
+**500** | Internal server error |  -  |
 
 [[Back to top]](#)
 # **get_eth_rewards**
-> GetEthRewards200Response kiln.eth.get_eth_rewards(validators=validators, wallets=wallets, accounts=accounts)
+> GetEthRewards200Response kiln.eth.get_eth_rewards(validators=validators, wallets=wallets, accounts=accounts, start_date=start_date, end_date=end_date)
 
 Rewards
 
-Get the rewards of Ethereum stakes
+Get historical rewards by day of Ethereum stakes
 
 ### Example
 
@@ -157,7 +199,9 @@ with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
     validators = ['validators_example'] # List[str] | Comma-separated list of validators addresses (optional)
     wallets = ['wallets_example'] # List[str] | Comma-separated list of wallets addresses (optional)
     accounts = ['accounts_example'] # List[str] | Comma-separated list of Kiln accounts identifiers (optional)
-    response = kiln.eth.get_eth_rewards(validators=validators, wallets=wallets, accounts=accounts)
+    start_date = 'Tue Jan 10 00:00:00 GMT 2023' # date | Get rewards from this date (YYYY-MM-DD) (optional)
+    end_date = 'Fri Jan 20 00:00:00 GMT 2023' # date | Get rewards to this date (YYYY-MM-DD) (optional)
+    response = kiln.eth.get_eth_rewards(validators=validators, wallets=wallets, accounts=accounts, start_date=start_date, end_date=end_date)
 ```
 
 
@@ -168,6 +212,8 @@ Name | Type | Description  | Notes
  **validators** | [**List[str]**](str.md)| Comma-separated list of validators addresses | [optional] 
  **wallets** | [**List[str]**](str.md)| Comma-separated list of wallets addresses | [optional] 
  **accounts** | [**List[str]**](str.md)| Comma-separated list of Kiln accounts identifiers | [optional] 
+ **start_date** | **date**| Get rewards from this date (YYYY-MM-DD) | [optional] 
+ **end_date** | **date**| Get rewards to this date (YYYY-MM-DD) | [optional] 
 
 ### Return type
 
@@ -181,14 +227,15 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | successful operation |  -  |
-**400** | Invalid status value |  -  |
+**200** | Successful operation |  -  |
+**400** | Invalid parameters |  -  |
+**500** | Internal server error |  -  |
 
 [[Back to top]](#)
 # **get_eth_stake_transaction_status**
 > PostEthStakeTransaction201Response kiln.eth.get_eth_stake_transaction_status(tx_hash)
 
-TX status
+Transaction status
 
 Get the status of an Ethereum transaction
 
@@ -222,8 +269,9 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | successful operation |  -  |
-**400** | Invalid status value |  -  |
+**200** | Successful operation |  -  |
+**400** | Invalid parameters |  -  |
+**500** | Internal server error |  -  |
 
 [[Back to top]](#)
 # **get_eth_stakes**
@@ -267,16 +315,17 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | successful operation |  -  |
+**200** | Successful operation |  -  |
 **400** | Invalid parameters |  -  |
+**500** | Internal server error |  -  |
 
 [[Back to top]](#)
 # **post_eth_stake_transaction**
-> PostEthStakeTransaction201Response kiln.eth.post_eth_stake_transaction(ethereum_craft_tx_query)
+> PostEthStakeTransaction201Response kiln.eth.post_eth_stake_transaction(ethereum_craft_stake_tx_payload)
 
-TX Craft
+Craft stake transaction
 
-Generates a stake transaction for Ethereum
+Generates an Ethereum EIP 1559 stake transaction
 
 ### Example
 
@@ -285,8 +334,8 @@ import kiln_connect
 import os
 
 with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
-    ethereum_craft_tx_query = kiln_connect.openapi_client.EthereumCraftTxQuery() # EthereumCraftTxQuery | Transaction to craft
-    response = kiln.eth.post_eth_stake_transaction(ethereum_craft_tx_query)
+    ethereum_craft_stake_tx_payload = kiln_connect.openapi_client.EthereumCraftStakeTxPayload() # EthereumCraftStakeTxPayload | Transaction to craft
+    response = kiln.eth.post_eth_stake_transaction(ethereum_craft_stake_tx_payload)
 ```
 
 
@@ -294,7 +343,7 @@ with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ethereum_craft_tx_query** | [**EthereumCraftTxQuery**](EthereumCraftTxQuery.md)| Transaction to craft | 
+ **ethereum_craft_stake_tx_payload** | [**EthereumCraftStakeTxPayload**](EthereumCraftStakeTxPayload.md)| Transaction to craft | 
 
 ### Return type
 
@@ -308,16 +357,17 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | successful operation |  -  |
-**400** | Invalid status value |  -  |
+**201** | Successful operation |  -  |
+**400** | Invalid parameters |  -  |
+**500** | Internal server error |  -  |
 
 [[Back to top]](#)
 # **post_eth_transaction_broadcast**
-> PostEthTransactionBroadcast201Response kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
+> PostEthTransactionBroadcast201Response kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_payload)
 
-TX Broadcast
+Broadcast transaction
 
-Broadcasts a transaction for Ethereum
+Broadcasts a signed Ethereum transaction
 
 ### Example
 
@@ -326,8 +376,8 @@ import kiln_connect
 import os
 
 with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
-    ethereum_broadcast_tx_query = kiln_connect.openapi_client.EthereumBroadcastTxQuery() # EthereumBroadcastTxQuery | Transaction to broadcast
-    response = kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_query)
+    ethereum_broadcast_tx_payload = kiln_connect.openapi_client.EthereumBroadcastTxPayload() # EthereumBroadcastTxPayload | Transaction to broadcast
+    response = kiln.eth.post_eth_transaction_broadcast(ethereum_broadcast_tx_payload)
 ```
 
 
@@ -335,7 +385,7 @@ with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ethereum_broadcast_tx_query** | [**EthereumBroadcastTxQuery**](EthereumBroadcastTxQuery.md)| Transaction to broadcast | 
+ **ethereum_broadcast_tx_payload** | [**EthereumBroadcastTxPayload**](EthereumBroadcastTxPayload.md)| Transaction to broadcast | 
 
 ### Return type
 
@@ -349,7 +399,50 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | successful operation |  -  |
-**400** | Invalid status value |  -  |
+**201** | Successful operation |  -  |
+**400** | Invalid parameters |  -  |
+**500** | Internal server error |  -  |
+
+[[Back to top]](#)
+# **v1_eth_transaction_prepare_post**
+> V1EthTransactionPreparePost201Response kiln.eth.v1_eth_transaction_prepare_post(ethereum_prepare_tx_payload)
+
+Prepare transaction
+
+Prepare an Ethereum transaction for broadcasting. It takes a serialized transaction and its signatures and returns a serialized signed transaction that can be broadcasted.
+
+### Example
+
+```python
+import kiln_connect
+import os
+
+with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kiln:
+    ethereum_prepare_tx_payload = kiln_connect.openapi_client.EthereumPrepareTxPayload() # EthereumPrepareTxPayload | Transaction to prepare
+    response = kiln.eth.v1_eth_transaction_prepare_post(ethereum_prepare_tx_payload)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ethereum_prepare_tx_payload** | [**EthereumPrepareTxPayload**](EthereumPrepareTxPayload.md)| Transaction to prepare | 
+
+### Return type
+
+[**V1EthTransactionPreparePost201Response**](V1EthTransactionPreparePost201Response.md)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json; charset=utf-8
+ - **Accept**: application/json; charset=utf-8
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Successful operation |  -  |
+**400** | Invalid parameters |  -  |
+**500** | Internal server error |  -  |
 
 [[Back to top]](#)

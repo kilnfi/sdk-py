@@ -17,11 +17,11 @@ import unittest
 import datetime
 
 import kiln_connect.openapi_client
-from kiln_connect.openapi_client.models.ethereum_broadcast_tx_query import EthereumBroadcastTxQuery  # noqa: E501
+from kiln_connect.openapi_client.models.ethereum_kiln_stats import EthereumKilnStats  # noqa: E501
 from kiln_connect.openapi_client.rest import ApiException
 
-class TestEthereumBroadcastTxQuery(unittest.TestCase):
-    """EthereumBroadcastTxQuery unit test stubs"""
+class TestEthereumKilnStats(unittest.TestCase):
+    """EthereumKilnStats unit test stubs"""
 
     def setUp(self):
         pass
@@ -30,24 +30,27 @@ class TestEthereumBroadcastTxQuery(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test EthereumBroadcastTxQuery
+        """Test EthereumKilnStats
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `EthereumBroadcastTxQuery`
+        # uncomment below to create an instance of `EthereumKilnStats`
         """
-        model = kiln_connect.openapi_client.models.ethereum_broadcast_tx_query.EthereumBroadcastTxQuery()  # noqa: E501
+        model = kiln_connect.openapi_client.models.ethereum_kiln_stats.EthereumKilnStats()  # noqa: E501
         if include_optional :
-            return EthereumBroadcastTxQuery(
-                serialized_tx = '0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc'
+            return EthereumKilnStats(
+                gross_apy = kiln_connect.openapi_client.models.ethereum_kiln_stats_gross_apy.EthereumKilnStats_gross_apy(
+                    last_1d = 1.337, 
+                    last_7d = 1.337, 
+                    last_30d = 1.337, )
             )
         else :
-            return EthereumBroadcastTxQuery(
+            return EthereumKilnStats(
         )
         """
 
-    def testEthereumBroadcastTxQuery(self):
-        """Test EthereumBroadcastTxQuery"""
+    def testEthereumKilnStats(self):
+        """Test EthereumKilnStats"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

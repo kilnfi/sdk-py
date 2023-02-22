@@ -29,6 +29,13 @@ class TestEthApi(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_get_eth_kiln_stats(self):
+        """Test case for get_eth_kiln_stats
+
+        Kiln stats  # noqa: E501
+        """
+        pass
+
     def test_get_eth_network_stats(self):
         """Test case for get_eth_network_stats
 
@@ -46,7 +53,7 @@ class TestEthApi(unittest.TestCase):
     def test_get_eth_report(self):
         """Test case for get_eth_report
 
-        Report  # noqa: E501
+        Excel reports  # noqa: E501
         """
         pass
 
@@ -60,7 +67,7 @@ class TestEthApi(unittest.TestCase):
     def test_get_eth_stake_transaction_status(self):
         """Test case for get_eth_stake_transaction_status
 
-        TX status  # noqa: E501
+        Transaction status  # noqa: E501
         """
         pass
 
@@ -74,14 +81,21 @@ class TestEthApi(unittest.TestCase):
     def test_post_eth_stake_transaction(self):
         """Test case for post_eth_stake_transaction
 
-        TX Craft  # noqa: E501
+        Craft stake transaction  # noqa: E501
         """
         pass
 
     def test_post_eth_transaction_broadcast(self):
         """Test case for post_eth_transaction_broadcast
 
-        TX Broadcast  # noqa: E501
+        Broadcast transaction  # noqa: E501
+        """
+        pass
+
+    def test_v1_eth_transaction_prepare_post(self):
+        """Test case for v1_eth_transaction_prepare_post
+
+        Prepare transaction  # noqa: E501
         """
         pass
 

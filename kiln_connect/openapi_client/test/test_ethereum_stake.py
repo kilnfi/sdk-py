@@ -52,7 +52,8 @@ class TestEthereumStake(unittest.TestCase):
                 consensus_rewards = '76187808000000000', 
                 execution_rewards = '0', 
                 rewards = '76187808000000000', 
-                gross_apy = 3.407
+                gross_apy = 3.407, 
+                updated_at = '2023-01-14T01:13:59Z'
             )
         else :
             return EthereumStake(

@@ -17,11 +17,11 @@ import unittest
 import datetime
 
 import kiln_connect.openapi_client
-from kiln_connect.openapi_client.models.ethereum_craft_tx_query import EthereumCraftTxQuery  # noqa: E501
+from kiln_connect.openapi_client.models.get_eth_kiln_stats200_response import GetEthKilnStats200Response  # noqa: E501
 from kiln_connect.openapi_client.rest import ApiException
 
-class TestEthereumCraftTxQuery(unittest.TestCase):
-    """EthereumCraftTxQuery unit test stubs"""
+class TestGetEthKilnStats200Response(unittest.TestCase):
+    """GetEthKilnStats200Response unit test stubs"""
 
     def setUp(self):
         pass
@@ -30,26 +30,28 @@ class TestEthereumCraftTxQuery(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test EthereumCraftTxQuery
+        """Test GetEthKilnStats200Response
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `EthereumCraftTxQuery`
+        # uncomment below to create an instance of `GetEthKilnStats200Response`
         """
-        model = kiln_connect.openapi_client.models.ethereum_craft_tx_query.EthereumCraftTxQuery()  # noqa: E501
+        model = kiln_connect.openapi_client.models.get_eth_kiln_stats200_response.GetEthKilnStats200Response()  # noqa: E501
         if include_optional :
-            return EthereumCraftTxQuery(
-                account_id = 'b7177fd2-fbb3-479f-aa92-db9fb16e229f', 
-                wallet = '0xe1f4acc0affB36a805474e3b6ab786738C6900A2', 
-                amount_wei = '32000000000000000000'
+            return GetEthKilnStats200Response(
+                data = kiln_connect.openapi_client.models.ethereum_kiln_stats.EthereumKilnStats(
+                    gross_apy = kiln_connect.openapi_client.models.ethereum_kiln_stats_gross_apy.EthereumKilnStats_gross_apy(
+                        last_1d = 1.337, 
+                        last_7d = 1.337, 
+                        last_30d = 1.337, ), )
             )
         else :
-            return EthereumCraftTxQuery(
+            return GetEthKilnStats200Response(
         )
         """
 
-    def testEthereumCraftTxQuery(self):
-        """Test EthereumCraftTxQuery"""
+    def testGetEthKilnStats200Response(self):
+        """Test GetEthKilnStats200Response"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
