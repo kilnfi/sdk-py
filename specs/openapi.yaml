@@ -5,10 +5,23 @@ info:
   title: Kiln API Specifications
   description: |-
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.
-    
     In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.
-    
     Once you have your API token, you can set it as a bearer token in your request headers.
+    
+    ### Backward Compatibility
+
+    Kiln considers the following changes to be backwards-compatible:
+
+    - Adding new API routes.
+    - Adding new optional request parameters to existing API methods.
+    - Adding new properties to existing API responses.
+    - Changing the order of properties in existing API responses.
+    - Adding new event types in existing enums.
+
+    Non-breaking changes may be introduced silently in our API and
+    subject to modifications before being officialy communicated and
+    documented here. Your application should not depend on them until
+    part of this specification.
   termsOfService: https://kiln.fi/
   contact:
     email: contact@kiln.fi
@@ -21,7 +34,11 @@ servers:
   - url: https://api.testnet.kiln.fi
   - url: https://api.mainnet.kiln.fi
 tags:
+  - name: accounts
+    x-displayName: ACCOUNTS
+    description: Manage your Kiln accounts. Accounts are like folders in which you can organize your stakes or clients' stakes. An account can contain stakes on multiple protocols.
   - name: eth
+    x-displayName: ETH
     description: Staking facilities for the Ethereum protocol
 paths:
   /v1/eth/stakes:
@@ -32,9 +49,9 @@ paths:
       description: Get the status of Ethereum stakes
       operationId: getEthStakes
       parameters:
-      - $ref: '#/components/parameters/EthereumValidatorsParam'
-      - $ref: '#/components/parameters/EthereumWalletsParam'
-      - $ref: '#/components/parameters/KilnAccountsParam'
+        - $ref: '#/components/parameters/EthereumValidatorsParam'
+        - $ref: '#/components/parameters/EthereumWalletsParam'
+        - $ref: '#/components/parameters/KilnAccountsParam'
       responses:
         '200':
           description: Successful operation
@@ -49,6 +66,8 @@ paths:
                       $ref: '#/components/schemas/EthereumStake'
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
   /v1/eth/rewards:
@@ -78,6 +97,8 @@ paths:
                       $ref: '#/components/schemas/EthereumReward'
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
   /v1/eth/operations:
@@ -108,16 +129,21 @@ paths:
                       - $ref: '#/components/schemas/EthereumOperationExecutionReward'
                       discriminator:
                         propertyName: type
+                        mapping:
+                          deposit: '#/components/schemas/EthereumOperationDeposit'
+                          consensus_reward: '#/components/schemas/EthereumOperationConsensusWithdrawal'
+                          execution_reward: '#/components/schemas/EthereumOperationExecutionReward'
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
-
   /v1/eth/network-stats:
     get:
       tags:
         - eth
-      summary: Network stats
+      summary: Network Stats
       description: Get some network statistics on Ethereum staking
       operationId: getEthNetworkStats
       responses:
@@ -130,13 +156,15 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/EthereumNetworkStats'
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
   /v1/eth/kiln-stats:
     get:
       tags:
         - eth
-      summary: Kiln stats
+      summary: Kiln Stats
       description: Get some Kiln statistics on Ethereum staking
       operationId: getEthKilnStats
       responses:
@@ -149,15 +177,49 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/EthereumKilnStats'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /v1/eth/keys:
+    post:
+      tags:
+        - eth
+      summary: Validation Keys
+      description: Create Ethereum validation keys on Kiln's infrastructure.
+      operationId: postEthKeys
+      requestBody:
+        description: Ethereum keys to generate
+        required: true
+        content:
+          "application/json; charset=utf-8":
+            schema:
+              $ref: '#/components/schemas/EthereumPostKeysPayload'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    oneOf:
+                      - $ref: '#/components/schemas/EthereumPostKeysCliResponse'
+                      - $ref: '#/components/schemas/EthereumPostKeysBatchResponse'
+        '400':
+          description: Invalid parameters
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
   /v1/eth/transaction/stake:
     post:
       tags:
         - eth
-      summary: Craft stake transaction
+      summary: Stake Transaction
       description: Generates an Ethereum EIP 1559 stake transaction
-      operationId: postEthStakeTransaction
+      operationId: postEthStakeTx
       requestBody:
         description: Transaction to craft
         required: true
@@ -177,14 +239,17 @@ paths:
                     $ref: '#/components/schemas/EthereumUnsignedStakeTx'
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
   /v1/eth/transaction/prepare:
     post:
       tags:
         - eth
-      summary: Prepare transaction
+      summary: Prepare Transaction
       description: Prepare an Ethereum transaction for broadcasting. It takes a serialized transaction and its signatures and returns a serialized signed transaction that can be broadcasted.
+      operationId: postEthPrepareTx
       requestBody:
         description: Transaction to prepare
         required: true
@@ -204,15 +269,17 @@ paths:
                     $ref: '#/components/schemas/EthereumSignedTx'
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
   /v1/eth/transaction/broadcast:
     post:
       tags:
         - eth
-      summary: Broadcast transaction
+      summary: Broadcast Transaction
       description: Broadcasts a signed Ethereum transaction
-      operationId: postEthTransactionBroadcast
+      operationId: postEthBroadcastTx
       requestBody:
         description: Transaction to broadcast
         required: true
@@ -232,15 +299,17 @@ paths:
                     $ref: '#/components/schemas/EthereumBroadcastTxResponse'
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
   /v1/eth/transaction/status:
     get:
       tags:
         - eth
-      summary: Transaction status
+      summary: Transaction Status
       description: Get the status of an Ethereum transaction
-      operationId: getEthStakeTransactionStatus
+      operationId: getEthTxStatus
       parameters:
       - name: tx_hash
         in: query
@@ -263,15 +332,17 @@ paths:
                     $ref: '#/components/schemas/EthereumUnsignedStakeTx'
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
   /v1/eth/reports:
     get:
       tags:
         - eth
-      summary: Excel reports
+      summary: Excel Reports
       description: Generates an Excel report sheet for your stakes and rewards
-      operationId: getEthReport
+      operationId: getEthReports
       parameters:
       - $ref: '#/components/parameters/EthereumValidatorsParam'
       - $ref: '#/components/parameters/EthereumWalletsParam'
@@ -288,6 +359,121 @@ paths:
                 example: ...
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /v1/accounts:
+    get:
+      tags:
+        - accounts
+      summary: Accounts
+      description: Retrieve accounts in your organization
+      operationId: getAccounts
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsResponse'
+
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - accounts
+      summary: Accounts
+      description: Create a new account in your organization
+      operationId: postAccount
+      requestBody:
+        description: Account to create
+        required: true
+        content:
+          "application/json; charset=utf-8":
+            schema:
+              $ref: '#/components/schemas/AccountPayload'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Invalid parameters
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /v1/accounts/{id}:
+    get:
+      tags:
+        - accounts
+      summary: Account
+      description: Retrieve an account in your organization
+      operationId: getAccount
+      parameters:
+        - $ref: '#/components/parameters/AccountIdParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - accounts
+      summary: Account
+      description: Update an account in your organization
+      operationId: putAccount
+      parameters:
+        - $ref: '#/components/parameters/AccountIdParam'
+      requestBody:
+        description: Account to update
+        required: true
+        content:
+          "application/json; charset=utf-8":
+            schema:
+              $ref: '#/components/schemas/AccountPayload'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Invalid parameters
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /v1/accounts/{id}/portfolio:
+    get:
+      tags:
+        - accounts
+      summary: Account Portfolio
+      description: Retrieve an account asset portfolio. USD balances are calculated based on recent asset prices. We use CoinGecko API to retrieve asset prices.
+      operationId: getAccountPortfolio
+      parameters:
+        - $ref: '#/components/parameters/AccountIdParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountPortfolio'
+        '401':
+          description: Unauthorized
         '500':
           description: Internal server error
 components:
@@ -351,6 +537,16 @@ components:
         type: string
         format: date
         example: "2023-01-20"
+    AccountIdParam:
+      name: id
+      in: path
+      description: Account id
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: "92f5bfd4-ea38-4824-84f7-686eddff5539"
+
   schemas:
     EthereumOperationDeposit:
       type: object
@@ -359,10 +555,10 @@ components:
           type: string
           example: deposit
           description: type of the operation
-        date:
+        time:
           type: string
           format: date-time
-          description: Date of the operation
+          description: Time of the operation
           example: "2023-01-14T01:13:59Z"
         validator_address:
           type: string
@@ -380,11 +576,14 @@ components:
           type: string
           description: Address of the sender of the transaction
           example: "0x41bf25fc8c52d292bd66d3bcecd8a919ecb9ef88"
-        proxied_by:
-          type: string
-          nullable: true
-          description: First address of the smart-contract called in the deposit chain
-          example: "0x1e68238cE926DEC62b3FBC99AB06eB1D85CE0270"
+        proxies:
+          type: array
+          example: ["0x1e68238cE926DEC62b3FBC99AB06eB1D85CE0270", "0x43244f90814b31dec250de24df5bb023eB1D85CE"]
+          description: Ordered list of smart-contracts in the calling chain
+          items:
+            type: string
+            description: Address of the smart-contract called in the deposit chain
+            example: "0x1e68238cE926DEC62b3FBC99AB06eB1D85CE0270"
         block:
           type: integer
           description: Block number containing the transaction
@@ -403,10 +602,10 @@ components:
         type:
           type: string
           example: execution_reward
-        date:
+        time:
           type: string
           format: date-time
-          description: Date of the operation
+          description: Time of the operation
           example: "2023-01-14T01:13:59Z"
         validator_address:
           type: string
@@ -425,11 +624,6 @@ components:
           nullable: true
           description: Hash of the MEV payout transaction if appliable
           example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
-        mev_payout_tx_sender:
-          type: string
-          nullable: true
-          description: Sender of the MEV payout transaction if appliable
-          example: "0x1e68238cE926DEC62b3FBC99AB06eB1D85CE0270"
         amount:
           type: string
           description: Amount in WEI of the reward
@@ -440,10 +634,10 @@ components:
         type:
           type: string
           example: consensus_reward
-        date:
+        time:
           type: string
           format: date-time
-          description: Date of the operation
+          description: Time of the operation
           example: "2023-01-14T01:13:59Z"
         validator_address:
           type: string
@@ -466,6 +660,7 @@ components:
       properties:
         validator_address:
           type: string
+          description: Public key of the validator
           example: "0x95373bcf8e2c64e1c373a6e534c002f210adbcc84c5abda3b6306677e171430ae50781a51c9f579a47622e334dba2412"
         state:
           type: string
@@ -620,6 +815,8 @@ components:
           example: "0x20a40259b763d549dfa1c082776a036dd8dabbe8b5e32ee721be017512dc"
     EthereumBroadcastTxPayload:
       type: object
+      required:
+        - tx_serialized
       properties:
         tx_serialized:
           type: string
@@ -630,10 +827,126 @@ components:
       properties:
         tx_hash:
           type: string
-          description: Hash of the transaction once broadcasted
+          description: Hash of the transaction
           example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
+    EthereumPostKeysPayload:
+      type: object
+      required:
+        - account_id
+        - withdrawal_address
+        - number
+      properties:
+        account_id:
+          type: string
+          example: "b7177fd2-fbb3-479f-aa92-db9fb16e229f"
+          format: uuid
+          description: Kiln Account ID to stake into
+        withdrawal_address:
+          type: string
+          example: "0xe1f4acc0affB36a805474e3b6ab786738C6900A2"
+          description: Ethereum withdrawal address used for the withdrawals credentials of the validators. BLS format is not supported.
+        number:
+          type: number
+          minimum: 1
+          maximum: 150
+          example: 1
+          description: Number of validator keys to generate. You can generate up to 150 keys at once.
+        format:
+          type: string
+          default: "batch_deposit"
+          x-extensible-enum: ["cli_deposit", "batch_deposit"]
+          example: "cli_deposit"
+          description: Response format. Use "cli_deposit" for more information about each key.
+    EthereumPostKeysCliResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          format:
+            type: string
+            example: cli_deposit
+            description: Format of the key
+          pubkey:
+            type: string
+            example: "8f36e2f4e921b1ed5ce9c94f21e1f26a748ac4e0c57f0d8973e7d576a2f8953b87dd86300de718238de23b1fecb19db5"
+            description: Public key of the validator
+          withdrawal_credentials:
+            type: string
+            example: "010000000000000000000000e1f4acc0affb36a805474e3b6ab786738c6900a2"
+            description: Withdrawals credentials of the validator
+          amount:
+            type: number
+            example: 32000000000
+            description: Amount in GWEI that needs to be deposited to activate the validator
+          signature:
+            type: string
+            example: "b7947eabf631d4772c4014a9fec2ecac2c15fc5175ad83023bbdfc9e6618cb8e78829231477c060bc9339482058ff195141f2aeb801c0329a1a4afebd7e76ce0ba1d9d88f8820d052836a79d59aea673db9eb5009db4a4f6e04fb7ffbdbdd604"
+            description: BLS signature for the deposit data structure required to stake on the Ethereum chain
+          deposit_message_root:
+            type: string
+            example: "65db6ae73c6465311a7acf2cd8a2863eececf09901872550639f0d8f6c1876f5"
+            description: Root hash ensuring the deposit message integrity
+          deposit_data_root:
+            type: string
+            example: "9b74cccf3a3c501374179be4bb6f505c4b40da41c205a101db3342a8df0af2dd"
+            description: Root hash ensuring the deposit data integrity
+          fork_version:
+            type: string
+            example: "00000000"
+            description: Identifier for the fork version
+          network_name:
+            type: string
+            example: "mainnet"
+            description: Ethereum network for the generated validation key(s)
+          deposit_cli_version:
+            type: string
+            example: "2.2.0"
+            description: Version of the deposit-cli tool used to generate the validation key
+    EthereumPostKeysBatchResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          example: batch_deposit
+          description: Format of the key
+        pubkeys:
+          type: array
+          example: [ "8f36e2f4e921b1ed5ce9c94f21e1f26a748ac4e0c57f0d8973e7d576a2f8953b87dd86300de718238de23b1fecb19db5" ]
+          description: Public keys of the validators
+          items:
+            type: string
+            example: "8f36e2f4e921b1ed5ce9c94f21e1f26a748ac4e0c57f0d8973e7d576a2f8953b87dd86300de718238de23b1fecb19db5"
+            description: Public key of a validator
+        withdrawal_credentials:
+          type: array
+          example: [ "010000000000000000000000e1f4acc0affb36a805474e3b6ab786738c6900a2" ]
+          description: Withdrawals credentials of the validators
+          items:
+            type: string
+            example: "010000000000000000000000e1f4acc0affb36a805474e3b6ab786738c6900a2"
+            description: Withdrawals credentials of a validator
+        signatures:
+          type: array
+          example: [ "b7947eabf631d4772c4014a9fec2ecac2c15fc5175ad83023bbdfc9e6618cb8e78829231477c060bc9339482058ff195141f2aeb801c0329a1a4afebd7e76ce0ba1d9d88f8820d052836a79d59aea673db9eb5009db4a4f6e04fb7ffbdbdd604" ]
+          description: BLS signatures for the deposit data structure required to stake on the Ethereum chain
+          items:
+            type: string
+            example: "b7947eabf631d4772c4014a9fec2ecac2c15fc5175ad83023bbdfc9e6618cb8e78829231477c060bc9339482058ff195141f2aeb801c0329a1a4afebd7e76ce0ba1d9d88f8820d052836a79d59aea673db9eb5009db4a4f6e04fb7ffbdbdd604"
+            description: BLS signature for the deposit data structure required to stake on the Ethereum chain
+        deposit_data_roots:
+          type: array
+          example: [ "37e329240dd23a4bcd86cd62b97fdf0873b565876f29678e1edbf5514fe344d6" ]
+          description: Root hashes ensuring the deposit data integrity
+          items:
+            type: string
+            example: "37e329240dd23a4bcd86cd62b97fdf0873b565876f29678e1edbf5514fe344d6"
+            description: Root hashes ensuring the deposit data integrity
     EthereumCraftStakeTxPayload:
       type: object
+      required:
+        - account_id
+        - wallet
+        - amount_wei
       properties:
         account_id:
           type: string
@@ -650,6 +963,11 @@ components:
           description: Amount to stake in WEI (must be a multiple of "32000000000000000000")
     EthereumPrepareTxPayload:
       type: object
+      required:
+        - unsigned_tx_serialized
+        - r
+        - s
+        - v
       properties:
         unsigned_tx_serialized:
           type: string
@@ -667,6 +985,138 @@ components:
           type: number
           description: v part of the ECDSA signature (0 or 1)
           example: 0
+    AccountsResponse:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Account'
+    Account:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: Date at which the account was created
+          example: "2023-02-06T21:48:11.038Z"
+        id:
+          type: string
+          format: uuid
+          description: Account id
+          example: "92f5bfd4-ea38-4824-84f7-686eddff5539"
+        name:
+          type: string
+          description: Account name
+          example: "account name"
+        description:
+          type: string
+          description: Account description
+          example: "account description"
+    AccountPortfolio:
+      type: object
+      properties:
+        total_balance_usd:
+          type: number
+          format: float
+          description: Total USD balance of all the account's stakes
+          example: 182981229.16751668
+        total_rewards_usd:
+          type: number
+          format: float
+          description: Total USD of rewards earned from all the account's stakes
+          example: 4526.16751668
+        total_stakes:
+          type: integer
+          description: Total number of stakes
+          example: 56
+        total_active_stakes:
+          type: integer
+          description: Total number of stakes actively collecting rewards
+          example: 52
+        protocols:
+          type: array
+          description: List of protocols staked within the account
+          items:
+            type: object
+            properties:
+              token:
+                type: string
+                x-extensible-enum: ["ada", "eth", "near", "sol", "xtz"]
+                description: Token name
+                example: "eth"
+              name:
+                type: string
+                x-extensible-enum: [ "Cardano", "Ethereum", "Near", "Solana", "Tezos" ]
+                description: Protocol name
+                example: Ethereum
+              total_stakes:
+                type: integer
+                description: Total number of stakes for this protocol
+                example: 12
+              total_active_stakes:
+                type: integer
+                description: Total number of stakes actively collecting rewards for this protocol
+                example: 10
+              total_balance:
+                type: object
+                properties:
+                  amount_usd:
+                    type: number
+                    format: float
+                    description: Total USD balance of stakes for this protocol
+                    example: 10896.4568
+                  amount:
+                    type: number
+                    format: float
+                    description: Total balance of stakes in the native protocol token for this protocol
+                    example: 1896.4563
+              total_rewards:
+                type: object
+                properties:
+                  amount_usd:
+                    type: number
+                    format: float
+                    description: Total USD of rewards earned for this protocol
+                    example: 10896.4568
+                  amount:
+                    type: number
+                    format: float
+                    description: Total rewards earned in the native protocol token for this protocol
+                    example: 1896.4568
+              balance_share_percent:
+                type: number
+                format: float
+                description: Protocol share of the total balance
+                example: 42.59
+                maximum: 100
+                minimum: 0
+              rewards_share_percent:
+                type: number
+                format: float
+                description: Protocol share of the total rewards earned
+                example: 42.59
+                maximum: 100
+                minimum: 0
+    AccountPayload:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          description: Account name
+          example: "name"
+          maxLength: 100
+          minLength: 1
+        description:
+          type: string
+          description: Account description
+          example: "description"
+          maxLength: 500
+          minLength: 0
 security:
   - bearerAuth: []
 

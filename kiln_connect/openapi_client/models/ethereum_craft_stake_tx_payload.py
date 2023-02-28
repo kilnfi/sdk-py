@@ -3,7 +3,7 @@
 """
     Kiln API Specifications
 
-    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
+    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on. In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi. Once you have your API token, you can set it as a bearer token in your request headers.  ### Backward Compatibility  Kiln considers the following changes to be backwards-compatible:  - Adding new API routes. - Adding new optional request parameters to existing API methods. - Adding new properties to existing API responses. - Changing the order of properties in existing API responses. - Adding new event types in existing enums.  Non-breaking changes may be introduced silently in our API and subject to modifications before being officialy communicated and documented here. Your application should not depend on them until part of this specification.  # noqa: E501
 
     The version of the OpenAPI document: 1.0.0
     Contact: contact@kiln.fi
@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+
 from pydantic import BaseModel, Field, StrictStr
 
 class EthereumCraftStakeTxPayload(BaseModel):
@@ -27,9 +27,9 @@ class EthereumCraftStakeTxPayload(BaseModel):
 
     Do not edit the class manually.
     """
-    account_id: Optional[StrictStr] = Field(None, description="Kiln Account ID to stake into")
-    wallet: Optional[StrictStr] = Field(None, description="Wallet to stake from and be used as a withdrawal credentials in the deposit. Losing access to this wallet will result in losing the stake.")
-    amount_wei: Optional[StrictStr] = Field(None, description="Amount to stake in WEI (must be a multiple of \"32000000000000000000\")")
+    account_id: StrictStr = Field(..., description="Kiln Account ID to stake into")
+    wallet: StrictStr = Field(..., description="Wallet to stake from and be used as a withdrawal credentials in the deposit. Losing access to this wallet will result in losing the stake.")
+    amount_wei: StrictStr = Field(..., description="Amount to stake in WEI (must be a multiple of \"32000000000000000000\")")
     __properties = ["account_id", "wallet", "amount_wei"]
 
     class Config:

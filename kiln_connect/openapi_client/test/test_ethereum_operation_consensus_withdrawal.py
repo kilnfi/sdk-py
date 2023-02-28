@@ -3,7 +3,7 @@
 """
     Kiln API Specifications
 
-    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
+    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on. In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi. Once you have your API token, you can set it as a bearer token in your request headers.  ### Backward Compatibility  Kiln considers the following changes to be backwards-compatible:  - Adding new API routes. - Adding new optional request parameters to existing API methods. - Adding new properties to existing API responses. - Changing the order of properties in existing API responses. - Adding new event types in existing enums.  Non-breaking changes may be introduced silently in our API and subject to modifications before being officialy communicated and documented here. Your application should not depend on them until part of this specification.  # noqa: E501
 
     The version of the OpenAPI document: 1.0.0
     Contact: contact@kiln.fi
@@ -40,7 +40,7 @@ class TestEthereumOperationConsensusWithdrawal(unittest.TestCase):
         if include_optional :
             return EthereumOperationConsensusWithdrawal(
                 type = 'consensus_reward', 
-                var_date = '2023-01-14T01:13:59Z', 
+                time = '2023-01-14T01:13:59Z', 
                 validator_address = '0x95373bcf8e2c64e1c373a6e534c002f210adbcc84c5abda3b6306677e171430ae50781a51c9f579a47622e334dba2412', 
                 block = 15955054, 
                 fee_recipient = '0x1e68238cE926DEC62b3FBC99AB06eB1D85CE0270', 

@@ -3,7 +3,7 @@
 """
     Kiln API Specifications
 
-    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
+    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on. In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi. Once you have your API token, you can set it as a bearer token in your request headers.  ### Backward Compatibility  Kiln considers the following changes to be backwards-compatible:  - Adding new API routes. - Adding new optional request parameters to existing API methods. - Adding new properties to existing API responses. - Changing the order of properties in existing API responses. - Adding new event types in existing enums.  Non-breaking changes may be introduced silently in our API and subject to modifications before being officialy communicated and documented here. Your application should not depend on them until part of this specification.  # noqa: E501
 
     The version of the OpenAPI document: 1.0.0
     Contact: contact@kiln.fi
@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr
 
 class EthereumOperationDeposit(BaseModel):
@@ -28,16 +28,16 @@ class EthereumOperationDeposit(BaseModel):
     Do not edit the class manually.
     """
     type: Optional[StrictStr] = Field(None, description="type of the operation")
-    var_date: Optional[datetime] = Field(None, alias="date", description="Date of the operation")
+    time: Optional[datetime] = Field(None, description="Time of the operation")
     validator_address: Optional[StrictStr] = Field(None, description="Validator address of the operation")
     tx_hash: Optional[StrictStr] = Field(None, description="Hash of the transaction")
     tx_gas_used: Optional[StrictStr] = Field(None, description="Gas used by the transaction in WEI")
     tx_sender: Optional[StrictStr] = Field(None, description="Address of the sender of the transaction")
-    proxied_by: Optional[StrictStr] = Field(None, description="First address of the smart-contract called in the deposit chain")
+    proxies: Optional[List[StrictStr]] = Field(None, description="Ordered list of smart-contracts in the calling chain")
     block: Optional[StrictInt] = Field(None, description="Block number containing the transaction")
     withdrawal_credentials: Optional[StrictStr] = Field(None, description="Withdrawal credentials of the deposit")
     amount: Optional[StrictStr] = Field(None, description="Amount in WEI of the deposit transaction")
-    __properties = ["type", "date", "validator_address", "tx_hash", "tx_gas_used", "tx_sender", "proxied_by", "block", "withdrawal_credentials", "amount"]
+    __properties = ["type", "time", "validator_address", "tx_hash", "tx_gas_used", "tx_sender", "proxies", "block", "withdrawal_credentials", "amount"]
 
     class Config:
         allow_population_by_field_name = True
@@ -62,10 +62,6 @@ class EthereumOperationDeposit(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # set to None if proxied_by (nullable) is None
-        if self.proxied_by is None:
-            _dict['proxied_by'] = None
-
         return _dict
 
     @classmethod
@@ -79,12 +75,12 @@ class EthereumOperationDeposit(BaseModel):
 
         _obj = EthereumOperationDeposit.parse_obj({
             "type": obj.get("type"),
-            "var_date": obj.get("date"),
+            "time": obj.get("time"),
             "validator_address": obj.get("validator_address"),
             "tx_hash": obj.get("tx_hash"),
             "tx_gas_used": obj.get("tx_gas_used"),
             "tx_sender": obj.get("tx_sender"),
-            "proxied_by": obj.get("proxied_by"),
+            "proxies": obj.get("proxies"),
             "block": obj.get("block"),
             "withdrawal_credentials": obj.get("withdrawal_credentials"),
             "amount": obj.get("amount")

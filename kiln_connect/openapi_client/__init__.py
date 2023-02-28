@@ -5,7 +5,7 @@
 """
     Kiln API Specifications
 
-    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
+    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on. In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi. Once you have your API token, you can set it as a bearer token in your request headers.  ### Backward Compatibility  Kiln considers the following changes to be backwards-compatible:  - Adding new API routes. - Adding new optional request parameters to existing API methods. - Adding new properties to existing API responses. - Changing the order of properties in existing API responses. - Adding new event types in existing enums.  Non-breaking changes may be introduced silently in our API and subject to modifications before being officialy communicated and documented here. Your application should not depend on them until part of this specification.  # noqa: E501
 
     The version of the OpenAPI document: 1.0.0
     Contact: contact@kiln.fi
@@ -18,6 +18,7 @@ from __future__ import absolute_import
 __version__ = "1.0.0"
 
 # import apis into sdk package
+from kiln_connect.openapi_client.api.accounts_api import AccountsApi
 from kiln_connect.openapi_client.api.eth_api import EthApi
 
 # import ApiClient
@@ -30,6 +31,13 @@ from kiln_connect.openapi_client.exceptions import ApiKeyError
 from kiln_connect.openapi_client.exceptions import ApiAttributeError
 from kiln_connect.openapi_client.exceptions import ApiException
 # import models into sdk package
+from kiln_connect.openapi_client.models.account import Account
+from kiln_connect.openapi_client.models.account_payload import AccountPayload
+from kiln_connect.openapi_client.models.account_portfolio import AccountPortfolio
+from kiln_connect.openapi_client.models.account_portfolio_protocols_inner import AccountPortfolioProtocolsInner
+from kiln_connect.openapi_client.models.account_portfolio_protocols_inner_total_balance import AccountPortfolioProtocolsInnerTotalBalance
+from kiln_connect.openapi_client.models.account_portfolio_protocols_inner_total_rewards import AccountPortfolioProtocolsInnerTotalRewards
+from kiln_connect.openapi_client.models.accounts_response import AccountsResponse
 from kiln_connect.openapi_client.models.ethereum_broadcast_tx_payload import EthereumBroadcastTxPayload
 from kiln_connect.openapi_client.models.ethereum_broadcast_tx_response import EthereumBroadcastTxResponse
 from kiln_connect.openapi_client.models.ethereum_craft_stake_tx_payload import EthereumCraftStakeTxPayload
@@ -39,6 +47,9 @@ from kiln_connect.openapi_client.models.ethereum_network_stats import EthereumNe
 from kiln_connect.openapi_client.models.ethereum_operation_consensus_withdrawal import EthereumOperationConsensusWithdrawal
 from kiln_connect.openapi_client.models.ethereum_operation_deposit import EthereumOperationDeposit
 from kiln_connect.openapi_client.models.ethereum_operation_execution_reward import EthereumOperationExecutionReward
+from kiln_connect.openapi_client.models.ethereum_post_keys_batch_response import EthereumPostKeysBatchResponse
+from kiln_connect.openapi_client.models.ethereum_post_keys_cli_response_inner import EthereumPostKeysCliResponseInner
+from kiln_connect.openapi_client.models.ethereum_post_keys_payload import EthereumPostKeysPayload
 from kiln_connect.openapi_client.models.ethereum_prepare_tx_payload import EthereumPrepareTxPayload
 from kiln_connect.openapi_client.models.ethereum_reward import EthereumReward
 from kiln_connect.openapi_client.models.ethereum_signed_tx import EthereumSignedTx
@@ -50,6 +61,8 @@ from kiln_connect.openapi_client.models.get_eth_operations200_response import Ge
 from kiln_connect.openapi_client.models.get_eth_operations200_response_data_inner import GetEthOperations200ResponseDataInner
 from kiln_connect.openapi_client.models.get_eth_rewards200_response import GetEthRewards200Response
 from kiln_connect.openapi_client.models.get_eth_stakes200_response import GetEthStakes200Response
-from kiln_connect.openapi_client.models.post_eth_stake_transaction201_response import PostEthStakeTransaction201Response
-from kiln_connect.openapi_client.models.post_eth_transaction_broadcast201_response import PostEthTransactionBroadcast201Response
-from kiln_connect.openapi_client.models.v1_eth_transaction_prepare_post201_response import V1EthTransactionPreparePost201Response
+from kiln_connect.openapi_client.models.post_eth_broadcast_tx201_response import PostEthBroadcastTx201Response
+from kiln_connect.openapi_client.models.post_eth_keys201_response import PostEthKeys201Response
+from kiln_connect.openapi_client.models.post_eth_keys201_response_data import PostEthKeys201ResponseData
+from kiln_connect.openapi_client.models.post_eth_prepare_tx201_response import PostEthPrepareTx201Response
+from kiln_connect.openapi_client.models.post_eth_stake_tx201_response import PostEthStakeTx201Response

@@ -3,7 +3,7 @@
 """
     Kiln API Specifications
 
-    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
+    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on. In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi. Once you have your API token, you can set it as a bearer token in your request headers.  ### Backward Compatibility  Kiln considers the following changes to be backwards-compatible:  - Adding new API routes. - Adding new optional request parameters to existing API methods. - Adding new properties to existing API responses. - Changing the order of properties in existing API responses. - Adding new event types in existing enums.  Non-breaking changes may be introduced silently in our API and subject to modifications before being officialy communicated and documented here. Your application should not depend on them until part of this specification.  # noqa: E501
 
     The version of the OpenAPI document: 1.0.0
     Contact: contact@kiln.fi
@@ -28,14 +28,13 @@ class EthereumOperationExecutionReward(BaseModel):
     Do not edit the class manually.
     """
     type: Optional[StrictStr] = None
-    var_date: Optional[datetime] = Field(None, alias="date", description="Date of the operation")
+    time: Optional[datetime] = Field(None, description="Time of the operation")
     validator_address: Optional[StrictStr] = Field(None, description="Validator address of the operation")
     block: Optional[StrictInt] = Field(None, description="Block number of the reward")
     fee_recipient: Optional[StrictStr] = Field(None, description="Fee recipient of the reward")
     mev_payout_tx_hash: Optional[StrictStr] = Field(None, description="Hash of the MEV payout transaction if appliable")
-    mev_payout_tx_sender: Optional[StrictStr] = Field(None, description="Sender of the MEV payout transaction if appliable")
     amount: Optional[StrictStr] = Field(None, description="Amount in WEI of the reward")
-    __properties = ["type", "date", "validator_address", "block", "fee_recipient", "mev_payout_tx_hash", "mev_payout_tx_sender", "amount"]
+    __properties = ["type", "time", "validator_address", "block", "fee_recipient", "mev_payout_tx_hash", "amount"]
 
     class Config:
         allow_population_by_field_name = True
@@ -64,10 +63,6 @@ class EthereumOperationExecutionReward(BaseModel):
         if self.mev_payout_tx_hash is None:
             _dict['mev_payout_tx_hash'] = None
 
-        # set to None if mev_payout_tx_sender (nullable) is None
-        if self.mev_payout_tx_sender is None:
-            _dict['mev_payout_tx_sender'] = None
-
         return _dict
 
     @classmethod
@@ -81,12 +76,11 @@ class EthereumOperationExecutionReward(BaseModel):
 
         _obj = EthereumOperationExecutionReward.parse_obj({
             "type": obj.get("type"),
-            "var_date": obj.get("date"),
+            "time": obj.get("time"),
             "validator_address": obj.get("validator_address"),
             "block": obj.get("block"),
             "fee_recipient": obj.get("fee_recipient"),
             "mev_payout_tx_hash": obj.get("mev_payout_tx_hash"),
-            "mev_payout_tx_sender": obj.get("mev_payout_tx_sender"),
             "amount": obj.get("amount")
         })
         return _obj

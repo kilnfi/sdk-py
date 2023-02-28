@@ -3,7 +3,7 @@
 """
     Kiln API Specifications
 
-    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.  In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.  Once you have your API token, you can set it as a bearer token in your request headers.  # noqa: E501
+    This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on. In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi. Once you have your API token, you can set it as a bearer token in your request headers.  ### Backward Compatibility  Kiln considers the following changes to be backwards-compatible:  - Adding new API routes. - Adding new optional request parameters to existing API methods. - Adding new properties to existing API responses. - Changing the order of properties in existing API responses. - Adding new event types in existing enums.  Non-breaking changes may be introduced silently in our API and subject to modifications before being officialy communicated and documented here. Your application should not depend on them until part of this specification.  # noqa: E501
 
     The version of the OpenAPI document: 1.0.0
     Contact: contact@kiln.fi
@@ -32,14 +32,14 @@ class TestEthApi(unittest.TestCase):
     def test_get_eth_kiln_stats(self):
         """Test case for get_eth_kiln_stats
 
-        Kiln stats  # noqa: E501
+        Kiln Stats  # noqa: E501
         """
         pass
 
     def test_get_eth_network_stats(self):
         """Test case for get_eth_network_stats
 
-        Network stats  # noqa: E501
+        Network Stats  # noqa: E501
         """
         pass
 
@@ -50,10 +50,10 @@ class TestEthApi(unittest.TestCase):
         """
         pass
 
-    def test_get_eth_report(self):
-        """Test case for get_eth_report
+    def test_get_eth_reports(self):
+        """Test case for get_eth_reports
 
-        Excel reports  # noqa: E501
+        Excel Reports  # noqa: E501
         """
         pass
 
@@ -64,13 +64,6 @@ class TestEthApi(unittest.TestCase):
         """
         pass
 
-    def test_get_eth_stake_transaction_status(self):
-        """Test case for get_eth_stake_transaction_status
-
-        Transaction status  # noqa: E501
-        """
-        pass
-
     def test_get_eth_stakes(self):
         """Test case for get_eth_stakes
 
@@ -78,24 +71,38 @@ class TestEthApi(unittest.TestCase):
         """
         pass
 
-    def test_post_eth_stake_transaction(self):
-        """Test case for post_eth_stake_transaction
+    def test_get_eth_tx_status(self):
+        """Test case for get_eth_tx_status
 
-        Craft stake transaction  # noqa: E501
+        Transaction Status  # noqa: E501
         """
         pass
 
-    def test_post_eth_transaction_broadcast(self):
-        """Test case for post_eth_transaction_broadcast
+    def test_post_eth_broadcast_tx(self):
+        """Test case for post_eth_broadcast_tx
 
-        Broadcast transaction  # noqa: E501
+        Broadcast Transaction  # noqa: E501
         """
         pass
 
-    def test_v1_eth_transaction_prepare_post(self):
-        """Test case for v1_eth_transaction_prepare_post
+    def test_post_eth_keys(self):
+        """Test case for post_eth_keys
 
-        Prepare transaction  # noqa: E501
+        Validation Keys  # noqa: E501
+        """
+        pass
+
+    def test_post_eth_prepare_tx(self):
+        """Test case for post_eth_prepare_tx
+
+        Prepare Transaction  # noqa: E501
+        """
+        pass
+
+    def test_post_eth_stake_tx(self):
+        """Test case for post_eth_stake_tx
+
+        Stake Transaction  # noqa: E501
         """
         pass
 

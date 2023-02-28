@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**validator_address** | **str** |  | [optional] 
+**validator_address** | **str** | Public key of the validator | [optional] 
 **state** | **str** | State of the Ethereum stake as seen be the consensus layer | [optional] 
 **activated_at** | **datetime** | Date of activation on the Ethereum consensus layer | [optional] 
 **activated_epoch** | **int** | Epoch of activation on the Ethereum consensus layer | [optional] 
