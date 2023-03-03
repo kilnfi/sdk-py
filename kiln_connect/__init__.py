@@ -3,3 +3,9 @@ from .kiln_connect import (
     KilnConnect,
     KilnError,
 )
+
+from .integrations import (
+    IntegrationConfig,
+)
+
+from .errors import *
