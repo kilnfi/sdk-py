@@ -24,7 +24,7 @@ from typing import Optional
 import kiln_connect
 
 
-eth = typer.Typer(
+eth_cli = typer.Typer(
     name='eth', help='Staking utilities for Ethereum', no_args_is_help=True)
 
 
@@ -39,7 +39,7 @@ def pretty_wei_to_eth(wei: str) -> str:
     return f"{eth}Ξ"
 
 
-@eth.command("stakes")
+@eth_cli.command("stakes")
 def ethereum_stakes(validators: list[str]):
     """Show Ethereum Stake status.
     """
@@ -57,7 +57,7 @@ def ethereum_stakes(validators: list[str]):
         console.print(table)
 
 
-@eth.command("rewards")
+@eth_cli.command("rewards")
 def ethereum_rewards(validators: list[str]):
     """Show Ethereum rewards.
     """
@@ -78,7 +78,7 @@ def ethereum_rewards(validators: list[str]):
         console.print(table)
 
 
-@eth.command("network-stats")
+@eth_cli.command("network-stats")
 def ethereum_network_stats():
     """Show Ethereum Network Stats.
     """
@@ -93,7 +93,7 @@ def ethereum_network_stats():
         console.print(table)
 
 
-@eth.command("stake-via-fireblocks")
+@eth_cli.command("stake-via-fireblocks")
 def ethereum_stake_via_fireblocks(account_id: str, wallet: str):
     """Stake ETH via fireblocks.
     """
