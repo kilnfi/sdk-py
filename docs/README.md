@@ -13,7 +13,7 @@ The SDK is typically used as follows: a `KilnConnect` instance is
 created from a `KilnConfig`, the SDK then provides access to different
 parts:
 
-- `accounts` for Kiln accopunt facilities
+- `accounts` for Kiln Accounts facilities
 - `eth` for Ethereum facilities
 
 Optionally, the SDK can be configured with multiple integrations
