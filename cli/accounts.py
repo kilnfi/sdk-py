@@ -44,7 +44,7 @@ def accounts_list():
             table.add_row(
                 account.id,
                 account.name,
-                account.created_at,
+                str(account.created_at),
                 account.description)
 
         console.print(table)

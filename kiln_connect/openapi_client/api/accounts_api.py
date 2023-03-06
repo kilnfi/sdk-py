@@ -20,10 +20,10 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
 
-from kiln_connect.openapi_client.models.account import Account
 from kiln_connect.openapi_client.models.account_payload import AccountPayload
-from kiln_connect.openapi_client.models.account_portfolio import AccountPortfolio
-from kiln_connect.openapi_client.models.accounts_response import AccountsResponse
+from kiln_connect.openapi_client.models.get_account_portfolio200_response import GetAccountPortfolio200Response
+from kiln_connect.openapi_client.models.get_accounts200_response import GetAccounts200Response
+from kiln_connect.openapi_client.models.post_account201_response import PostAccount201Response
 
 from kiln_connect.openapi_client.api_client import ApiClient
 from kiln_connect.openapi_client.exceptions import (  # noqa: F401
@@ -45,7 +45,7 @@ class AccountsApi(object):
         self.api_client = api_client
 
     @validate_arguments
-    def get_account(self, id : Annotated[StrictStr, Field(..., description="Account id")], **kwargs) -> Account:  # noqa: E501
+    def get_account(self, id : Annotated[StrictStr, Field(..., description="Account id")], **kwargs) -> PostAccount201Response:  # noqa: E501
         """Account  # noqa: E501
 
         Retrieve an account in your organization  # noqa: E501
@@ -70,7 +70,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: Account
+        :rtype: PostAccount201Response
         """
         kwargs['_return_http_data_only'] = True
         return self.get_account_with_http_info(id, **kwargs)  # noqa: E501
@@ -109,7 +109,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(Account, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(PostAccount201Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -167,7 +167,7 @@ class AccountsApi(object):
         _auth_settings = ['bearerAuth']  # noqa: E501
 
         _response_types_map = {
-            '200': "Account",
+            '200': "PostAccount201Response",
             '401': None,
             '500': None,
         }
@@ -190,7 +190,7 @@ class AccountsApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_account_portfolio(self, id : Annotated[StrictStr, Field(..., description="Account id")], **kwargs) -> AccountPortfolio:  # noqa: E501
+    def get_account_portfolio(self, id : Annotated[StrictStr, Field(..., description="Account id")], **kwargs) -> GetAccountPortfolio200Response:  # noqa: E501
         """Account Portfolio  # noqa: E501
 
         Retrieve an account asset portfolio. USD balances are calculated based on recent asset prices. We use CoinGecko API to retrieve asset prices.  # noqa: E501
@@ -215,7 +215,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: AccountPortfolio
+        :rtype: GetAccountPortfolio200Response
         """
         kwargs['_return_http_data_only'] = True
         return self.get_account_portfolio_with_http_info(id, **kwargs)  # noqa: E501
@@ -254,7 +254,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(AccountPortfolio, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(GetAccountPortfolio200Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -312,7 +312,7 @@ class AccountsApi(object):
         _auth_settings = ['bearerAuth']  # noqa: E501
 
         _response_types_map = {
-            '200': "AccountPortfolio",
+            '200': "GetAccountPortfolio200Response",
             '401': None,
             '500': None,
         }
@@ -335,7 +335,7 @@ class AccountsApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_accounts(self, **kwargs) -> AccountsResponse:  # noqa: E501
+    def get_accounts(self, **kwargs) -> GetAccounts200Response:  # noqa: E501
         """Accounts  # noqa: E501
 
         Retrieve accounts in your organization  # noqa: E501
@@ -358,7 +358,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: AccountsResponse
+        :rtype: GetAccounts200Response
         """
         kwargs['_return_http_data_only'] = True
         return self.get_accounts_with_http_info(**kwargs)  # noqa: E501
@@ -395,7 +395,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(AccountsResponse, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(GetAccounts200Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -450,7 +450,7 @@ class AccountsApi(object):
         _auth_settings = ['bearerAuth']  # noqa: E501
 
         _response_types_map = {
-            '200': "AccountsResponse",
+            '200': "GetAccounts200Response",
             '401': None,
             '500': None,
         }
@@ -473,7 +473,7 @@ class AccountsApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def post_account(self, account_payload : Annotated[AccountPayload, Field(..., description="Account to create")], **kwargs) -> Account:  # noqa: E501
+    def post_account(self, account_payload : Annotated[AccountPayload, Field(..., description="Account to create")], **kwargs) -> PostAccount201Response:  # noqa: E501
         """Accounts  # noqa: E501
 
         Create a new account in your organization  # noqa: E501
@@ -498,7 +498,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: Account
+        :rtype: PostAccount201Response
         """
         kwargs['_return_http_data_only'] = True
         return self.post_account_with_http_info(account_payload, **kwargs)  # noqa: E501
@@ -537,7 +537,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(Account, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(PostAccount201Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -602,7 +602,7 @@ class AccountsApi(object):
         _auth_settings = ['bearerAuth']  # noqa: E501
 
         _response_types_map = {
-            '201': "Account",
+            '201': "PostAccount201Response",
             '400': None,
             '401': None,
             '500': None,
@@ -626,7 +626,7 @@ class AccountsApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def put_account(self, id : Annotated[StrictStr, Field(..., description="Account id")], account_payload : Annotated[AccountPayload, Field(..., description="Account to update")], **kwargs) -> Account:  # noqa: E501
+    def put_account(self, id : Annotated[StrictStr, Field(..., description="Account id")], account_payload : Annotated[AccountPayload, Field(..., description="Account to update")], **kwargs) -> PostAccount201Response:  # noqa: E501
         """Account  # noqa: E501
 
         Update an account in your organization  # noqa: E501
@@ -653,7 +653,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: Account
+        :rtype: PostAccount201Response
         """
         kwargs['_return_http_data_only'] = True
         return self.put_account_with_http_info(id, account_payload, **kwargs)  # noqa: E501
@@ -694,7 +694,7 @@ class AccountsApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(Account, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(PostAccount201Response, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -762,7 +762,7 @@ class AccountsApi(object):
         _auth_settings = ['bearerAuth']  # noqa: E501
 
         _response_types_map = {
-            '200': "Account",
+            '200': "PostAccount201Response",
             '400': None,
             '401': None,
             '500': None,

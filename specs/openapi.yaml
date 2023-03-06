@@ -367,7 +367,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountsResponse'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AccountsResponse'
 
         '401':
           description: Unauthorized
@@ -392,7 +395,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account'
         '400':
           description: Invalid parameters
         '401':
@@ -414,7 +420,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account'
         '401':
           description: Unauthorized
         '500':
@@ -440,7 +449,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account'
         '400':
           description: Invalid parameters
         '401':
@@ -462,7 +474,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountPortfolio'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AccountPortfolio'
         '401':
           description: Unauthorized
         '500':
@@ -977,13 +992,9 @@ components:
           description: v part of the ECDSA signature (0 or 1)
           example: 0
     AccountsResponse:
-      type: object
-      properties:
-        accounts:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/Account'
+      type: array
+      items:
+        $ref: '#/components/schemas/Account'
     Account:
       type: object
       properties:

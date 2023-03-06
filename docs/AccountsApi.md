@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **get_account**
-> Account kiln.accounts.get_account(id)
+> PostAccount201Response kiln.accounts.get_account(id)
 
 Account
 
@@ -38,7 +38,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Account**](Account.md)
+[**PostAccount201Response**](PostAccount201Response.md)
 
 ### HTTP request headers
 
@@ -54,7 +54,7 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#)
 # **get_account_portfolio**
-> AccountPortfolio kiln.accounts.get_account_portfolio(id)
+> GetAccountPortfolio200Response kiln.accounts.get_account_portfolio(id)
 
 Account Portfolio
 
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AccountPortfolio**](AccountPortfolio.md)
+[**GetAccountPortfolio200Response**](GetAccountPortfolio200Response.md)
 
 ### HTTP request headers
 
@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#)
 # **get_accounts**
-> AccountsResponse kiln.accounts.get_accounts()
+> GetAccounts200Response kiln.accounts.get_accounts()
 
 Accounts
 
@@ -118,7 +118,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**AccountsResponse**](AccountsResponse.md)
+[**GetAccounts200Response**](GetAccounts200Response.md)
 
 ### HTTP request headers
 
@@ -134,7 +134,7 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#)
 # **post_account**
-> Account kiln.accounts.post_account(account_payload)
+> PostAccount201Response kiln.accounts.post_account(account_payload)
 
 Accounts
 
@@ -160,7 +160,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Account**](Account.md)
+[**PostAccount201Response**](PostAccount201Response.md)
 
 ### HTTP request headers
 
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#)
 # **put_account**
-> Account kiln.accounts.put_account(id, account_payload)
+> PostAccount201Response kiln.accounts.put_account(id, account_payload)
 
 Account
 
@@ -205,7 +205,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Account**](Account.md)
+[**PostAccount201Response**](PostAccount201Response.md)
 
 ### HTTP request headers
 
