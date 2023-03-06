@@ -35,6 +35,8 @@ error_console = Console(stderr=True)
 def pretty_wei_to_eth(wei: str) -> str:
     """Quick helper to pretty print WEI to ETH.
     """
+    if not wei:
+        return 'n/a'
     eth = str(round(int(wei) / 1e18, 3))
     return f"{eth}Ξ"
 
