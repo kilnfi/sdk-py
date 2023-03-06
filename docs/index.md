@@ -154,4 +154,4 @@ API facilities:
 
 Integrations facilities:
 
-- [Fireblocks](fireblocks.md)
+- [Fireblocks](#fireblocks)
