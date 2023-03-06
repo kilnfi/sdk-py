@@ -43,7 +43,7 @@ def pretty_wei_to_eth(wei: str) -> str:
 
 @eth_cli.command("stakes")
 def ethereum_stakes(identifiers: list[str], by: str = typer.Option('validator')):
-    """Show Ethereum Stake status.
+    """List Ethereum Stake status.
     """
     with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
         stakes = None
@@ -71,7 +71,7 @@ def ethereum_stakes(identifiers: list[str], by: str = typer.Option('validator'))
 
 @eth_cli.command("rewards")
 def ethereum_rewards(identifiers: list[str], by: str = typer.Option('validator')):
-    """Show Ethereum rewards.
+    """View Ethereum rewards.
     """
     with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
         rewards = None
@@ -102,7 +102,7 @@ def ethereum_rewards(identifiers: list[str], by: str = typer.Option('validator')
 
 @eth_cli.command("operations")
 def ethereum_operations(identifiers: list[str], by: str = typer.Option('validator')):
-    """Show Ethereum operations.
+    """List Ethereum operations.
     """
     with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
         operations = None
