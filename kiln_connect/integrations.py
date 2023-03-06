@@ -11,7 +11,8 @@ from .errors import *
 
 @dataclass
 class IntegrationConfig:
-    """Class to describe the config of an integration"""
+    """Configuration of a Kiln integration.
+    """
     name: str
     provider: str
     parameters: dict
