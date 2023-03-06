@@ -12,6 +12,7 @@ simpler.
 
 import click
 import os
+import re
 import rich
 import typer
 import time
@@ -19,7 +20,7 @@ import time
 import fireblocks_sdk
 from rich.console import Console
 from rich.table import Table
-from typing import Optional
+from typing import Optional, Tuple
 
 import kiln_connect
 
@@ -41,22 +42,63 @@ def pretty_wei_to_eth(wei: str) -> str:
     return f"{eth}Ξ"
 
 
+def sort_identifiers(identifiers: list[str]) -> Tuple[list[str], list[str], list[str]]:
+    """Sorts ETH filtering identifiers in corresponding buckets.
+
+    The Kiln ETH API supports filtering by:
+
+    - ETH2 BLS validator address (consensus address)
+    - ETH1 wallet address (execution address)
+    - Kiln Account ID (UUID)
+
+    This functions returns the identifiers sorted in their corresponding bucket.
+    """
+
+    validators = []
+    accounts = []
+    wallets = []
+
+    for identifier in identifiers:
+        identifier = identifier[2:] if '0x' in identifier else identifier
+
+        # Validator addresses are 96 bytes
+        if re.match('^[0-9a-zA-Z]{96}$', identifier):
+            validators.append(identifier)
+            continue
+
+        # Kiln Account UUIDs
+        if re.match('^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$', identifier):
+            accounts.append(identifier)
+            continue
+
+        # Wallet addresses are 40 bytes
+        if re.match('^[0-9a-zA-Z]{40}$', identifier):
+            wallets.append(identifier)
+            continue
+
+        raise click.UsageError(
+            "Unknown identifier (should be a BLS validator address, an ETH wallet address or a Kiln account UUID)")
+
+    # This is a current limit of the Kiln API, we only support one
+    # filter type at a time. This removes confusion when a staked is
+    # matched by multiple filters.
+    if (validators and accounts) or (validators and wallets) or (accounts and wallets):
+        raise click.UsageError(
+            "Identifiers should be of the same type"
+        )
+
+    return validators or None, accounts or None, wallets or None
+
+
 @eth_cli.command("stakes")
-def ethereum_stakes(identifiers: list[str], by: str = typer.Option('validator')):
+def ethereum_stakes(identifiers: list[str]):
     """List Ethereum Stake status.
     """
     with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
-        stakes = None
+        validators, accounts, wallets = sort_identifiers(identifiers)
 
-        if by == 'validator':
-            stakes = kc.eth.get_eth_stakes(validators=identifiers).data
-        elif by == 'account':
-            stakes = kc.eth.get_eth_stakes(accounts=identifiers).data
-        elif by == 'wallet':
-            stakes = kc.eth.get_eth_stakes(wallets=identifiers).data
-        else:
-            raise click.UsageError(
-                "Argument --by should be one of 'validator', 'account', 'wallet'")
+        stakes = kc.eth.get_eth_stakes(
+            validators=validators, accounts=accounts, wallets=wallets).data
 
         table = Table('Stake(s)', 'Status', 'Balance', 'Rewards')
         for stake in stakes:
@@ -70,21 +112,13 @@ def ethereum_stakes(identifiers: list[str], by: str = typer.Option('validator'))
 
 
 @eth_cli.command("rewards")
-def ethereum_rewards(identifiers: list[str], by: str = typer.Option('validator')):
+def ethereum_rewards(identifiers: list[str]):
     """View Ethereum rewards.
     """
     with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
-        rewards = None
-
-        if by == 'validator':
-            rewards = kc.eth.get_eth_rewards(validators=identifiers).data
-        elif by == 'account':
-            rewards = kc.eth.get_eth_rewards(accounts=identifiers).data
-        elif by == 'wallet':
-            rewards = kc.eth.get_eth_rewards(wallets=identifiers).data
-        else:
-            raise click.UsageError(
-                "Argument --by should be one of 'validator', 'account', 'wallet'")
+        validators, accounts, wallets = sort_identifiers(identifiers)
+        rewards = kc.eth.get_eth_rewards(
+            validators=validators, accounts=accounts, wallets=wallets).data
 
         table = Table(
             'Time', 'Stake Balance', 'Consensus', 'Execution', 'Rewards', 'Gross APY')
@@ -101,21 +135,13 @@ def ethereum_rewards(identifiers: list[str], by: str = typer.Option('validator')
 
 
 @eth_cli.command("operations")
-def ethereum_operations(identifiers: list[str], by: str = typer.Option('validator')):
+def ethereum_operations(identifiers: list[str]):
     """List Ethereum operations.
     """
     with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
-        operations = None
-
-        if by == 'validator':
-            operations = kc.eth.get_eth_operations(validators=identifiers).data
-        elif by == 'account':
-            operations = kc.eth.get_eth_operations(accounts=identifiers).data
-        elif by == 'wallet':
-            operations = kc.eth.get_eth_operations(wallets=identifiers).data
-        else:
-            raise click.UsageError(
-                "Argument --by should be one of 'validator', 'account', 'wallet'")
+        validators, accounts, wallets = sort_identifiers(identifiers)
+        operations = kc.eth.get_eth_operations(
+            validators=validators, accounts=accounts, wallets=wallets).data
 
         table = Table('Stake', 'Time', 'Type')
         for op in operations:
