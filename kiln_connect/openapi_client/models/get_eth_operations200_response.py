@@ -19,7 +19,7 @@ import json
 
 
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, conlist
 from kiln_connect.openapi_client.models.get_eth_operations200_response_data_inner import GetEthOperations200ResponseDataInner
 
 class GetEthOperations200Response(BaseModel):
@@ -28,7 +28,7 @@ class GetEthOperations200Response(BaseModel):
 
     Do not edit the class manually.
     """
-    data: Optional[List[GetEthOperations200ResponseDataInner]] = None
+    data: Optional[conlist(GetEthOperations200ResponseDataInner)] = None
     __properties = ["data"]
 
     class Config:

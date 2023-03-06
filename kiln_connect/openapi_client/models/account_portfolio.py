@@ -19,7 +19,7 @@ import json
 
 
 from typing import List, Optional
-from pydantic import BaseModel, Field, StrictInt
+from pydantic import BaseModel, Field, StrictInt, conlist
 from kiln_connect.openapi_client.models.account_portfolio_protocols_inner import AccountPortfolioProtocolsInner
 
 class AccountPortfolio(BaseModel):
@@ -32,7 +32,7 @@ class AccountPortfolio(BaseModel):
     total_rewards_usd: Optional[float] = Field(None, description="Total USD of rewards earned from all the account's stakes")
     total_stakes: Optional[StrictInt] = Field(None, description="Total number of stakes")
     total_active_stakes: Optional[StrictInt] = Field(None, description="Total number of stakes actively collecting rewards")
-    protocols: Optional[List[AccountPortfolioProtocolsInner]] = Field(None, description="List of protocols staked within the account")
+    protocols: Optional[conlist(AccountPortfolioProtocolsInner)] = Field(None, description="List of protocols staked within the account")
     __properties = ["total_balance_usd", "total_rewards_usd", "total_stakes", "total_active_stakes", "protocols"]
 
     class Config:

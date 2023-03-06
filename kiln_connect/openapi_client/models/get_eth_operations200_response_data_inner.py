@@ -34,11 +34,11 @@ class GetEthOperations200ResponseDataInner(BaseModel):
     Do not edit the class manually.
     """
     # data type: EthereumOperationDeposit
-    __oneof_schema_1: Optional[EthereumOperationDeposit] = None
+    oneof_schema_1_validator: Optional[EthereumOperationDeposit] = None
     # data type: EthereumOperationConsensusWithdrawal
-    __oneof_schema_2: Optional[EthereumOperationConsensusWithdrawal] = None
+    oneof_schema_2_validator: Optional[EthereumOperationConsensusWithdrawal] = None
     # data type: EthereumOperationExecutionReward
-    __oneof_schema_3: Optional[EthereumOperationExecutionReward] = None
+    oneof_schema_3_validator: Optional[EthereumOperationExecutionReward] = None
     actual_instance: Any
     one_of_schemas: List[str] = Field(GETETHOPERATIONS200RESPONSEDATAINNER_ONE_OF_SCHEMAS, const=True)
 
@@ -70,10 +70,7 @@ class GetEthOperations200ResponseDataInner(BaseModel):
         else:
             match += 1
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into GetEthOperations200ResponseDataInner with oneOf schemas: EthereumOperationConsensusWithdrawal, EthereumOperationDeposit, EthereumOperationExecutionReward. Details: " + ", ".join(error_messages))
-        elif match == 0:
+        if match == 0:
             # no match
             raise ValueError("No match found when deserializing the JSON string into GetEthOperations200ResponseDataInner with oneOf schemas: EthereumOperationConsensusWithdrawal, EthereumOperationDeposit, EthereumOperationExecutionReward. Details: " + ", ".join(error_messages))
         else:
@@ -109,10 +106,7 @@ class GetEthOperations200ResponseDataInner(BaseModel):
         except ValidationError as e:
             error_messages.append(str(e))
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into GetEthOperations200ResponseDataInner with oneOf schemas: EthereumOperationConsensusWithdrawal, EthereumOperationDeposit, EthereumOperationExecutionReward. Details: " + ", ".join(error_messages))
-        elif match == 0:
+        if match == 0:
             # no match
             raise ValueError("No match found when deserializing the JSON string into GetEthOperations200ResponseDataInner with oneOf schemas: EthereumOperationConsensusWithdrawal, EthereumOperationDeposit, EthereumOperationExecutionReward. Details: " + ", ".join(error_messages))
         else:

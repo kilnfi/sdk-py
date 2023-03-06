@@ -18,7 +18,7 @@ import json
 import re  # noqa: F401
 
 from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
+from pydantic import BaseModel, Field, StrictStr, ValidationError, conlist, validator
 from kiln_connect.openapi_client.models.ethereum_post_keys_batch_response import EthereumPostKeysBatchResponse
 from kiln_connect.openapi_client.models.ethereum_post_keys_cli_response_inner import EthereumPostKeysCliResponseInner
 from typing import Any, List
@@ -33,9 +33,9 @@ class PostEthKeys201ResponseData(BaseModel):
     Do not edit the class manually.
     """
     # data type: List[EthereumPostKeysCliResponseInner]
-    __oneof_schema_1: Optional[List[EthereumPostKeysCliResponseInner]] = None
+    oneof_schema_1_validator: Optional[conlist(EthereumPostKeysCliResponseInner)] = None
     # data type: EthereumPostKeysBatchResponse
-    __oneof_schema_2: Optional[EthereumPostKeysBatchResponse] = None
+    oneof_schema_2_validator: Optional[EthereumPostKeysBatchResponse] = None
     actual_instance: Any
     one_of_schemas: List[str] = Field(POSTETHKEYS201RESPONSEDATA_ONE_OF_SCHEMAS, const=True)
 
@@ -58,10 +58,7 @@ class PostEthKeys201ResponseData(BaseModel):
         else:
             match += 1
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into PostEthKeys201ResponseData with oneOf schemas: EthereumPostKeysBatchResponse, List[EthereumPostKeysCliResponseInner]. Details: " + ", ".join(error_messages))
-        elif match == 0:
+        if match == 0:
             # no match
             raise ValueError("No match found when deserializing the JSON string into PostEthKeys201ResponseData with oneOf schemas: EthereumPostKeysBatchResponse, List[EthereumPostKeysCliResponseInner]. Details: " + ", ".join(error_messages))
         else:
@@ -91,10 +88,7 @@ class PostEthKeys201ResponseData(BaseModel):
         except ValidationError as e:
             error_messages.append(str(e))
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into PostEthKeys201ResponseData with oneOf schemas: EthereumPostKeysBatchResponse, List[EthereumPostKeysCliResponseInner]. Details: " + ", ".join(error_messages))
-        elif match == 0:
+        if match == 0:
             # no match
             raise ValueError("No match found when deserializing the JSON string into PostEthKeys201ResponseData with oneOf schemas: EthereumPostKeysBatchResponse, List[EthereumPostKeysCliResponseInner]. Details: " + ", ".join(error_messages))
         else:

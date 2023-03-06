@@ -19,7 +19,7 @@ import json
 
 
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, conlist
 from kiln_connect.openapi_client.models.ethereum_stake import EthereumStake
 
 class GetEthStakes200Response(BaseModel):
@@ -28,7 +28,7 @@ class GetEthStakes200Response(BaseModel):
 
     Do not edit the class manually.
     """
-    data: Optional[List[EthereumStake]] = None
+    data: Optional[conlist(EthereumStake)] = None
     __properties = ["data"]
 
     class Config:

@@ -20,9 +20,9 @@ from typing_extensions import Annotated
 
 from datetime import date
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictStr, conlist
 
-from typing import List, Optional
+from typing import Optional
 
 from kiln_connect.openapi_client.models.ethereum_broadcast_tx_payload import EthereumBroadcastTxPayload
 from kiln_connect.openapi_client.models.ethereum_craft_stake_tx_payload import EthereumCraftStakeTxPayload
@@ -334,7 +334,7 @@ class EthApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_eth_operations(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> GetEthOperations200Response:  # noqa: E501
+    def get_eth_operations(self, validators : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> GetEthOperations200Response:  # noqa: E501
         """Operations  # noqa: E501
 
         Get the operations of Ethereum stakes  # noqa: E501
@@ -369,7 +369,7 @@ class EthApi(object):
         return self.get_eth_operations_with_http_info(validators, wallets, accounts, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_eth_operations_with_http_info(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
+    def get_eth_operations_with_http_info(self, validators : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
         """Operations  # noqa: E501
 
         Get the operations of Ethereum stakes  # noqa: E501
@@ -497,7 +497,7 @@ class EthApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_eth_reports(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> str:  # noqa: E501
+    def get_eth_reports(self, validators : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> str:  # noqa: E501
         """Excel Reports  # noqa: E501
 
         Generates an Excel report sheet for your stakes and rewards  # noqa: E501
@@ -532,7 +532,7 @@ class EthApi(object):
         return self.get_eth_reports_with_http_info(validators, wallets, accounts, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_eth_reports_with_http_info(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
+    def get_eth_reports_with_http_info(self, validators : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
         """Excel Reports  # noqa: E501
 
         Generates an Excel report sheet for your stakes and rewards  # noqa: E501
@@ -660,7 +660,7 @@ class EthApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_eth_rewards(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, start_date : Annotated[Optional[date], Field(description="Get rewards from this date (YYYY-MM-DD)")] = None, end_date : Annotated[Optional[date], Field(description="Get rewards to this date (YYYY-MM-DD)")] = None, **kwargs) -> GetEthRewards200Response:  # noqa: E501
+    def get_eth_rewards(self, validators : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, start_date : Annotated[Optional[date], Field(description="Get rewards from this date (YYYY-MM-DD)")] = None, end_date : Annotated[Optional[date], Field(description="Get rewards to this date (YYYY-MM-DD)")] = None, **kwargs) -> GetEthRewards200Response:  # noqa: E501
         """Rewards  # noqa: E501
 
         Get historical rewards by day of Ethereum stakes  # noqa: E501
@@ -699,7 +699,7 @@ class EthApi(object):
         return self.get_eth_rewards_with_http_info(validators, wallets, accounts, start_date, end_date, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_eth_rewards_with_http_info(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, start_date : Annotated[Optional[date], Field(description="Get rewards from this date (YYYY-MM-DD)")] = None, end_date : Annotated[Optional[date], Field(description="Get rewards to this date (YYYY-MM-DD)")] = None, **kwargs):  # noqa: E501
+    def get_eth_rewards_with_http_info(self, validators : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, start_date : Annotated[Optional[date], Field(description="Get rewards from this date (YYYY-MM-DD)")] = None, end_date : Annotated[Optional[date], Field(description="Get rewards to this date (YYYY-MM-DD)")] = None, **kwargs):  # noqa: E501
         """Rewards  # noqa: E501
 
         Get historical rewards by day of Ethereum stakes  # noqa: E501
@@ -837,7 +837,7 @@ class EthApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_eth_stakes(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> GetEthStakes200Response:  # noqa: E501
+    def get_eth_stakes(self, validators : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs) -> GetEthStakes200Response:  # noqa: E501
         """Stakes  # noqa: E501
 
         Get the status of Ethereum stakes  # noqa: E501
@@ -872,7 +872,7 @@ class EthApi(object):
         return self.get_eth_stakes_with_http_info(validators, wallets, accounts, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_eth_stakes_with_http_info(self, validators : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[List[StrictStr]], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
+    def get_eth_stakes_with_http_info(self, validators : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of validators addresses")] = None, wallets : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of wallets addresses")] = None, accounts : Annotated[Optional[conlist(StrictStr)], Field(description="Comma-separated list of Kiln accounts identifiers")] = None, **kwargs):  # noqa: E501
         """Stakes  # noqa: E501
 
         Get the status of Ethereum stakes  # noqa: E501
