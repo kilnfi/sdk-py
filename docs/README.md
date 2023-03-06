@@ -54,7 +54,7 @@ helper `KilnConfig.from_env()`, as follows:
 ```python
 import kiln_connect
 
-def example:
+def example():
     with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
        pass
 ```
