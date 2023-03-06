@@ -5,9 +5,9 @@
 Welcome to the Python Kiln Connect SDK which provides facilities
 around Staking using the Kiln API. It is composed of three parts:
 
-- [API layer](kiln_connect/openapi_client) which facilities usage of the Kiln API,
-- [Integration layer](kiln_connect/)  which provides facilities around the Kiln API,
-- [CLI](cli/) which showcases the two previous parts.
+- [API layer](../kiln_connect/openapi_client) which facilities usage of the Kiln API,
+- [Integration layer](../kiln_connect/)  which provides facilities around the Kiln API,
+- [CLI](../cli/) which showcases the two previous parts.
 
 The SDK is typically used as follows: a `KilnConnect` instance is
 created from a `KilnConfig`, the SDK then provides access to different
@@ -26,7 +26,7 @@ integration called `fireblocks` (configured with a specific vault
 account and API key), we then stake on Ethereum using the fireblocks
 integration.
 
-```
+```python
 import kiln_connect
 
 config = kiln_connect.KilnConfig.from_env()
@@ -51,7 +51,7 @@ recommend using the environment to start with, and then switch to
 Kiln Connect can be configured from the environment by using the
 helper `KilnConfig.from_env()`, as follows:
 
-```
+```python
 import kiln_connect
 
 def example:
@@ -76,7 +76,7 @@ environment variables:
 The `KilnConfig` required to initialize the API is defined
 as follows:
 
-```
+```python
 class KilnConfig:
     """Configuration of the Kiln Connect SDK.
     """
@@ -94,7 +94,7 @@ class IntegrationConfig:
 
 For example:
 
-```
+```python
 import kiln_connect
 
 config = kiln_connect.KilnConfig(
@@ -126,7 +126,7 @@ config = kiln_connect.KilnConfig(
 Here is the expected configuration for the optional Fireblocks
 integration:
 
-```
+```python
 {
    'api_token': '<Fireblocks API token>',
    'raw_key_path': '<Fireblocks raw key path>',
@@ -145,13 +145,13 @@ staking on a given protocol. The following protocols are supported:
 ## Usage
 
 The simplest way to start using the SDK is to look at examples
-implemented in the [CLI](cli/); it is kept simple to showcase the SDK.
+implemented in the [CLI](../cli/); it is kept simple to showcase the SDK.
 
 API facilities:
 
-- [Accounts](docs/AccountsApi.md)
-- [Ethereum](docs/EthApi.md)
+- [Accounts](AccountsApi.md)
+- [Ethereum](EthApi.md)
 
 Integrations facilities:
 
-- [Fireblocks](docs/fireblocks.md)
+- [Fireblocks](fireblocks.md)
