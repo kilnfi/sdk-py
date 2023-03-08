@@ -17,11 +17,11 @@ import unittest
 import datetime
 
 import kiln_connect.openapi_client
-from kiln_connect.openapi_client.models.ethereum_reward import EthereumReward  # noqa: E501
+from kiln_connect.openapi_client.models.tezos_cycle_reward import TezosCycleReward  # noqa: E501
 from kiln_connect.openapi_client.rest import ApiException
 
-class TestEthereumReward(unittest.TestCase):
-    """EthereumReward unit test stubs"""
+class TestTezosCycleReward(unittest.TestCase):
+    """TezosCycleReward unit test stubs"""
 
     def setUp(self):
         pass
@@ -30,31 +30,28 @@ class TestEthereumReward(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test EthereumReward
+        """Test TezosCycleReward
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `EthereumReward`
+        # uncomment below to create an instance of `TezosCycleReward`
         """
-        model = kiln_connect.openapi_client.models.ethereum_reward.EthereumReward()  # noqa: E501
+        model = kiln_connect.openapi_client.models.tezos_cycle_reward.TezosCycleReward()  # noqa: E501
         if include_optional :
-            return EthereumReward(
-                var_date = 'Sun Jan 15 00:00:00 GMT 2023', 
-                consensus_rewards = '2988504000000000', 
-                execution_rewards = '0', 
-                rewards = '2988504000000000', 
-                stake_balance = '64000000000000000000', 
-                gross_apy = 3.407, 
-                cl_apy = 3.407, 
-                el_apy = 0.0
+            return TezosCycleReward(
+                cycle = 271, 
+                cycle_begins_at = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                rewards = 27098488, 
+                active_balance = '34329999165', 
+                gross_apy = 36.053
             )
         else :
-            return EthereumReward(
+            return TezosCycleReward(
         )
         """
 
-    def testEthereumReward(self):
-        """Test EthereumReward"""
+    def testTezosCycleReward(self):
+        """Test TezosCycleReward"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

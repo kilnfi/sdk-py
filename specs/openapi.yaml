@@ -7,7 +7,7 @@ info:
     This API provides reporting staking data on various protocols as well as network wide data, staking transaction crafting features and so on.
     In order to use it, you should first get an API token from your Kiln dashboard (applications section). If you don't have access to our dashboard, please get in touch at hello@kiln.fi.
     Once you have your API token, you can set it as a bearer token in your request headers.
-    
+
     ### Backward Compatibility
 
     This is an experimental specification used for development and testing, do not rely on what is here unless you know the implications.
@@ -31,6 +31,9 @@ tags:
   - name: eth
     x-displayName: ETH
     description: Staking facilities for the Ethereum protocol
+  - name: xtz
+    x-displayName: XTZ
+    description: Staking facilities for the Tezos protocol
 paths:
   /v1/eth/stakes:
     get:
@@ -69,11 +72,11 @@ paths:
       description: Get historical rewards by day of Ethereum stakes
       operationId: getEthRewards
       parameters:
-      - $ref: '#/components/parameters/EthereumValidatorsParam'
-      - $ref: '#/components/parameters/EthereumWalletsParam'
-      - $ref: '#/components/parameters/KilnAccountsParam'
-      - $ref: '#/components/parameters/StartDateParam'
-      - $ref: '#/components/parameters/EndDateParam'
+        - $ref: '#/components/parameters/EthereumValidatorsParam'
+        - $ref: '#/components/parameters/EthereumWalletsParam'
+        - $ref: '#/components/parameters/KilnAccountsParam'
+        - $ref: '#/components/parameters/StartDateParam'
+        - $ref: '#/components/parameters/EndDateParam'
       responses:
         '200':
           description: Successful operation
@@ -100,9 +103,9 @@ paths:
       description: Get the operations of Ethereum stakes
       operationId: getEthOperations
       parameters:
-      - $ref: '#/components/parameters/EthereumValidatorsParam'
-      - $ref: '#/components/parameters/EthereumWalletsParam'
-      - $ref: '#/components/parameters/KilnAccountsParam'
+        - $ref: '#/components/parameters/EthereumValidatorsParam'
+        - $ref: '#/components/parameters/EthereumWalletsParam'
+        - $ref: '#/components/parameters/KilnAccountsParam'
       responses:
         '200':
           description: Successful operation
@@ -115,9 +118,9 @@ paths:
                     type: array
                     items:
                       oneOf:
-                      - $ref: '#/components/schemas/EthereumOperationDeposit'
-                      - $ref: '#/components/schemas/EthereumOperationConsensusWithdrawal'
-                      - $ref: '#/components/schemas/EthereumOperationExecutionReward'
+                        - $ref: '#/components/schemas/EthereumOperationDeposit'
+                        - $ref: '#/components/schemas/EthereumOperationConsensusWithdrawal'
+                        - $ref: '#/components/schemas/EthereumOperationExecutionReward'
                       discriminator:
                         propertyName: type
                         mapping:
@@ -302,15 +305,15 @@ paths:
       description: Get the status of an Ethereum transaction
       operationId: getEthTxStatus
       parameters:
-      - name: tx_hash
-        in: query
-        description: Hash of the transaction
-        required: true
-        style: form
-        explode: false
-        schema:
-          type: string
-          example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
+        - name: tx_hash
+          in: query
+          description: Hash of the transaction
+          required: true
+          style: form
+          explode: false
+          schema:
+            type: string
+            example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
       responses:
         '200':
           description: Successful operation
@@ -335,9 +338,9 @@ paths:
       description: Generates an Excel report sheet for your stakes and rewards
       operationId: getEthReports
       parameters:
-      - $ref: '#/components/parameters/EthereumValidatorsParam'
-      - $ref: '#/components/parameters/EthereumWalletsParam'
-      - $ref: '#/components/parameters/KilnAccountsParam'
+        - $ref: '#/components/parameters/EthereumValidatorsParam'
+        - $ref: '#/components/parameters/EthereumWalletsParam'
+        - $ref: '#/components/parameters/KilnAccountsParam'
 
       responses:
         '200':
@@ -350,6 +353,88 @@ paths:
                 example: ...
         '400':
           description: Invalid parameters
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /v1/xtz/stakes:
+    get:
+      tags:
+        - xtz
+      summary: Stakes
+      description: Get the status of Tezos stakes
+      operationId: getXtzStakes
+      parameters:
+        - $ref: '#/components/parameters/TezosWalletsParam'
+        - $ref: '#/components/parameters/KilnAccountsParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TezosStake'
+        '400':
+          description: Invalid parameters
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /v1/xtz/rewards:
+    get:
+      tags:
+        - xtz
+      summary: Rewards
+      description: Get historical rewards of Tezos stakes
+      operationId: getXtzRewards
+      parameters:
+        - $ref: '#/components/parameters/TezosWalletsParam'
+        - $ref: '#/components/parameters/KilnAccountsParam'
+        - $ref: '#/components/parameters/TezosRewardsFormatParam'
+        - $ref: '#/components/parameters/StartDateParam'
+        - $ref: '#/components/parameters/EndDateParam'
+        - $ref: '#/components/parameters/TezosStartCycleParam'
+        - $ref: '#/components/parameters/TezosEndCycleParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    oneOf:
+                      - $ref: '#/components/schemas/TezosDailyReward'
+                      - $ref: '#/components/schemas/TezosCycleReward'
+        '400':
+          description: Invalid parameters
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /v1/xtz/network-stats:
+    get:
+      tags:
+        - xtz
+      summary: Network Stats
+      description: Get some network statistics on Tezos staking
+      operationId: getXtzNetworkStats
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            "application/json; charset=utf-8":
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TezosNetworkStats'
         '401':
           description: Unauthorized
         '500':
@@ -552,6 +637,42 @@ components:
         type: string
         format: uuid
         example: "92f5bfd4-ea38-4824-84f7-686eddff5539"
+    TezosWalletsParam:
+      name: wallets
+      in: query
+      description: Comma-separated list of wallets addresses
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          example: "tz1VZ4iC4wzTR7iK2Q7PoQGVDAojuY42fDxD"
+    TezosStartCycleParam:
+      name: start_cycle
+      in: query
+      description: The cycle from which we want to fetch rewards. Must be used with format=cycle
+      required: false
+      schema:
+        type: number
+        example: 542
+    TezosEndCycleParam:
+      name: end_cycle
+      in: query
+      description: The cycle until which we want to fetch rewards. Must be used with format=cycle
+      required: false
+      schema:
+        type: number
+        example: 542
+    TezosRewardsFormatParam:
+      name: format
+      in: query
+      description: The format of the response. Defaults to daily
+      required: false
+      schema:
+        type: string
+        x-extensible-enum: [daily, cycle]
 
   schemas:
     EthereumOperationDeposit:
@@ -746,6 +867,7 @@ components:
         date:
           type: string
           description: Day for this reward entry
+          format: date
           example: "2023-01-15"
         consensus_rewards:
           type: string
@@ -991,6 +1113,137 @@ components:
           type: number
           description: v part of the ECDSA signature (0 or 1)
           example: 0
+    TezosStake:
+      type: object
+      properties:
+        stake_address:
+          type: string
+          description: Wallet address of the delegator
+          example: "tz1VZ4iC4wzTR7iK2Q7PoQGVDAojuY42fDxD"
+        baker_address:
+          type: string
+          description: Address of the baker
+          example: "tz2FCNBrERXtaTtNX6iimR1UJ5JSDxvdHM93"
+        state:
+          type: string
+          description: State of the Tezos stake
+          example: "active"
+          x-extensible-enum: ["activating", "active", "inactive"]
+        activated_at:
+          type: string
+          description: Date at which the stake started earning rewards
+          nullable: true
+          format: date-time
+          example: "2023-01-14T01:13:59Z"
+        activated_cycle:
+          type: integer
+          description: Cycle at which the stake started earning rewards
+          nullable: true
+          example: 542
+        delegated_cycle:
+          type: string
+          description: Cycle in which the delegation transaction was made
+          nullable: true
+          format: date-time
+          example: "2023-01-14T01:13:59Z"
+        delegated_at:
+          type: integer
+          description: Date at which the staking transaction was made, corresponds to the block it was part of.
+          nullable: true
+          example: 542
+        delegated_block:
+          description: Block at which the corresponding staking transaction was executed
+          nullable: true
+          type: integer
+          example: 16397387
+        balance:
+          type: string
+          description: Current balance in mutez
+          nullable: true
+          example: "32076187808000000000"
+        rewards:
+          type: string
+          description: Sum of rewards in mutez earned by this stake since delegation
+          nullable: true
+          example: "76187808000000000"
+        gross_apy:
+          type: number
+          description: Gross annual percentage yield
+          nullable: true
+          example: 3.407
+        updated_at:
+          type: string
+          description: Last date this data was updated
+          nullable: true
+          format: date-time
+          example: "2023-01-14T01:13:59Z"
+    TezosDailyReward:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Day for this reward entry
+          format: date
+          example: "2023-01-15"
+        rewards:
+          type: string
+          description: Rewards earned for that day in mutez
+          example: "27098488"
+        active_balance:
+          type: string
+          description: Wallet balance for that day in mutez
+          example: "420000000000"
+        gross_apy:
+          type: number
+          description: Gross annual percentage yield
+          example: 3.42
+    TezosCycleReward:
+      type: object
+      properties:
+        cycle:
+          type: number
+          description: The cycle number
+          example: 271
+        cycle_begins_at:
+          type: string
+          format: date
+          description: The date at which the cycle began
+          example: "2022-09-01T08:44:00Z"
+        rewards:
+          type: number
+          description: The rewards for that cycle in mutez
+          example: 27098488
+        active_balance:
+          type: string
+          description: Wallet balance for that cycle in mutez
+          example: "34329999165"
+        gross_apy:
+          type: number
+          description: Gross annual percentage yield
+          example: 36.053
+    TezosNetworkStats:
+      type: object
+      properties:
+        nb_validators:
+          type: number
+          description: Number of active bakers
+          example: 402
+        network_gross_apy:
+          type: number
+          description: Gross annual percentage yield
+          example: 4.5
+        supply_staked_percent:
+          type: number
+          description: Supply percentage of Tezos currently staked
+          example: 12.4
+        updated_at:
+          type: string
+          description: Last date this data was updated
+          nullable: true
+          format: date-time
+          example: "2023-01-14T01:13:59Z"
+
+
     AccountsResponse:
       type: array
       items:
@@ -1121,4 +1374,3 @@ components:
           minLength: 0
 security:
   - bearerAuth: []
-

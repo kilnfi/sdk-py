@@ -17,11 +17,11 @@ import unittest
 import datetime
 
 import kiln_connect.openapi_client
-from kiln_connect.openapi_client.models.ethereum_reward import EthereumReward  # noqa: E501
+from kiln_connect.openapi_client.models.tezos_network_stats import TezosNetworkStats  # noqa: E501
 from kiln_connect.openapi_client.rest import ApiException
 
-class TestEthereumReward(unittest.TestCase):
-    """EthereumReward unit test stubs"""
+class TestTezosNetworkStats(unittest.TestCase):
+    """TezosNetworkStats unit test stubs"""
 
     def setUp(self):
         pass
@@ -30,31 +30,27 @@ class TestEthereumReward(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test EthereumReward
+        """Test TezosNetworkStats
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `EthereumReward`
+        # uncomment below to create an instance of `TezosNetworkStats`
         """
-        model = kiln_connect.openapi_client.models.ethereum_reward.EthereumReward()  # noqa: E501
+        model = kiln_connect.openapi_client.models.tezos_network_stats.TezosNetworkStats()  # noqa: E501
         if include_optional :
-            return EthereumReward(
-                var_date = 'Sun Jan 15 00:00:00 GMT 2023', 
-                consensus_rewards = '2988504000000000', 
-                execution_rewards = '0', 
-                rewards = '2988504000000000', 
-                stake_balance = '64000000000000000000', 
-                gross_apy = 3.407, 
-                cl_apy = 3.407, 
-                el_apy = 0.0
+            return TezosNetworkStats(
+                nb_validators = 402, 
+                network_gross_apy = 4.5, 
+                supply_staked_percent = 12.4, 
+                updated_at = '2023-01-14T01:13:59Z'
             )
         else :
-            return EthereumReward(
+            return TezosNetworkStats(
         )
         """
 
-    def testEthereumReward(self):
-        """Test EthereumReward"""
+    def testTezosNetworkStats(self):
+        """Test TezosNetworkStats"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

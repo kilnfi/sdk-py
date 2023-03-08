@@ -17,11 +17,11 @@ import unittest
 import datetime
 
 import kiln_connect.openapi_client
-from kiln_connect.openapi_client.models.ethereum_reward import EthereumReward  # noqa: E501
+from kiln_connect.openapi_client.models.get_xtz_stakes200_response import GetXtzStakes200Response  # noqa: E501
 from kiln_connect.openapi_client.rest import ApiException
 
-class TestEthereumReward(unittest.TestCase):
-    """EthereumReward unit test stubs"""
+class TestGetXtzStakes200Response(unittest.TestCase):
+    """GetXtzStakes200Response unit test stubs"""
 
     def setUp(self):
         pass
@@ -30,31 +30,38 @@ class TestEthereumReward(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test EthereumReward
+        """Test GetXtzStakes200Response
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `EthereumReward`
+        # uncomment below to create an instance of `GetXtzStakes200Response`
         """
-        model = kiln_connect.openapi_client.models.ethereum_reward.EthereumReward()  # noqa: E501
+        model = kiln_connect.openapi_client.models.get_xtz_stakes200_response.GetXtzStakes200Response()  # noqa: E501
         if include_optional :
-            return EthereumReward(
-                var_date = 'Sun Jan 15 00:00:00 GMT 2023', 
-                consensus_rewards = '2988504000000000', 
-                execution_rewards = '0', 
-                rewards = '2988504000000000', 
-                stake_balance = '64000000000000000000', 
-                gross_apy = 3.407, 
-                cl_apy = 3.407, 
-                el_apy = 0.0
+            return GetXtzStakes200Response(
+                data = [
+                    kiln_connect.openapi_client.models.tezos_stake.TezosStake(
+                        stake_address = 'tz1VZ4iC4wzTR7iK2Q7PoQGVDAojuY42fDxD', 
+                        baker_address = 'tz2FCNBrERXtaTtNX6iimR1UJ5JSDxvdHM93', 
+                        state = 'active', 
+                        activated_at = '2023-01-14T01:13:59Z', 
+                        activated_cycle = 542, 
+                        delegated_cycle = '2023-01-14T01:13:59Z', 
+                        delegated_at = 542, 
+                        delegated_block = 16397387, 
+                        balance = '32076187808000000000', 
+                        rewards = '76187808000000000', 
+                        gross_apy = 3.407, 
+                        updated_at = '2023-01-14T01:13:59Z', )
+                    ]
             )
         else :
-            return EthereumReward(
+            return GetXtzStakes200Response(
         )
         """
 
-    def testEthereumReward(self):
-        """Test EthereumReward"""
+    def testGetXtzStakes200Response(self):
+        """Test GetXtzStakes200Response"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
