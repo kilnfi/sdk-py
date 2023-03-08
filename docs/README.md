@@ -151,6 +151,7 @@ API facilities:
 
 - [Accounts](AccountsApi.md)
 - [Ethereum](EthApi.md)
+- [Tezos](XtzApi.md)
 
 Integrations facilities:
 
