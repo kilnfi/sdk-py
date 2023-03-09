@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**var_date** | **str** | Day for this reward entry | [optional] 
+**var_date** | **date** | Day for this reward entry | [optional] 
 **consensus_rewards** | **str** | Accumulated consensus rewards WEI during the day | [optional] 
 **execution_rewards** | **str** | Accumulated execution rewards in WEI during the day | [optional] 
 **rewards** | **str** | Accumulated consensus and execution rewards in WEI during the day | [optional] 

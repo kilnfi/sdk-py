@@ -41,7 +41,7 @@ class TestGetEthRewards200Response(unittest.TestCase):
             return GetEthRewards200Response(
                 data = [
                     kiln_connect.openapi_client.models.ethereum_reward.EthereumReward(
-                        date = '2023-01-15', 
+                        date = 'Sun Jan 15 00:00:00 GMT 2023', 
                         consensus_rewards = '2988504000000000', 
                         execution_rewards = '0', 
                         rewards = '2988504000000000', 

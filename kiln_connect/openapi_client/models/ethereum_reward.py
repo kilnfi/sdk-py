@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from datetime import date
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
@@ -27,7 +27,7 @@ class EthereumReward(BaseModel):
 
     Do not edit the class manually.
     """
-    var_date: Optional[StrictStr] = Field(None, alias="date", description="Day for this reward entry")
+    var_date: Optional[date] = Field(None, alias="date", description="Day for this reward entry")
     consensus_rewards: Optional[StrictStr] = Field(None, description="Accumulated consensus rewards WEI during the day")
     execution_rewards: Optional[StrictStr] = Field(None, description="Accumulated execution rewards in WEI during the day")
     rewards: Optional[StrictStr] = Field(None, description="Accumulated consensus and execution rewards in WEI during the day")

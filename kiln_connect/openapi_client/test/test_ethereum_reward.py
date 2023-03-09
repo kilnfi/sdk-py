@@ -39,7 +39,7 @@ class TestEthereumReward(unittest.TestCase):
         model = kiln_connect.openapi_client.models.ethereum_reward.EthereumReward()  # noqa: E501
         if include_optional :
             return EthereumReward(
-                var_date = '2023-01-15', 
+                var_date = 'Sun Jan 15 00:00:00 GMT 2023', 
                 consensus_rewards = '2988504000000000', 
                 execution_rewards = '0', 
                 rewards = '2988504000000000', 
