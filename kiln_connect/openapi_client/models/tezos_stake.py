@@ -32,14 +32,14 @@ class TezosStake(BaseModel):
     state: Optional[StrictStr] = Field(None, description="State of the Tezos stake")
     activated_at: Optional[datetime] = Field(None, description="Date at which the stake started earning rewards")
     activated_cycle: Optional[StrictInt] = Field(None, description="Cycle at which the stake started earning rewards")
-    delegated_cycle: Optional[datetime] = Field(None, description="Cycle in which the delegation transaction was made")
-    delegated_at: Optional[StrictInt] = Field(None, description="Date at which the staking transaction was made, corresponds to the block it was part of.")
-    delegated_block: Optional[StrictInt] = Field(None, description="Block at which the corresponding staking transaction was executed")
+    delegated_at: Optional[datetime] = Field(None, description="Cycle in which the delegation transaction was made")
+    delegated_cycle: Optional[StrictInt] = Field(None, description="Date at which the staking transaction was made, corresponds to the block it was part of.")
+    delegated_block: Optional[StrictStr] = Field(None, description="Block at which the corresponding staking transaction was executed")
     balance: Optional[StrictStr] = Field(None, description="Current balance in mutez")
     rewards: Optional[StrictStr] = Field(None, description="Sum of rewards in mutez earned by this stake since delegation")
     gross_apy: Optional[float] = Field(None, description="Gross annual percentage yield")
     updated_at: Optional[datetime] = Field(None, description="Last date this data was updated")
-    __properties = ["stake_address", "baker_address", "state", "activated_at", "activated_cycle", "delegated_cycle", "delegated_at", "delegated_block", "balance", "rewards", "gross_apy", "updated_at"]
+    __properties = ["stake_address", "baker_address", "state", "activated_at", "activated_cycle", "delegated_at", "delegated_cycle", "delegated_block", "balance", "rewards", "gross_apy", "updated_at"]
 
     class Config:
         allow_population_by_field_name = True
@@ -72,13 +72,13 @@ class TezosStake(BaseModel):
         if self.activated_cycle is None:
             _dict['activated_cycle'] = None
 
-        # set to None if delegated_cycle (nullable) is None
-        if self.delegated_cycle is None:
-            _dict['delegated_cycle'] = None
-
         # set to None if delegated_at (nullable) is None
         if self.delegated_at is None:
             _dict['delegated_at'] = None
+
+        # set to None if delegated_cycle (nullable) is None
+        if self.delegated_cycle is None:
+            _dict['delegated_cycle'] = None
 
         # set to None if delegated_block (nullable) is None
         if self.delegated_block is None:
@@ -117,8 +117,8 @@ class TezosStake(BaseModel):
             "state": obj.get("state"),
             "activated_at": obj.get("activated_at"),
             "activated_cycle": obj.get("activated_cycle"),
-            "delegated_cycle": obj.get("delegated_cycle"),
             "delegated_at": obj.get("delegated_at"),
+            "delegated_cycle": obj.get("delegated_cycle"),
             "delegated_block": obj.get("delegated_block"),
             "balance": obj.get("balance"),
             "rewards": obj.get("rewards"),

@@ -409,9 +409,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    oneOf:
-                      - $ref: '#/components/schemas/TezosDailyReward'
-                      - $ref: '#/components/schemas/TezosCycleReward'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TezosDailyReward'
         '400':
           description: Invalid parameters
         '401':
@@ -1128,7 +1128,7 @@ components:
           type: string
           description: State of the Tezos stake
           example: "active"
-          x-extensible-enum: ["activating", "active", "inactive"]
+          x-extensible-enum: ["activating", "active", "inactive", "syncing"]
         activated_at:
           type: string
           description: Date at which the stake started earning rewards
@@ -1140,13 +1140,13 @@ components:
           description: Cycle at which the stake started earning rewards
           nullable: true
           example: 542
-        delegated_cycle:
+        delegated_at:
           type: string
           description: Cycle in which the delegation transaction was made
           nullable: true
           format: date-time
           example: "2023-01-14T01:13:59Z"
-        delegated_at:
+        delegated_cycle:
           type: integer
           description: Date at which the staking transaction was made, corresponds to the block it was part of.
           nullable: true
@@ -1154,8 +1154,8 @@ components:
         delegated_block:
           description: Block at which the corresponding staking transaction was executed
           nullable: true
-          type: integer
-          example: 16397387
+          type: string
+          example: "16397387"
         balance:
           type: string
           description: Current balance in mutez
@@ -1197,35 +1197,11 @@ components:
           type: number
           description: Gross annual percentage yield
           example: 3.42
-    TezosCycleReward:
-      type: object
-      properties:
-        cycle:
-          type: number
-          description: The cycle number
-          example: 271
-        cycle_begins_at:
-          type: string
-          format: date
-          description: The date at which the cycle began
-          example: "2022-09-01T08:44:00Z"
-        rewards:
-          type: number
-          description: The rewards for that cycle in mutez
-          example: 27098488
-        active_balance:
-          type: string
-          description: Wallet balance for that cycle in mutez
-          example: "34329999165"
-        gross_apy:
-          type: number
-          description: Gross annual percentage yield
-          example: 36.053
     TezosNetworkStats:
       type: object
       properties:
         nb_validators:
-          type: number
+          type: integer
           description: Number of active bakers
           example: 402
         network_gross_apy:
