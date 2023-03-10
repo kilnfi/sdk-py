@@ -153,6 +153,6 @@ API facilities:
 - [Ethereum](https://github.com/kilnfi/sdk-py/tree/main/docs/EthApi.md)
 - [Tezos](https://github.com/kilnfi/sdk-py/tree/main/docs/XtzApi.md)
 
-Integrations facilities:
+- Integrations facilities:
 
 - [Fireblocks](https://github.com/kilnfi/sdk-py/tree/main/docs/README.md#fireblocks)
