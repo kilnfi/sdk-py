@@ -15,12 +15,13 @@ parts:
 
 - `accounts` for Kiln Accounts facilities
 - `eth` for Ethereum facilities
+- `xtz` for Tezos facilities
 
 Optionally, the SDK can be configured with multiple integrations
 (similar to the concept of modules), which can be referred later via
 their name.
 
-For example, here we create a KilnConnect object from a config
+For example, here we create a `KilnConnect` object from a config
 initialized from the environment. This config has a Fireblocks
 integration called `fireblocks` (configured with a specific vault
 account and API key), we then stake on Ethereum using the fireblocks
