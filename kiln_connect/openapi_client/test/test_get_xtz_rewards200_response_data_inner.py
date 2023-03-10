@@ -17,11 +17,11 @@ import unittest
 import datetime
 
 import kiln_connect.openapi_client
-from kiln_connect.openapi_client.models.ethereum_operation_deposit import EthereumOperationDeposit  # noqa: E501
+from kiln_connect.openapi_client.models.get_xtz_rewards200_response_data_inner import GetXtzRewards200ResponseDataInner  # noqa: E501
 from kiln_connect.openapi_client.rest import ApiException
 
-class TestEthereumOperationDeposit(unittest.TestCase):
-    """EthereumOperationDeposit unit test stubs"""
+class TestGetXtzRewards200ResponseDataInner(unittest.TestCase):
+    """GetXtzRewards200ResponseDataInner unit test stubs"""
 
     def setUp(self):
         pass
@@ -30,35 +30,29 @@ class TestEthereumOperationDeposit(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test EthereumOperationDeposit
+        """Test GetXtzRewards200ResponseDataInner
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `EthereumOperationDeposit`
+        # uncomment below to create an instance of `GetXtzRewards200ResponseDataInner`
         """
-        model = kiln_connect.openapi_client.models.ethereum_operation_deposit.EthereumOperationDeposit()  # noqa: E501
+        model = kiln_connect.openapi_client.models.get_xtz_rewards200_response_data_inner.GetXtzRewards200ResponseDataInner()  # noqa: E501
         if include_optional :
-            return EthereumOperationDeposit(
-                type = 'deposit', 
-                time = '2023-01-14T01:13:59Z', 
-                validator_address = '0x95373bcf8e2c64e1c373a6e534c002f210adbcc84c5abda3b6306677e171430ae50781a51c9f579a47622e334dba2412', 
-                tx_hash = '0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94', 
-                tx_sender = '0x41bf25fc8c52d292bd66d3bcecd8a919ecb9ef88', 
-                tx_gas_used = '2700999916653262', 
-                tx_effective_gas_price = '1499997889', 
-                proxies = ["0x1e68238cE926DEC62b3FBC99AB06eB1D85CE0270","0x43244f90814b31dec250de24df5bb023eB1D85CE"], 
-                block = 15955054, 
-                block_base_fee = '7', 
-                withdrawal_credentials = '010000000000000000000000e1f4acc0affb36a805474e3b6ab786738c6900a2', 
-                amount = '32000000000000000000000'
+            return GetXtzRewards200ResponseDataInner(
+                var_date = 'Sun Jan 15 00:00:00 GMT 2023', 
+                rewards = '27098488', 
+                active_balance = '34329999165', 
+                gross_apy = 36.053, 
+                cycle = 271, 
+                cycle_begins_at = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date()
             )
         else :
-            return EthereumOperationDeposit(
+            return GetXtzRewards200ResponseDataInner(
         )
         """
 
-    def testEthereumOperationDeposit(self):
-        """Test EthereumOperationDeposit"""
+    def testGetXtzRewards200ResponseDataInner(self):
+        """Test GetXtzRewards200ResponseDataInner"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

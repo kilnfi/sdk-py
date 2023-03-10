@@ -31,13 +31,15 @@ class EthereumOperationDeposit(BaseModel):
     time: Optional[datetime] = Field(None, description="Time of the operation")
     validator_address: Optional[StrictStr] = Field(None, description="Validator address of the operation")
     tx_hash: Optional[StrictStr] = Field(None, description="Hash of the transaction")
-    tx_gas_used: Optional[StrictStr] = Field(None, description="Gas used by the transaction in WEI")
     tx_sender: Optional[StrictStr] = Field(None, description="Address of the sender of the transaction")
+    tx_gas_used: Optional[StrictStr] = Field(None, description="Gas used by the transaction in WEI")
+    tx_effective_gas_price: Optional[StrictStr] = Field(None, description="Effective gas price used for this TX in WEI")
     proxies: Optional[conlist(StrictStr)] = Field(None, description="Ordered list of smart-contracts in the calling chain")
     block: Optional[StrictInt] = Field(None, description="Block number containing the transaction")
+    block_base_fee: Optional[StrictStr] = Field(None, description="Base fee used for this block in WEI")
     withdrawal_credentials: Optional[StrictStr] = Field(None, description="Withdrawal credentials of the deposit")
     amount: Optional[StrictStr] = Field(None, description="Amount in WEI of the deposit transaction")
-    __properties = ["type", "time", "validator_address", "tx_hash", "tx_gas_used", "tx_sender", "proxies", "block", "withdrawal_credentials", "amount"]
+    __properties = ["type", "time", "validator_address", "tx_hash", "tx_sender", "tx_gas_used", "tx_effective_gas_price", "proxies", "block", "block_base_fee", "withdrawal_credentials", "amount"]
 
     class Config:
         allow_population_by_field_name = True
@@ -78,10 +80,12 @@ class EthereumOperationDeposit(BaseModel):
             "time": obj.get("time"),
             "validator_address": obj.get("validator_address"),
             "tx_hash": obj.get("tx_hash"),
-            "tx_gas_used": obj.get("tx_gas_used"),
             "tx_sender": obj.get("tx_sender"),
+            "tx_gas_used": obj.get("tx_gas_used"),
+            "tx_effective_gas_price": obj.get("tx_effective_gas_price"),
             "proxies": obj.get("proxies"),
             "block": obj.get("block"),
+            "block_base_fee": obj.get("block_base_fee"),
             "withdrawal_credentials": obj.get("withdrawal_credentials"),
             "amount": obj.get("amount")
         })
