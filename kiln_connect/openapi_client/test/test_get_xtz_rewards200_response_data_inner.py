@@ -44,10 +44,13 @@ class TestGetXtzRewards200ResponseDataInner(unittest.TestCase):
                 active_balance = '34329999165', 
                 gross_apy = 36.053, 
                 cycle = 271, 
-                cycle_begins_at = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date()
+                cycle_begins_at = '2022-09-01T08:44Z'
             )
         else :
             return GetXtzRewards200ResponseDataInner(
+                var_date = 'Sun Jan 15 00:00:00 GMT 2023',
+                cycle = 271,
+                cycle_begins_at = '2022-09-01T08:44Z',
         )
         """
 

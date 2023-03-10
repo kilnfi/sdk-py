@@ -40,11 +40,7 @@ class TestGetXtzRewards200Response(unittest.TestCase):
         if include_optional :
             return GetXtzRewards200Response(
                 data = [
-                    kiln_connect.openapi_client.models.tezos_daily_reward.TezosDailyReward(
-                        date = 'Sun Jan 15 00:00:00 GMT 2023', 
-                        rewards = '27098488', 
-                        active_balance = '420000000000', 
-                        gross_apy = 3.42, )
+                    null
                     ]
             )
         else :

@@ -27,7 +27,7 @@ class TezosDailyReward(BaseModel):
 
     Do not edit the class manually.
     """
-    var_date: Optional[date] = Field(None, alias="date", description="Day for this reward entry")
+    var_date: date = Field(..., alias="date", description="Day for this reward entry")
     rewards: Optional[StrictStr] = Field(None, description="Rewards earned for that day in mutez")
     active_balance: Optional[StrictStr] = Field(None, description="Wallet balance for that day in mutez")
     gross_apy: Optional[float] = Field(None, description="Gross annual percentage yield")

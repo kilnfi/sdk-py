@@ -40,13 +40,15 @@ class TestTezosCycleReward(unittest.TestCase):
         if include_optional :
             return TezosCycleReward(
                 cycle = 271, 
-                cycle_begins_at = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                cycle_begins_at = '2022-09-01T08:44Z', 
                 rewards = '27098488', 
                 active_balance = '34329999165', 
                 gross_apy = 36.053
             )
         else :
             return TezosCycleReward(
+                cycle = 271,
+                cycle_begins_at = '2022-09-01T08:44Z',
         )
         """
 

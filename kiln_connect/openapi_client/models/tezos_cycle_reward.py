@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import date
+from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr
 
@@ -27,8 +27,8 @@ class TezosCycleReward(BaseModel):
 
     Do not edit the class manually.
     """
-    cycle: Optional[StrictInt] = Field(None, description="The cycle number")
-    cycle_begins_at: Optional[date] = Field(None, description="The date at which the cycle began")
+    cycle: StrictInt = Field(..., description="The cycle number")
+    cycle_begins_at: datetime = Field(..., description="The date at which the cycle began")
     rewards: Optional[StrictStr] = Field(None, description="The rewards for that cycle in mutez")
     active_balance: Optional[StrictStr] = Field(None, description="Wallet balance for that cycle in mutez")
     gross_apy: Optional[float] = Field(None, description="Gross annual percentage yield")

@@ -46,6 +46,7 @@ class TestTezosDailyReward(unittest.TestCase):
             )
         else :
             return TezosDailyReward(
+                var_date = 'Sun Jan 15 00:00:00 GMT 2023',
         )
         """
 

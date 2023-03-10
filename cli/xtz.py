@@ -9,6 +9,7 @@ understand things unrelated to what their primary goal is: use the
 SDK. So let's keep it stupid simple so the integration work is
 simpler.
 """
+from enum import Enum
 
 import click
 import os
@@ -29,6 +30,11 @@ xtz_cli = typer.Typer(
 
 console = Console()
 error_console = Console(stderr=True)
+
+
+class RewardsFormat(str, Enum):
+    daily = "daily"
+    cycle = "cycle"
 
 
 def sort_identifiers(identifiers: list[str]) -> Tuple[list[str], list[str]]:
@@ -125,21 +131,35 @@ def xtz_stakes(identifiers: list[str]):
 
 
 @xtz_cli.command("rewards")
-def xtz_rewards(identifiers: list[str]):
+def xtz_rewards(
+        identifiers: list[str],
+        response_format: RewardsFormat = typer.Option(RewardsFormat.daily, '--format')):
     """View Tezos rewards.
     """
     with kiln_connect.KilnConnect(kiln_connect.KilnConfig.from_env()) as kc:
         accounts, wallets = sort_identifiers(identifiers)
 
-        stakes = kc.xtz.get_xtz_rewards(accounts=accounts, wallets=wallets)
+        rewards = kc.xtz.get_xtz_rewards(accounts=accounts, wallets=wallets, format=response_format.value)
 
-        table = Table('Date', 'Active Balance', 'Rewards', 'Gross APY')
-        for stake in stakes.data:
-            table.add_row(
-                str(stake.var_date),
-                pretty_mutez_to_tez(stake.active_balance),
-                pretty_mutez_to_tez(stake.rewards),
-                str(round(stake.gross_apy, 3))
-            )
+        if response_format == RewardsFormat.daily:
+            table = Table('Date', 'Active Balance', 'Rewards', 'Gross APY')
+            for reward in rewards.data:
+                table.add_row(
+                    str(reward.actual_instance.var_date),
+                    pretty_mutez_to_tez(reward.actual_instance.active_balance),
+                    pretty_mutez_to_tez(reward.actual_instance.rewards),
+                    str(round(reward.actual_instance.gross_apy, 3))
+                )
+            console.print(table)
+        elif response_format == RewardsFormat.cycle:
+            table = Table('Cycle', 'Cycle Begins At', 'Active Balance', 'Rewards', 'Gross APY')
+            for reward in rewards.data:
+                table.add_row(
+                    str(reward.actual_instance.cycle),
+                    str(reward.actual_instance.cycle_begins_at),
+                    pretty_mutez_to_tez(reward.actual_instance.active_balance),
+                    pretty_mutez_to_tez(reward.actual_instance.rewards),
+                    str(round(reward.actual_instance.gross_apy, 3)))
+            console.print(table)
 
-        console.print(table)
+

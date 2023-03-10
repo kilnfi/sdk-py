@@ -4,6 +4,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**List[TezosDailyReward]**](TezosDailyReward.md) |  | [optional] 
+**data** | [**List[GetXtzRewards200ResponseDataInner]**](GetXtzRewards200ResponseDataInner.md) |  | [optional] 
 
 
