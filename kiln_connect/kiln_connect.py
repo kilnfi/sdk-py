@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from kiln_connect.openapi_client import ApiClient, Configuration
 
 from .eth import ETH
+from .xtz import XTZ
 from .accounts import Accounts
 from .errors import *
 from .integrations import IntegrationConfig, Integrations
@@ -74,6 +75,7 @@ class KilnConnect:
 
         self._integrations = Integrations(config.integrations)
 
+        self.xtz = XTZ(self._api, self._integrations)
         self.eth = ETH(self._api, self._integrations)
         self.accounts = Accounts(self._api, self._integrations)
 
