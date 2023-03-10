@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kiln-connect"
-version = "1.0.0-dev0"
+version = "1.0.0-dev1"
 description = ""
 authors = ["s. rannou <mxs@sbrk.org>"]
 maintainers = ["s. rannou <mxs@sbrk.org>"]
