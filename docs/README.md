@@ -5,9 +5,9 @@
 Welcome to the Python Kiln Connect SDK which provides facilities
 around Staking using the Kiln API. It is composed of three parts:
 
-- [API layer](../kiln_connect/openapi_client) which facilities usage of the Kiln API,
-- [Integration layer](../kiln_connect/)  which provides facilities around the Kiln API,
-- [CLI](../cli/) which showcases the two previous parts.
+- [API layer](https://github.com/kilnfi/sdk-py/tree/main/kiln_connect/openapi_client) which facilities usage of the Kiln API,
+- [Integration layer](https://github.com/kilnfi/sdk-py/tree/main/kiln_connect/)  which provides facilities around the Kiln API,
+- [CLI](https://github.com/kilnfi/sdk-py/tree/main/cli/) which showcases the two previous parts.
 
 The SDK is typically used as follows: a `KilnConnect` instance is
 created from a `KilnConfig`, the SDK then provides access to different
@@ -145,7 +145,7 @@ staking on a given protocol. The following protocols are supported:
 ## Usage
 
 The simplest way to start using the SDK is to look at examples
-implemented in the [CLI](../cli/); it is kept simple to showcase the SDK.
+implemented in the [CLI](https://github.com/kilnfi/sdk-py/tree/main/cli/); it is kept simple to showcase the SDK.
 
 API facilities:
 
@@ -155,4 +155,4 @@ API facilities:
 
 Integrations facilities:
 
-- [Fireblocks](#fireblocks)
+- [Fireblocks](https://github.com/kilnfi/sdk-py/tree/main/docs/README.md#fireblocks)

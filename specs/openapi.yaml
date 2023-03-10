@@ -695,14 +695,18 @@ components:
           type: string
           description: Hash of the transaction
           example: "0x43244f90814b31dec250de24df5bb023a338790c1d5a39244cf1064cf6d98c94"
-        tx_gas_used:
-          type: string
-          description: Gas used by the transaction in WEI
-          example: "2700999916653262"
         tx_sender:
           type: string
           description: Address of the sender of the transaction
           example: "0x41bf25fc8c52d292bd66d3bcecd8a919ecb9ef88"
+        tx_gas_used:
+          type: string
+          description: Gas used by the transaction in WEI
+          example: "2700999916653262"
+        tx_effective_gas_price:
+          type: string
+          description: Effective gas price used for this TX in WEI
+          example: "1499997889"
         proxies:
           type: array
           example: ["0x1e68238cE926DEC62b3FBC99AB06eB1D85CE0270", "0x43244f90814b31dec250de24df5bb023eB1D85CE"]
@@ -715,6 +719,10 @@ components:
           type: integer
           description: Block number containing the transaction
           example: 15955054
+        block_base_fee:
+          type: string
+          description: Base fee used for this block in WEI
+          example: "7"
         withdrawal_credentials:
           type: string
           description: Withdrawal credentials of the deposit
